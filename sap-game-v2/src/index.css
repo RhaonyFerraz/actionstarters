@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .neon-text {
+    text-shadow: 0 0 5px rgba(57, 255, 20, 0.7), 0 0 10px rgba(57, 255, 20, 0.5);
+  }
+  .neon-border {
+    box-shadow: 0 0 5px rgba(57, 255, 20, 0.4), inset 0 0 5px rgba(57, 255, 20, 0.2);
+  }
+  .animate-ticker {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker 30s linear infinite;
+  }
+  /* Modern Glassmorphism Utilities */
+  .glass-panel {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  }
+  .glass-button {
+    @apply bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300;
+  }
+  /* Soft Neon Bloom */
+  .neon-bloom-purple {
+    box-shadow: 0 0 15px rgba(191, 0, 255, 0.4), 0 0 30px rgba(191, 0, 255, 0.1);
+  }
+  .neon-bloom-green {
+    box-shadow: 0 0 15px rgba(56, 211, 26, 0.4), 0 0 30px rgba(56, 211, 26, 0.1);
+  }
+  .modern-shadow {
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+  }
+  /* Theme: Retro 2000s / Win95 */
+  .retro-outset {
+    border: 2px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+  }
+  .retro-inset {
+    border: 2px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+  }
+  .win95-title-bar {
+    background: linear-gradient(90deg, #000080, #1084d0);
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 20px;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: 'Tahoma', 'Verdana', sans-serif;
+  }
+  .win95-button {
+    @apply bg-[#c0c0c0] retro-outset px-4 py-0.5 text-black hover:bg-[#c0c0c0] active:retro-inset flex items-center justify-center gap-1 font-sans text-xs font-bold leading-normal;
+  }
+  .win95-bg {
+    @apply bg-[#c0c0c0];
+  }
+  /* Theme: Terminal Hacker */
+  .terminal-border {
+    border: 1px solid #38D31A;
+    box-shadow: 0 0 10px rgba(56, 211, 26, 0.2);
+  }
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes flyToBank {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+  15% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  40% {
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    top: 20px;
+    left: 45%; /* Levemente para a esquerda */
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.animate-fly-to-bank {
+  animation: flyToBank 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@layer base {
+  body {
+    @apply bg-[#121212] text-gray-300 antialiased transition-colors duration-500 overflow-x-hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  .font-digital {
+    font-family: 'Orbitron', sans-serif;
+  }
+  .font-mono-neon {
+    font-family: 'Space Mono', monospace;
+  }
+}
