@@ -35,10 +35,10 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
       <div className="win95-bg -m-8 p-1 retro-outset font-sans text-black">
         
         {/* Win95 Header (Internal) */}
-        <div className="win95-title-bar mb-1">
+        <div className="win95-title-bar mb-1" style={{ background: '#ffffff', color: '#111827' }}>
           <div className="flex items-center gap-2">
-            <Layout size={12} className="text-blue-200" />
-            <span className="text-[11px] tracking-tight">MailPlus Pro v1.0 - [Inbox]</span>
+            <Layout size={12} className="text-gray-600" />
+            <span className="text-[11px] tracking-tight text-gray-800">MailPlus Pro v1.0 - [Inbox]</span>
           </div>
           <button onClick={onClose} className="w-4 h-4 bg-[#c0c0c0] text-black border border-white border-b-gray-800 border-r-gray-800 flex items-center justify-center text-[10px] font-bold active:border-inset">
             X
