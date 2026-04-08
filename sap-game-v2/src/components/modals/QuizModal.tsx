@@ -268,10 +268,10 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                   language === 'en' && (
                     <button 
                       onClick={() => setLanguage('pt')}
-                      className="flex items-center gap-2 bg-white/5 border border-neon-purple/20 px-4 py-1.5 rounded-xl text-[10px] font-bold text-gray-400 hover:text-white hover:bg-neon-purple/20 hover:border-neon-purple/50 hover:shadow-[0_0_20px_rgba(191,0,255,0.3)] transition-all duration-300 active:scale-95 group animate-in fade-in"
+                      className="flex items-center gap-2 bg-white/5 border border-white/20 px-4 py-1.5 rounded-xl text-[10px] font-bold text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/40 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all duration-300 active:scale-95 group animate-in fade-in"
                     >
-                      <Languages size={14} className="text-neon-purple transition-transform group-hover:scale-110 drop-shadow-[0_0_8px_rgba(191,0,255,0.6)]" />
-                      <span className="tracking-widest group-hover:drop-shadow-[0_0_8px_rgba(191,0,255,0.5)]">TRADUZIR PARA PT-BR</span>
+                      <Languages size={14} className="text-white transition-transform group-hover:scale-110 drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
+                      <span className="tracking-widest group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">TRADUZIR PARA PT-BR</span>
                     </button>
                   )
                 ) : (

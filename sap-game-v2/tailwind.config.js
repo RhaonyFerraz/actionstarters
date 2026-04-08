@@ -16,11 +16,11 @@ export default {
         neon: {
           green: '#38D31A',
           cyan: '#00FFFF',
-          purple: '#BF00FF',
+          purple: '#ffffff',
           border: '#1A1A1A',
           deep: '#121212',
           glow: 'rgba(56, 211, 26, 0.4)',
-          'glow-purple': 'rgba(191, 0, 255, 0.4)',
+          'glow-purple': 'rgba(255, 255, 255, 0.4)',
           'glow-cyan': 'rgba(0, 255, 255, 0.4)'
         }
       }

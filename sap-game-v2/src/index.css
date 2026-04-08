@@ -23,7 +23,7 @@
   }
   /* Soft Neon Bloom */
   .neon-bloom-purple {
-    box-shadow: 0 0 15px rgba(191, 0, 255, 0.4), 0 0 30px rgba(191, 0, 255, 0.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.1);
   }
   .neon-bloom-green {
     box-shadow: 0 0 15px rgba(56, 211, 26, 0.4), 0 0 30px rgba(56, 211, 26, 0.1);

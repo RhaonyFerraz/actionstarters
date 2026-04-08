@@ -120,7 +120,7 @@ export const HintSystem: React.FC = () => {
                 theme === 'terminal-hacker' ? "text-neon-green border border-neon-green px-2 hover:bg-neon-green hover:text-black" :
                 theme === 'sap-blue' ? "bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700" :
                 theme === 'high-tech-red' ? "text-white hover:text-red-400 px-2 py-1 border border-red-500/50 hover:bg-red-900/50" :
-                "text-neon-purple hover:text-white bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10"
+                "text-white hover:text-gray-300 bg-white/5 px-3 py-1.5 rounded-lg hover:bg-white/10"
               )}
             >
               Próxima <ChevronRight size={14} />

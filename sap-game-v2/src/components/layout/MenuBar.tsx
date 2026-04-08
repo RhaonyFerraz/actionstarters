@@ -51,7 +51,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         {/* Vibrant Green Background Glow (Glass only) */}
         {theme === 'modern-glass' && (
           <>
-            <div className="absolute -inset-1 bg-gradient-to-r from-neon-green/20 via-transparent to-neon-purple/20 opacity-30 blur-3xl group-hover:opacity-60 transition-opacity duration-1000" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-neon-green/20 via-transparent to-white/10 opacity-30 blur-3xl group-hover:opacity-60 transition-opacity duration-1000" />
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-green/40 to-transparent" />
           </>
         )}
@@ -88,16 +88,16 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         {/* Center: Navigation (Modern Icons) */}
         <nav className="flex items-center gap-2 relative z-10">
           <MenuButton icon={<Building2 size={22} />} label="Banco" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<PiggyBank size={22} />} label="Financeiro" onClick={onOpenBank} color="purple" />
+          <MenuButton icon={<PiggyBank size={22} />} label="Financeiro" onClick={onOpenBank} color="green" />
           <MenuButton icon={<Package size={22} />} label="Inventário" onClick={onOpenCommercial} color="green" />
-          <MenuButton icon={<Zap size={22} />} label="Melhorias" onClick={onOpenConsultoria} color="purple" />
+          <MenuButton icon={<Zap size={22} />} label="Melhorias" onClick={onOpenConsultoria} color="green" />
           <MenuButton icon={<Receipt size={22} />} label="Despesas" onClick={onOpenBank} color="green" />
           <MenuButton 
             icon={<Mail size={22} />} 
             label="E-mail" 
             onClick={onOpenEmail} 
             badge={unreadEmails > 0 ? unreadEmails : undefined} 
-            color="purple"
+            color="green"
           />
         </nav>
 
@@ -139,7 +139,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
             onClick={onAdvanceTurn}
             className={cn(
               "flex items-center gap-2 group transition-all duration-300",
-              theme === 'modern-glass' ? "bg-neon-purple text-white rounded-xl px-8 py-3 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(191,0,255,0.4)] hover:shadow-[0_0_30px_rgba(191,0,255,0.6)]" : "",
+              theme === 'modern-glass' ? "bg-white text-black rounded-xl px-8 py-3 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]" : "",
               theme === 'retro-2000' ? "bg-[#c0c0c0] retro-outset active:retro-inset px-4 h-8" : "",
               theme === 'terminal-hacker' ? "bg-black border border-neon-green text-neon-green px-6 py-2 hover:bg-neon-green hover:text-black" : "",
               theme === 'sap-blue' ? "bg-blue-600 text-white rounded-lg px-6 py-2 hover:bg-blue-500 active:scale-95 shadow-md" : "",
@@ -149,7 +149,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
             <Play size={16} className={cn(
               "group-hover:translate-x-0.5 transition-transform",
               theme === 'modern-glass' || theme === 'sap-blue' || theme === 'high-tech-red' ? "fill-white" : "",
-              theme === 'retro-2000' ? "text-neon-purple fill-neon-purple" : "",
+              theme === 'retro-2000' ? "text-black fill-black" : "",
               theme === 'terminal-hacker' ? "text-current fill-current" : ""
             )} />
             <span className={cn(
@@ -175,9 +175,9 @@ export const MenuBar: React.FC<MenuBarProps> = ({
       )}>
         <div className="animate-ticker whitespace-nowrap">
           <span className="text-white font-bold text-[11px] uppercase tracking-[0.4em] flex gap-20 items-center justify-center">
-            <span className="text-neon-purple drop-shadow-[0_0_8px_rgba(191,0,255,0.4)]">ESTRATÉGIA: Infraestrutura avançada aumenta massivamente seu lucro por rodada.</span>
+            <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">ESTRATÉGIA: Infraestrutura avançada aumenta massivamente seu lucro por rodada.</span>
             <span className={cn(theme === 'terminal-hacker' ? 'text-neon-green' : 'text-neon-cyan', "drop-shadow-[0_0_8px_rgba(0,255,255,0.4)]")}>MERCADO: O preço das SKUs varia conforme seu nível comercial.</span>
-            <span className="text-neon-purple drop-shadow-[0_0_8px_rgba(191,0,255,0.4)]">UPDATE: Novo sistema de gestão SAP ativo.</span>
+            <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">UPDATE: Novo sistema de gestão SAP ativo.</span>
           </span>
         </div>
       </div>
@@ -198,30 +198,32 @@ import { cn } from '../ui/Button';
 
 const MenuButton: React.FC<MenuButtonProps> = ({ icon, label, onClick, badge, color = 'green' }) => {
   const { theme } = useGameStore();
-  const accentColor = color === 'green' ? 'text-neon-green' : 'text-neon-purple';
+  const accentColor = color === 'green' ? 'text-neon-green' : 'text-white';
 
   return (
     <button 
       onClick={onClick}
       className={cn(
         "flex flex-col items-center justify-center transition-all relative group focus:outline-none",
-        theme === 'modern-glass' ? "min-w-[80px] h-14 rounded-xl duration-300 hover:bg-white/5 active:scale-90 hover:shadow-[0_0_15px_rgba(255,255,255,0.05)]" : "",
-        theme === 'retro-2000' ? "gap-2 px-3 h-8 hover:bg-white/20 border border-transparent active:retro-inset flex-row" : "",
-        theme === 'terminal-hacker' ? "min-w-[80px] h-12 border border-transparent hover:border-neon-green hover:bg-neon-green/10" : "",
-        theme === 'sap-blue' ? "min-w-[70px] h-12 rounded-lg hover:bg-blue-700/50 active:bg-blue-600 mt-1" : "",
-        theme === 'high-tech-red' ? "min-w-[80px] h-12 border border-transparent hover:border-red-500 hover:bg-red-900/30" : ""
+        theme === 'modern-glass' ? "min-w-[80px] h-14 rounded-xl duration-300 active:scale-90" : "",
+        theme === 'retro-2000' ? "gap-2 px-3 h-8 border border-transparent active:retro-inset flex-row" : "",
+        theme === 'terminal-hacker' ? "min-w-[80px] h-12 border border-transparent" : "",
+        theme === 'sap-blue' ? "min-w-[70px] h-12 rounded-lg active:bg-blue-600 mt-1" : "",
+        theme === 'high-tech-red' ? "min-w-[80px] h-12 border border-transparent" : ""
       )}
     >
       <div className={cn(
         accentColor,
+        "transition-all duration-300 group-hover:scale-125 group-hover:brightness-150",
         theme === 'modern-glass' ? cn(
-          "transition-transform group-hover:scale-110",
-          color === 'green' ? "drop-shadow-[0_0_10px_rgba(56,211,26,0.6)]" : "drop-shadow-[0_0_10px_rgba(191,0,255,0.6)]"
+          color === 'green' 
+            ? "drop-shadow-[0_0_8px_rgba(56,211,26,0.4)] group-hover:drop-shadow-[0_0_20px_rgba(56,211,26,0.8)]" 
+            : "drop-shadow-[0_0_8px_rgba(255,255,255,0.4)] group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.8)]"
         ) : "",
-        theme === 'retro-2000' ? "filter drop-shadow-[0_0_2px_rgba(0,0,0,0.5)]" : "",
-        theme === 'terminal-hacker' ? "text-neon-green" : "",
-        theme === 'sap-blue' ? "text-blue-100 group-hover:text-white" : "",
-        theme === 'high-tech-red' ? "text-red-500 filter drop-shadow-[0_0_5px_currentColor]" : ""
+        theme === 'retro-2000' ? "filter drop-shadow-[0_0_2px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_8px_rgba(56,211,26,0.8)]" : "",
+        theme === 'terminal-hacker' ? "text-neon-green group-hover:drop-shadow-[0_0_15px_rgba(56,211,26,0.9)]" : "",
+        theme === 'sap-blue' ? "text-blue-100 group-hover:text-white group-hover:drop-shadow-[0_0_12px_rgba(255,255,255,0.6)]" : "",
+        theme === 'high-tech-red' ? "text-red-500 filter drop-shadow-[0_0_5px_currentColor] group-hover:drop-shadow-[0_0_15px_red]" : ""
       )}>
         {icon}
       </div>
@@ -230,7 +232,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ icon, label, onClick, badge, co
         theme === 'modern-glass' ? cn(
           "text-[9px] mt-1 transition-all duration-300",
           "text-gray-500 group-hover:text-white",
-          color === 'green' ? "group-hover:drop-shadow-[0_0_8px_rgba(56,211,26,0.5)]" : "group-hover:drop-shadow-[0_0_8px_rgba(191,0,255,0.5)]"
+          color === 'green' ? "group-hover:drop-shadow-[0_0_8px_rgba(56,211,26,0.5)]" : "group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
         ) : "",
         theme === 'retro-2000' ? "text-[10px] hidden lg:block text-black" : "",
         theme === 'terminal-hacker' ? "text-[8px] mt-1 text-neon-green" : "",
@@ -242,8 +244,8 @@ const MenuButton: React.FC<MenuButtonProps> = ({ icon, label, onClick, badge, co
       {badge !== undefined && (
         <span className={cn(
           "flex items-center justify-center text-black font-black",
-          theme === 'modern-glass' ? `absolute -top-1 -right-1 ${color === 'green' ? 'bg-neon-green' : 'bg-neon-purple'} text-[9px] h-4 min-w-[16px] px-1 rounded-full border border-black shadow-[0_0_10px_rgba(0,0,0,0.5)]` : "",
-          theme === 'retro-2000' ? `ml-1 ${color === 'green' ? 'bg-neon-green' : 'bg-neon-purple'} text-[9px] h-4 px-1 border border-black shadow-[1px_1px_0_white]` : "",
+          theme === 'modern-glass' ? `absolute -top-1 -right-1 ${color === 'green' ? 'bg-neon-green' : 'bg-white'} text-[9px] h-4 min-w-[16px] px-1 rounded-full border border-black shadow-[0_0_10px_rgba(0,0,0,0.5)]` : "",
+          theme === 'retro-2000' ? `ml-1 ${color === 'green' ? 'bg-neon-green' : 'bg-white'} text-[9px] h-4 px-1 border border-black shadow-[1px_1px_0_white]` : "",
           theme === 'terminal-hacker' ? "ml-1 bg-neon-green text-[9px] h-4 px-1" : "",
           theme === 'sap-blue' ? "absolute -top-1 -right-1 bg-yellow-400 text-blue-900 text-[10px] h-4 min-w-[16px] rounded-full shadow-md font-sans" : "",
           theme === 'high-tech-red' ? "absolute top-0 right-0 bg-white text-red-700 text-[9px] h-4 px-1 border border-red-500 font-digital" : ""

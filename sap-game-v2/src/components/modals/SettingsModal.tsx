@@ -68,7 +68,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                   className={cn(
                     "flex flex-col items-center text-center p-6 rounded-xl border transition-all duration-300",
                     isActive 
-                      ? "bg-neon-purple/20 border-neon-purple shadow-[0_0_15px_rgba(191,0,255,0.4)]" 
+                      ? "bg-white/10 border-white shadow-[0_0_15px_rgba(255,255,255,0.2)]" 
                       : "bg-white/5 border-white/10 hover:bg-white/10 hover:border-gray-400"
                   )}
                 >

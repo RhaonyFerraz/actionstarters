@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { GameBoard } from './pages/GameBoard';
 import { Login } from './pages/Login';
+import { AdminPanel } from './pages/AdminPanel';
 import { ToastProvider } from './context/ToastContext';
 import { BackgroundCarousel } from './components/layout/BackgroundCarousel';
 import { useGameStore } from './store/useGameStore';
@@ -39,6 +40,7 @@ const App = () => {
             path="/" 
             element={user ? <GameBoard /> : <Navigate to="/login" />} 
           />
+          <Route path="/admin" element={<AdminPanel />} />
         </Routes>
       </ToastProvider>
     </div>

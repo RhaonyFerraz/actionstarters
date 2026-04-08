@@ -31,7 +31,13 @@ export const Login: React.FC = () => {
       if (err.code === 'auth/operation-not-allowed' || err.message?.includes('CONFIGURATION_NOT_FOUND')) {
         setErrorMsg('ERRO: O Firebase não está configurado no Console. Use o Modo Desenvolvedor abaixo.');
       } else {
-        setErrorMsg('Falha na Autenticação. Verifique os dados ou se já possui cadastro.');
+        // Melhora a visualização do erro para debug
+        const friendlyMsg = err.code === 'auth/email-already-in-use' ? 'Este e-mail já está cadastrado. Tente fazer login.' :
+                          err.code === 'auth/weak-password' ? 'A senha deve ter pelo menos 6 caracteres.' :
+                          err.code === 'auth/invalid-credential' ? 'E-mail ou senha incorretos.' :
+                          err.code === 'auth/user-not-found' ? 'Usuário não encontrado. Cadastre-se primeiro.' :
+                          err.message;
+        setErrorMsg(`ERRO: ${friendlyMsg}`);
       }
     } finally {
       setIsLoading(false);

@@ -9,10 +9,11 @@ interface ModalProps {
   title: string;
   children: React.ReactNode;
   className?: string;
+  headerClassName?: string;
   forceTheme?: 'modern-glass' | 'retro-2000' | 'terminal-hacker' | 'sap-blue' | 'high-tech-red';
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className, forceTheme }) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className, headerClassName, forceTheme }) => {
   const { theme: globalTheme } = useGameStore();
   const theme = forceTheme || globalTheme;
 
@@ -48,12 +49,13 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
       >
         {/* Header */}
         <div className={cn(
-          "flex items-center justify-between px-8 py-4",
-          theme === 'modern-glass' ? "border-b border-white/5 bg-white/5 py-6" : "",
+          "flex items-center justify-between px-8 py-4 transition-colors",
+          theme === 'modern-glass' ? (headerClassName || "border-b border-white/5 bg-white/5 py-6") : "",
           theme === 'retro-2000' ? "bg-gradient-to-r from-[#000080] to-[#1084d0] px-2 py-1 mb-2" : "",
           theme === 'terminal-hacker' ? "border-b border-dashed border-neon-green bg-black" : "",
           theme === 'sap-blue' ? "bg-blue-700 text-white border-b border-blue-800" : "",
-          theme === 'high-tech-red' ? "bg-red-950/50 border-b-2 border-red-600" : ""
+          theme === 'high-tech-red' ? "bg-red-950/50 border-b-2 border-red-600" : "",
+          theme !== 'modern-glass' && headerClassName ? headerClassName : ""
         )}>
           <div className="flex flex-col">
             <h2 className={cn(
@@ -66,7 +68,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
             )}>{title}</h2>
 
             {theme === 'modern-glass' && (
-              <div className="h-1 w-12 bg-neon-purple mt-2 rounded-full shadow-[0_0_10px_rgba(191,0,255,0.8)]" />
+              <div className="h-1 w-12 bg-white mt-2 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.6)]" />
             )}
           </div>
           <button 

@@ -31,11 +31,12 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
       onClose={onClose} 
       title="📬 MailPlus Pro v1.0" 
       className="max-w-5xl"
+      headerClassName="bg-blue-900/60 border-b border-blue-500/30"
     >
       <div className="win95-bg -m-8 p-1 retro-outset font-sans text-black">
         
         {/* Win95 Header (Internal) */}
-        <div className="win95-title-bar mb-1" style={{ background: '#ffffff', color: '#111827' }}>
+        <div className="win95-title-bar mb-1" style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#111827' }}>
           <div className="flex items-center gap-2">
             <Layout size={12} className="text-gray-600" />
             <span className="text-[11px] tracking-tight text-gray-800">MailPlus Pro v1.0 - [Inbox]</span>
@@ -51,7 +52,7 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           <div className="w-44 flex flex-col gap-1">
             <SidebarItem icon={<Inbox size={14} className="text-blue-600" />} label="Entrada" active />
             <SidebarItem icon={<Send size={14} className="text-green-600" />} label="Saída" />
-            <SidebarItem icon={<SquarePen size={14} className="text-purple-600" />} label="ESCREVER" />
+            <SidebarItem icon={<SquarePen size={14} className="text-gray-400" />} label="ESCREVER" />
             
             <div className="flex-1 mt-2 retro-inset bg-white overflow-hidden p-2">
                {/* Decorative white space */}
