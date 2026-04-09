@@ -19,7 +19,7 @@ interface MenuBarProps {
   onOpenConsultoria: () => void;
   onOpenEmail: () => void;
   onOpenFinanceiro?: () => void;
-  onOpenInventario?: () => void;
+  onOpenInventario: () => void;
   onOpenDespesas?: () => void;
   onOpenSettings: () => void;
   onAdvanceTurn: () => void;
@@ -30,6 +30,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
   onOpenCommercial,
   onOpenConsultoria,
   onOpenEmail,
+  onOpenInventario,
   onOpenSettings,
   onAdvanceTurn
 }) => {
@@ -91,7 +92,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         <nav className="hidden md:flex flex-1 items-center justify-center gap-2 lg:gap-4 relative z-10 mx-2">
           <MenuButton icon={<Building2 size={20} />} label="Banco" onClick={onOpenBank} color="green" />
           <MenuButton icon={<PiggyBank size={20} />} label="Financeiro" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<Package size={20} />} label="Inventário" onClick={onOpenCommercial} color="green" />
+          <MenuButton icon={<Package size={20} />} label="Inventário" onClick={onOpenInventario || onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={20} />} label="Melhorias" onClick={onOpenConsultoria} color="green" />
           <MenuButton icon={<Receipt size={20} />} label="Despesas" onClick={onOpenBank} color="green" />
           <MenuButton 
@@ -183,7 +184,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         <nav className="flex items-center justify-around h-full w-full">
           <MenuButton icon={<Building2 size={24} />} label="Banco" onClick={onOpenBank} color="green" />
           <MenuButton icon={<PiggyBank size={24} />} label="Finance" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<Package size={24} />} label="Inv." onClick={onOpenCommercial} color="green" />
+          <MenuButton icon={<Package size={24} />} label="Inv." onClick={onOpenInventario || onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={24} />} label="Up" onClick={onOpenConsultoria} color="green" />
           <MenuButton icon={<Receipt size={24} />} label="Bills" onClick={onOpenBank} color="green" />
           <MenuButton 

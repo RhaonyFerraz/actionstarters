@@ -20,7 +20,16 @@ const initialState: PlayerState = {
   theme: 'modern-glass',
   balance: 50000,
   currentRound: 1,
-  inventory: { skus: 0, machinery: 0, bonusPoints: 0 },
+  inventory: { 
+    skus: 750, 
+    galpao: 5000, 
+    machinery: 8000, 
+    supplies: 800, 
+    rawMaterial: 0, 
+    finishedGoods: 750, 
+    vehicles: 0, 
+    bonusPoints: 0 
+  },
   modulesLevels: {
     commercial: 1,
     financial: 1,

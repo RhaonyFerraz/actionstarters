@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTurn } from '../hooks/useTurn';
 import { BankModal } from '../components/modals/BankModal';
 import { CommercialModal } from '../components/modals/CommercialModal';
+import { InventarioModal } from '../components/modals/InventarioModal';
 import { ConsultoriaModal } from '../components/modals/ConsultoriaModal';
 import { QuizModal } from '../components/modals/QuizModal';
 import { SurpriseModal } from '../components/modals/SurpriseModal';
@@ -18,6 +19,7 @@ export const GameBoard = () => {
 
   const [isBankOpen, setIsBankOpen] = useState(false);
   const [isCommercialOpen, setIsCommercialOpen] = useState(false);
+  const [isInventarioOpen, setIsInventarioOpen] = useState(false);
   const [isConsultoriaOpen, setIsConsultoriaOpen] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isEmailOpen, setIsEmailOpen] = useState(false);
@@ -39,6 +41,7 @@ export const GameBoard = () => {
       <MenuBar 
         onOpenBank={() => setIsBankOpen(true)}
         onOpenCommercial={() => setIsCommercialOpen(true)}
+        onOpenInventario={() => setIsInventarioOpen(true)}
         onOpenConsultoria={() => setIsConsultoriaOpen(true)}
         onOpenEmail={() => setIsEmailOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
@@ -51,6 +54,7 @@ export const GameBoard = () => {
       {/* Modais */}
       <BankModal isOpen={isBankOpen} onClose={() => setIsBankOpen(false)} />
       <CommercialModal isOpen={isCommercialOpen} onClose={() => setIsCommercialOpen(false)} />
+      <InventarioModal isOpen={isInventarioOpen} onClose={() => setIsInventarioOpen(false)} />
       <ConsultoriaModal isOpen={isConsultoriaOpen} onClose={() => setIsConsultoriaOpen(false)} />
       <QuizModal isOpen={isQuizOpen} onClose={() => {
         setIsQuizOpen(false);

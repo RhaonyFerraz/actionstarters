@@ -18,7 +18,12 @@ export interface EmailMessage {
 
 export interface Inventory {
   skus: number;
+  galpao: number;
   machinery: number;
+  supplies: number; // Embalagens
+  rawMaterial: number;
+  finishedGoods: number;
+  vehicles: number;
   bonusPoints: number;
 }
 
