@@ -197,19 +197,21 @@ export const MenuBar: React.FC<MenuBarProps> = ({
       </div>
 
       {/* Floating Strategy Ticker (Visible on all screens) */}
-      <div className={cn(
-        "mt-2 sm:mt-3 flex items-center overflow-hidden max-w-4xl w-full mx-auto animate-in fade-in slide-in-from-top-2 duration-500",
-        theme === 'modern-glass' ? "bg-black/30 backdrop-blur-sm border border-white/5 h-8 rounded-full px-8" : "",
-        theme === 'terminal-hacker' ? "bg-transparent border border-dashed border-neon-green/50 h-6 px-4" : ""
-      )}>
-        <div className="animate-ticker whitespace-nowrap">
-          <span className="text-white font-bold text-[11px] uppercase tracking-[0.4em] flex gap-20 items-center justify-center">
-            <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">ESTRATÉGIA: Infraestrutura avançada aumenta massivamente seu lucro por rodada.</span>
-            <span className={cn(theme === 'terminal-hacker' ? 'text-neon-green' : 'text-neon-cyan', "drop-shadow-[0_0_8px_rgba(0,255,255,0.4)]")}>MERCADO: O preço das SKUs varia conforme seu nível comercial.</span>
-            <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">UPDATE: Novo sistema de gestão SAP ativo.</span>
-          </span>
+      {showTicker && (
+        <div className={cn(
+          "mt-2 sm:mt-3 flex items-center overflow-hidden max-w-4xl w-full mx-auto animate-in fade-in slide-in-from-top-2 duration-500",
+          theme === 'modern-glass' ? "bg-black/30 backdrop-blur-sm border border-white/5 h-8 rounded-full px-8" : "",
+          theme === 'terminal-hacker' ? "bg-transparent border border-dashed border-neon-green/50 h-6 px-4" : ""
+        )}>
+          <div className="animate-ticker whitespace-nowrap">
+            <span className="text-white font-bold text-[11px] uppercase tracking-[0.4em] flex gap-20 items-center justify-center">
+              <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">ESTRATÉGIA: Infraestrutura avançada aumenta massivamente seu lucro por rodada.</span>
+              <span className={cn(theme === 'terminal-hacker' ? 'text-neon-green' : 'text-neon-cyan', "drop-shadow-[0_0_8px_rgba(0,255,255,0.4)]")}>MERCADO: O preço das SKUs varia conforme seu nível comercial.</span>
+              <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">UPDATE: Novo sistema de gestão SAP ativo.</span>
+            </span>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
