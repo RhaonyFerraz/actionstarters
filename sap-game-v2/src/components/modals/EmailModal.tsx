@@ -33,10 +33,10 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
       className="max-w-5xl"
       headerClassName="bg-blue-900/60 border-b border-blue-500/30"
     >
-      <div className="win95-bg -m-8 p-1 retro-outset font-sans text-black">
+      <div className="win95-bg sm:-m-8 p-1 retro-outset font-sans text-black grow flex flex-col overflow-hidden">
         
-        {/* Win95 Header (Internal) */}
-        <div className="win95-title-bar mb-1" style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#111827' }}>
+        {/* Win95 Header (Internal) - Hidden on mobile as the Modal already has a title */}
+        <div className="hidden sm:flex win95-title-bar mb-1" style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#111827' }}>
           <div className="flex items-center gap-2">
             <Layout size={12} className="text-gray-600" />
             <span className="text-[11px] tracking-tight text-gray-800">MailPlus Pro v1.0 - [Inbox]</span>
@@ -46,10 +46,10 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           </button>
         </div>
 
-        <div className="flex h-[60vh] gap-1">
+        <div className="flex-1 flex min-h-0 gap-1 overflow-hidden">
           
-          {/* Sidebar */}
-          <div className="w-44 flex flex-col gap-1">
+          {/* Sidebar - Only visible on LG screens and up */}
+          <div className="hidden lg:flex w-44 flex-col gap-1 shrink-0">
             <SidebarItem icon={<Inbox size={14} className="text-blue-600" />} label="Entrada" active />
             <SidebarItem icon={<Send size={14} className="text-green-600" />} label="Saída" />
             <SidebarItem icon={<SquarePen size={14} className="text-gray-400" />} label="ESCREVER" />
@@ -62,8 +62,8 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           {/* Main Content Area */}
           <div className="flex-1 flex flex-col min-w-0">
             
-            {/* Table Headers */}
-            <div className="flex gap-px bg-gray-400 border-b border-gray-800">
+            {/* Table Headers - Hidden on mobile, visible on lg */}
+            <div className="hidden lg:flex gap-px bg-gray-400 border-b border-gray-800">
               <div className="flex-[3] win95-button rounded-none border-t-white border-l-white justify-start pl-4 font-sans uppercase tracking-tighter text-[9px]">Assunto</div>
               <div className="w-32 win95-button rounded-none border-t-white border-l-white font-sans uppercase tracking-tighter text-[9px]">Data Recebida</div>
             </div>
@@ -82,7 +82,7 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                       <button 
                         key={email.id}
                         onClick={() => handleSelect(email.id)}
-                        className="w-full flex items-center px-4 py-1.5 hover:bg-[#000080] hover:text-white text-left group focus:bg-[#000080] focus:text-white border-b border-gray-50 transition-colors"
+                        className="w-full flex items-center px-4 py-3 sm:py-1.5 hover:bg-[#000080] hover:text-white text-left group focus:bg-[#000080] focus:text-white border-b border-gray-50 transition-colors"
                       >
                         <div className="flex-[3] flex items-center gap-3 min-w-0">
                           {email.read ? 
@@ -104,7 +104,7 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                   )}
                 </div>
               ) : (
-                <div className="p-6 flex flex-col h-full overflow-hidden animate-in fade-in slide-in-from-right-2 duration-200">
+                <div className="p-4 sm:p-6 flex flex-col h-full overflow-hidden animate-in fade-in slide-in-from-right-2 duration-200">
                   <div className="mb-4 pb-4 border-b border-dashed border-gray-300">
                     <button 
                       onClick={() => setSelectedEmailId(null)}
@@ -114,12 +114,12 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                       VOLTAR PARA LISTA
                     </button>
                     <h2 className="text-xl font-bold text-gray-900 leading-tight mb-2 tracking-tight">{selectedEmail.subject}</h2>
-                    <div className="flex items-center gap-3 text-[10px] text-gray-500 uppercase tracking-widest font-sans">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[10px] text-gray-500 uppercase tracking-widest font-sans">
                       <span className="bg-gray-100 px-2 py-0.5 rounded border border-gray-200">De: {selectedEmail.sender}</span>
                       <span className="flex items-center gap-1"><Circle size={6} className="fill-blue-500 text-blue-500" /> Round: {selectedEmail.timestampRound}</span>
                     </div>
                   </div>
-                  <div className="flex-1 overflow-y-auto text-gray-800 text-[13px] font-sans leading-relaxed whitespace-pre-wrap selection:bg-[#000080] selection:text-white pr-4">
+                  <div className="flex-1 overflow-y-auto text-gray-800 text-[15px] sm:text-[13px] font-sans leading-relaxed whitespace-pre-wrap selection:bg-[#000080] selection:text-white pr-4">
                     {selectedEmail.content}
                   </div>
                 </div>
@@ -128,17 +128,17 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           </div>
         </div>
 
-        {/* Footer Status Bar */}
-        <div className="mt-1 grid grid-cols-4 gap-1 h-6">
-          <div className="col-span-3 retro-inset px-3 flex items-center gap-2 bg-[#c0c0c0]">
+        {/* Footer Status Bar - Stacked on mobile, grid on sm */}
+        <div className="mt-1 flex flex-col sm:grid sm:grid-cols-4 gap-1 shrink-0">
+          <div className="hidden xs:flex sm:col-span-3 retro-inset px-3 h-8 sm:h-6 items-center gap-2 bg-[#c0c0c0]">
             <div className="w-2.5 h-2.5 rounded-full bg-green-500 border border-black/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]" />
-            <span className="text-[10px] font-sans font-bold text-gray-600">Sistema Online: <span className="text-green-700">MODO OPERAÇÃO</span></span>
+            <span className="text-[10px] font-sans font-bold text-gray-600 truncate">Sistema Online: <span className="text-green-700 uppercase">Operação</span></span>
           </div>
           <button 
             onClick={onClose}
-            className="win95-button text-red-700 font-black"
+            className="win95-button text-red-700 font-black h-10 sm:h-6 text-xs sm:text-[10px]"
           >
-            TERMINAR
+            FECHAR JANELA
           </button>
         </div>
 
