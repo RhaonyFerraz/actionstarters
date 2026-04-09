@@ -42,14 +42,14 @@ export const MenuBar: React.FC<MenuBarProps> = ({
       "w-full fixed z-50 flex flex-col items-center px-1 sm:px-6 transition-all duration-300",
       theme === 'retro-2000' ? "top-0 px-0" : "top-2 sm:top-6"
     )}>
-      {/* Floating Modern Bar / Retro Toolbar */}
+      {/* MAIN TOP BAR (Responsive) */}
       <div className={cn(
         "w-full max-w-6xl flex items-center justify-between relative overflow-hidden group transition-all duration-300",
-        theme === 'modern-glass' ? "glass-panel h-16 sm:h-20 rounded-xl sm:rounded-2xl px-2 sm:px-8 border-b-2 border-neon-green/20" : "",
+        theme === 'modern-glass' ? "glass-panel h-14 sm:h-20 rounded-xl sm:rounded-2xl px-2 sm:px-8 border-b-2 border-neon-green/20" : "",
         theme === 'retro-2000' ? "bg-[#c0c0c0] border-b-2 border-b-[#808080] h-10 px-1 shadow-md max-w-full rounded-none" : "",
-        theme === 'terminal-hacker' ? "bg-black border border-neon-green h-14 rounded-sm px-2 sm:px-6" : "",
-        theme === 'sap-blue' ? "bg-blue-800 h-14 rounded-lg sm:rounded-xl px-2 sm:px-8 shadow-lg border-b border-blue-600" : "",
-        theme === 'high-tech-red' ? "bg-black border-2 border-red-600 h-14 rounded-none px-2 sm:px-6 shadow-[0_0_20px_rgba(220,38,38,0.3)]" : ""
+        theme === 'terminal-hacker' ? "bg-black border border-neon-green h-12 sm:h-14 rounded-sm px-2 sm:px-6" : "",
+        theme === 'sap-blue' ? "bg-blue-800 h-12 sm:h-14 rounded-lg sm:rounded-xl px-2 sm:px-8 shadow-lg border-b border-blue-600" : "",
+        theme === 'high-tech-red' ? "bg-black border-2 border-red-600 h-12 sm:h-14 rounded-none px-2 sm:px-6 shadow-[0_0_20px_rgba(220,38,38,0.3)]" : ""
       )}>
         {/* Vibrant Green Background Glow (Glass only) */}
         {theme === 'modern-glass' && (
@@ -70,25 +70,25 @@ export const MenuBar: React.FC<MenuBarProps> = ({
             theme === 'high-tech-red' ? "bg-red-950/40 border border-red-500 px-3 sm:px-6 py-1 sm:py-2 shadow-[inset_0_0_10px_rgba(220,38,38,0.3)]" : ""
           )}>
             <span className={cn(
-              "uppercase font-bold tracking-widest hidden md:block",
+              "uppercase font-bold tracking-widest hidden lg:block",
               theme === 'modern-glass' ? "text-[10px] text-gray-400 mb-0.5" : "",
               theme === 'sap-blue' ? "text-[9px] text-blue-300 mb-0.5" : ""
             )}>Disponível</span>
             <span className={cn(
               "font-digital tracking-tighter truncate",
-              theme === 'modern-glass' ? "text-neon-green text-lg sm:text-2xl drop-shadow-[0_0_10px_rgba(56,211,26,0.6)]" : "",
+              theme === 'modern-glass' ? "text-neon-green text-base sm:text-2xl drop-shadow-[0_0_10px_rgba(56,211,26,0.6)]" : "",
               theme === 'retro-2000' ? "text-neon-green text-sm sm:text-lg drop-shadow-[0_0_3px_rgba(56,211,26,0.5)]" : "",
-              theme === 'terminal-hacker' ? "text-neon-green text-base sm:text-xl" : "",
-              theme === 'sap-blue' ? "text-white text-base sm:text-xl font-sans font-bold tracking-normal" : "",
-              theme === 'high-tech-red' ? "text-red-500 text-lg sm:text-2xl drop-shadow-[0_0_5px_rgba(220,38,38,0.8)]" : ""
+              theme === 'terminal-hacker' ? "text-neon-green text-sm sm:text-xl" : "",
+              theme === 'sap-blue' ? "text-white text-sm sm:text-xl font-sans font-bold tracking-normal" : "",
+              theme === 'high-tech-red' ? "text-red-500 text-base sm:text-2xl drop-shadow-[0_0_5px_rgba(220,38,38,0.8)]" : ""
             )}>
               $ {balance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
             </span>
           </div>
         </div>
 
-        {/* Center: Navigation (Modern Icons) */}
-        <nav className="flex-1 flex items-center justify-start md:justify-center gap-2 sm:gap-4 relative z-10 overflow-x-auto no-scrollbar mx-1 sm:mx-2 py-1">
+        {/* Center: Navigation (Visible only on Desktop/Tablet md+) */}
+        <nav className="hidden md:flex flex-1 items-center justify-center gap-2 lg:gap-4 relative z-10 mx-2">
           <MenuButton icon={<Building2 size={20} />} label="Banco" onClick={onOpenBank} color="green" />
           <MenuButton icon={<PiggyBank size={20} />} label="Financeiro" onClick={onOpenBank} color="green" />
           <MenuButton icon={<Package size={20} />} label="Inventário" onClick={onOpenCommercial} color="green" />
@@ -104,8 +104,8 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         </nav>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-2 md:gap-4 relative z-10">
-          <div className="flex items-center border-r border-white/5 pr-2 md:pr-4 mr-0 md:mr-2 gap-2">
+        <div className="flex items-center gap-2 sm:gap-4 relative z-10">
+          <div className="hidden sm:flex items-center border-r border-white/5 pr-2 md:pr-4 mr-1 md:mr-2 gap-2">
             <button 
               onClick={() => setShowTicker(!showTicker)}
               className={cn(
@@ -118,7 +118,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
               )}
               title={showTicker ? "Ocultar Letreiro" : "Mostrar Letreiro"}
             >
-              {showTicker ? <EyeOff size={theme === 'modern-glass' || theme === 'sap-blue' ? 20 : 16} /> : <Eye size={theme === 'modern-glass' || theme === 'sap-blue' ? 20 : 16} />}
+              {showTicker ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
 
             <button 
@@ -133,7 +133,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
               )}
               title="Configurações (Temas)"
             >
-              <Settings size={theme === 'modern-glass' || theme === 'sap-blue' ? 20 : 16} />
+              <Settings size={18} />
             </button>
           </div>
           
@@ -162,19 +162,43 @@ export const MenuBar: React.FC<MenuBarProps> = ({
               theme === 'sap-blue' ? "tracking-wider text-[9px] sm:text-xs font-sans" : "",
               theme === 'high-tech-red' ? "tracking-widest text-[10px] sm:text-sm font-digital" : ""
             )}>
-              <span className="hidden md:inline">
+              <span className="hidden sm:inline">
                 {theme === 'retro-2000' ? `START/R${currentRound}` : `Rodada ${currentRound}`}
               </span>
-              <span className="md:hidden">R{currentRound}</span>
+              <span className="sm:hidden">R{currentRound}</span>
             </span>
           </button>
         </div>
       </div>
 
-      {/* Floating Strategy Ticker - Hide on retro for cleaner look, show differently on terminal */}
-      {theme !== 'retro-2000' && showTicker && (
+      {/* MOBILE BOTTOM NAVIGATION (Visible only on < md) */}
       <div className={cn(
-        "mt-3 flex items-center overflow-hidden max-w-4xl w-full mx-auto animate-in fade-in slide-in-from-top-2 duration-500",
+        "md:hidden fixed bottom-0 left-0 w-full z-50 transition-all duration-300 pb-safe",
+        theme === 'modern-glass' ? "glass-panel h-20 rounded-t-3xl border-t border-white/10 px-4" : "",
+        theme === 'retro-2000' ? "bg-[#c0c0c0] border-t-2 border-t-white h-16 px-2 flex items-center" : "",
+        theme === 'terminal-hacker' ? "bg-black border-t border-neon-green h-16 px-4" : "",
+        theme === 'sap-blue' ? "bg-blue-800 h-16 rounded-t-xl px-4 border-t border-blue-600" : "",
+        theme === 'high-tech-red' ? "bg-black border-t-2 border-red-600 h-16 px-4 shadow-[0_-5px_20px_rgba(220,38,38,0.3)]" : ""
+      )}>
+        <nav className="flex items-center justify-around h-full w-full">
+          <MenuButton icon={<Building2 size={24} />} label="Banco" onClick={onOpenBank} color="green" />
+          <MenuButton icon={<PiggyBank size={24} />} label="Finance" onClick={onOpenBank} color="green" />
+          <MenuButton icon={<Package size={24} />} label="Inv." onClick={onOpenCommercial} color="green" />
+          <MenuButton icon={<Zap size={24} />} label="Up" onClick={onOpenConsultoria} color="green" />
+          <MenuButton icon={<Receipt size={24} />} label="Bills" onClick={onOpenBank} color="green" />
+          <MenuButton 
+            icon={<Mail size={24} />} 
+            label="E-mail" 
+            onClick={onOpenEmail} 
+            badge={unreadEmails > 0 ? unreadEmails : undefined} 
+            color="green"
+          />
+        </nav>
+      </div>
+
+      {/* Floating Strategy Ticker (Desktop only for better view) */}
+      <div className={cn(
+        "mt-3 hidden md:flex items-center overflow-hidden max-w-4xl w-full mx-auto animate-in fade-in slide-in-from-top-2 duration-500",
         theme === 'modern-glass' ? "bg-black/30 backdrop-blur-sm border border-white/5 h-8 rounded-full px-8" : "",
         theme === 'terminal-hacker' ? "bg-transparent border border-dashed border-neon-green/50 h-6 px-4" : ""
       )}>
@@ -186,7 +210,6 @@ export const MenuBar: React.FC<MenuBarProps> = ({
           </span>
         </div>
       </div>
-      )}
     </div>
   );
 };

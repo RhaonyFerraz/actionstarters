@@ -108,6 +108,7 @@
 @layer base {
   body {
     @apply bg-[#121212] text-gray-300 antialiased transition-colors duration-500 overflow-x-hidden;
+    @apply pb-28 md:pb-0; /* Espaço para o Menu Inferior no Mobile */
     font-family: 'Inter', system-ui, sans-serif;
   }
   .font-digital {
