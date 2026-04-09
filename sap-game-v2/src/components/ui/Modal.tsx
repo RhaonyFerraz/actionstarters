@@ -59,9 +59,9 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
         )}>
           <div className="flex flex-col">
             <h2 className={cn(
-              "text-2xl font-bold tracking-tight uppercase leading-none truncate",
-              theme === 'modern-glass' ? "font-digital text-white" : "",
-              theme === 'retro-2000' ? "text-base font-sans font-bold text-white tracking-normal" : "",
+              "text-3xl font-extrabold tracking-tight uppercase leading-none truncate",
+              theme === 'modern-glass' ? "text-white" : "",
+              theme === 'retro-2000' ? "text-base font-sans font-bold text-white tracking-normal uppercase" : "",
               theme === 'terminal-hacker' ? "font-digital text-neon-green shadow-none text-xl" : "",
               theme === 'sap-blue' ? "font-sans font-semibold text-xl tracking-normal" : "",
               theme === 'high-tech-red' ? "font-digital text-red-500 shadow-[0_0_10px_rgba(220,38,38,0.8)]" : ""
@@ -89,6 +89,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
         {/* Content (Scrollable) */}
         <div className={cn(
           "flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar",
+          theme === 'modern-glass' ? "bg-gradient-to-b from-white/[0.02] to-transparent" : "",
           theme === 'retro-2000' ? "retro-inset bg-white p-6 m-1 text-black" : "",
           theme === 'terminal-hacker' ? "bg-black text-neon-green p-6" : "",
           theme === 'sap-blue' ? "bg-[#f4f4f4] text-gray-800 p-6 font-sans" : "",

@@ -52,56 +52,62 @@ export const ConsultoriaModal: React.FC<{ isOpen: boolean; onClose: () => void }
             const maxLvl = 10;
 
             return (
-              <div key={dep.id} className="bg-[#1a1a1a] border border-white/5 rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:bg-[#222] transition-colors group">
+              <div key={dep.id} className="glass-card rounded-3xl p-6 flex flex-col justify-between space-y-6 hover:scale-[1.01] active:scale-[0.99] group">
                 
-                <div className="flex gap-4">
+                <div className="flex gap-5">
                   {/* Icon Container linked to department color */}
-                  <div className={`p-4 bg-white/5 rounded-2xl border border-white/10 ${dep.color}`}>
+                  <div className={cn(
+                    "p-4 rounded-2xl border transition-all duration-500",
+                    "bg-white/5 border-white/10 group-hover:bg-white/10",
+                    dep.color
+                  )}>
                     <dep.icon size={28} />
                   </div>
                   
                   <div className="flex-1">
-                    <div className="flex justify-between items-center mb-1">
-                      <h3 className="font-bold text-white text-lg tracking-tight">{dep.name}</h3>
-                      <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Nível: {currentLvl}</span>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <h3 className="font-extrabold text-white text-lg tracking-tight">{dep.name}</h3>
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">Nível: {currentLvl}</span>
                     </div>
                     
-                    <p className="text-[10px] text-gray-500 leading-relaxed font-sans mb-4">
+                    <p className="text-[11px] text-gray-400 leading-relaxed font-sans mb-5 italic opacity-80">
                       {dep.desc}
                     </p>
 
-                    {/* Progress Dots (10 units) */}
-                    <div className="flex gap-1.5 h-3">
+                    {/* Progress Dots (10 units) with Bloom Effect */}
+                    <div className="flex gap-2 h-2.5">
                       {Array.from({ length: maxLvl }).map((_, i) => (
                         <div 
                           key={i} 
-                          className={`flex-1 rounded-sm border border-white/5 transition-colors ${
+                          className={cn(
+                            "flex-1 rounded-[1px] transition-all duration-700",
                             i < currentLvl 
-                              ? (dep.color.replace('text-', 'bg-') + '/40 border-' + dep.color.replace('text-', '')) 
-                              : 'bg-black/20'
-                          }`}
+                              ? (dep.color.replace('text-', 'bg-') + " shadow-[0_0_12px_rgba(255,255,255,0.2)] " + dep.color.replace('text-', 'shadow-'))
+                              : "bg-white/[0.03] border border-white/[0.05]"
+                          )}
+                          style={i < currentLvl ? { boxShadow: `0 0 10px currentColor` } : {}}
                         />
                       ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Purple Action Button */}
+                {/* Premium Gradient Button */}
                 <button 
                   onClick={() => handleUpgrade(dep.id)}
                   disabled={!canAfford || currentLvl >= maxLvl}
                   className={cn(
-                    "w-full py-3.5 rounded-2xl font-black uppercase tracking-[0.2em] text-xs transition-all",
+                    "w-full py-4 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] transition-all duration-500",
                     currentLvl >= maxLvl 
-                      ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                      ? "bg-white/5 text-gray-600 cursor-not-allowed border border-white/5"
                       : canAfford 
-                        ? "bg-purple-600 hover:bg-purple-500 text-white shadow-[0_4px_15px_rgba(147,51,234,0.3)] active:scale-95" 
-                        : "bg-white/5 text-gray-600 border border-white/5 cursor-not-allowed"
+                        ? "bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-500 hover:to-indigo-600 text-white shadow-[0_10px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_15px_30px_rgba(147,51,234,0.2)] active:scale-95" 
+                        : "bg-white/5 text-gray-500 border border-white/5 cursor-not-allowed"
                   )}
                 >
                   {currentLvl >= maxLvl 
-                    ? "NÍVEL MÁXIMO" 
-                    : `Melhorar (${formatCurrency(cost)})`
+                    ? "UNIDADE MÁXIMA ALCANÇADA" 
+                    : `INVESTIR ${formatCurrency(cost)}`
                   }
                 </button>
               </div>
