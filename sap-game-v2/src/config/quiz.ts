@@ -126,7 +126,7 @@ Always have:
 1 test company (sandbox)
 1 production company (real)
 ℹ️ This prevents breaking the live system.`,
-    imageUrl: '/quiz/q1.png'
+    imageUrl: `${import.meta.env.BASE_URL}quiz/q1.png`
   },
   {
     id: 'q2',

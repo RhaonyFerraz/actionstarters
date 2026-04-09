@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useGameStore } from '../../store/useGameStore';
 import { cn } from '../ui/Button';
 
-const IMAGES = Array.from({ length: 11 }, (_, i) => `/cenario1/${String(i + 1).padStart(2, '0')}.png`);
+const IMAGES = Array.from({ length: 11 }, (_, i) => `${import.meta.env.BASE_URL}cenario1/${String(i + 1).padStart(2, '0')}.png`);
 
 export const BackgroundCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
