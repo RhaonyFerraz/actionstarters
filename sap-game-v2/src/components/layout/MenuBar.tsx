@@ -38,15 +38,18 @@ export const MenuBar: React.FC<MenuBarProps> = ({
   const [showTicker, setShowTicker] = useState(true);
 
   return (
-    <div className={`w-full fixed top-6 left-0 z-50 flex flex-col items-center px-6 ${theme === 'retro-2000' ? 'top-0 px-0' : ''}`}>
+    <div className={cn(
+      "w-full fixed z-50 flex flex-col items-center px-1 sm:px-6 transition-all duration-300",
+      theme === 'retro-2000' ? "top-0 px-0" : "top-2 sm:top-6"
+    )}>
       {/* Floating Modern Bar / Retro Toolbar */}
       <div className={cn(
         "w-full max-w-6xl flex items-center justify-between relative overflow-hidden group transition-all duration-300",
-        theme === 'modern-glass' ? "glass-panel h-20 rounded-2xl px-8 border-b-2 border-neon-green/20" : "",
-        theme === 'retro-2000' ? "bg-[#c0c0c0] border-b-2 border-b-[#808080] h-12 px-2 shadow-md max-w-full rounded-none" : "",
-        theme === 'terminal-hacker' ? "bg-black border border-neon-green h-16 rounded-sm px-6" : "",
-        theme === 'sap-blue' ? "bg-blue-800 h-16 rounded-xl px-8 shadow-lg border-b border-blue-600" : "",
-        theme === 'high-tech-red' ? "bg-black border-2 border-red-600 h-16 rounded-none px-6 shadow-[0_0_20px_rgba(220,38,38,0.3)]" : ""
+        theme === 'modern-glass' ? "glass-panel h-16 sm:h-20 rounded-xl sm:rounded-2xl px-2 sm:px-8 border-b-2 border-neon-green/20" : "",
+        theme === 'retro-2000' ? "bg-[#c0c0c0] border-b-2 border-b-[#808080] h-10 px-1 shadow-md max-w-full rounded-none" : "",
+        theme === 'terminal-hacker' ? "bg-black border border-neon-green h-14 rounded-sm px-2 sm:px-6" : "",
+        theme === 'sap-blue' ? "bg-blue-800 h-14 rounded-lg sm:rounded-xl px-2 sm:px-8 shadow-lg border-b border-blue-600" : "",
+        theme === 'high-tech-red' ? "bg-black border-2 border-red-600 h-14 rounded-none px-2 sm:px-6 shadow-[0_0_20px_rgba(220,38,38,0.3)]" : ""
       )}>
         {/* Vibrant Green Background Glow (Glass only) */}
         {theme === 'modern-glass' && (
@@ -57,28 +60,27 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         )}
         
         {/* Left: Balance */}
-        <div className="flex items-center gap-4 relative z-10">
+        <div className="flex items-center gap-2 sm:gap-4 relative z-10">
           <div className={cn(
-            "flex flex-col items-start justify-center",
-            theme === 'modern-glass' ? "bg-white/5 border border-white/10 rounded-xl px-6 py-2.5 modern-shadow" : "",
-            theme === 'retro-2000' ? "bg-black retro-inset px-4 py-1 flex-row items-center gap-2 h-8" : "",
-            theme === 'terminal-hacker' ? "bg-black border border-dashed border-neon-green px-4 py-2" : "",
-            theme === 'sap-blue' ? "bg-blue-900/50 rounded-lg px-4 py-1.5 border border-blue-700" : "",
-            theme === 'high-tech-red' ? "bg-red-950/40 border border-red-500 px-6 py-2 shadow-[inset_0_0_10px_rgba(220,38,38,0.3)]" : ""
+            "flex flex-col items-start justify-center transition-all",
+            theme === 'modern-glass' ? "bg-white/5 border border-white/10 rounded-lg sm:rounded-xl px-2 sm:px-6 py-1 sm:py-2.5 modern-shadow" : "",
+            theme === 'retro-2000' ? "bg-black retro-inset px-2 sm:px-4 py-0.5 sm:py-1 flex-row items-center gap-1 sm:gap-2 h-7 sm:h-8" : "",
+            theme === 'terminal-hacker' ? "bg-black border border-dashed border-neon-green px-3 py-1 sm:py-2" : "",
+            theme === 'sap-blue' ? "bg-blue-900/50 rounded-lg px-2 sm:px-4 py-1 sm:py-1.5 border border-blue-700" : "",
+            theme === 'high-tech-red' ? "bg-red-950/40 border border-red-500 px-3 sm:px-6 py-1 sm:py-2 shadow-[inset_0_0_10px_rgba(220,38,38,0.3)]" : ""
           )}>
             <span className={cn(
-              "uppercase font-bold tracking-widest",
+              "uppercase font-bold tracking-widest hidden md:block",
               theme === 'modern-glass' ? "text-[10px] text-gray-400 mb-0.5" : "",
-              theme === 'retro-2000' || theme === 'terminal-hacker' || theme === 'high-tech-red' ? "hidden" : "",
               theme === 'sap-blue' ? "text-[9px] text-blue-300 mb-0.5" : ""
             )}>Disponível</span>
             <span className={cn(
-              "font-digital tracking-tighter",
-              theme === 'modern-glass' ? "text-neon-green text-2xl drop-shadow-[0_0_10px_rgba(56,211,26,0.6)]" : "",
-              theme === 'retro-2000' ? "text-neon-green text-lg drop-shadow-[0_0_3px_rgba(56,211,26,0.5)]" : "",
-              theme === 'terminal-hacker' ? "text-neon-green text-xl" : "",
-              theme === 'sap-blue' ? "text-white text-xl font-sans font-bold tracking-normal" : "",
-              theme === 'high-tech-red' ? "text-red-500 text-2xl drop-shadow-[0_0_5px_rgba(220,38,38,0.8)]" : ""
+              "font-digital tracking-tighter truncate",
+              theme === 'modern-glass' ? "text-neon-green text-lg sm:text-2xl drop-shadow-[0_0_10px_rgba(56,211,26,0.6)]" : "",
+              theme === 'retro-2000' ? "text-neon-green text-sm sm:text-lg drop-shadow-[0_0_3px_rgba(56,211,26,0.5)]" : "",
+              theme === 'terminal-hacker' ? "text-neon-green text-base sm:text-xl" : "",
+              theme === 'sap-blue' ? "text-white text-base sm:text-xl font-sans font-bold tracking-normal" : "",
+              theme === 'high-tech-red' ? "text-red-500 text-lg sm:text-2xl drop-shadow-[0_0_5px_rgba(220,38,38,0.8)]" : ""
             )}>
               $ {balance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
             </span>
@@ -86,14 +88,14 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         </div>
 
         {/* Center: Navigation (Modern Icons) */}
-        <nav className="flex items-center gap-2 relative z-10">
-          <MenuButton icon={<Building2 size={22} />} label="Banco" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<PiggyBank size={22} />} label="Financeiro" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<Package size={22} />} label="Inventário" onClick={onOpenCommercial} color="green" />
-          <MenuButton icon={<Zap size={22} />} label="Melhorias" onClick={onOpenConsultoria} color="green" />
-          <MenuButton icon={<Receipt size={22} />} label="Despesas" onClick={onOpenBank} color="green" />
+        <nav className="flex-1 flex items-center justify-start md:justify-center gap-2 sm:gap-4 relative z-10 overflow-x-auto no-scrollbar mx-1 sm:mx-2 py-1">
+          <MenuButton icon={<Building2 size={20} />} label="Banco" onClick={onOpenBank} color="green" />
+          <MenuButton icon={<PiggyBank size={20} />} label="Financeiro" onClick={onOpenBank} color="green" />
+          <MenuButton icon={<Package size={20} />} label="Inventário" onClick={onOpenCommercial} color="green" />
+          <MenuButton icon={<Zap size={20} />} label="Melhorias" onClick={onOpenConsultoria} color="green" />
+          <MenuButton icon={<Receipt size={20} />} label="Despesas" onClick={onOpenBank} color="green" />
           <MenuButton 
-            icon={<Mail size={22} />} 
+            icon={<Mail size={20} />} 
             label="E-mail" 
             onClick={onOpenEmail} 
             badge={unreadEmails > 0 ? unreadEmails : undefined} 
@@ -138,15 +140,15 @@ export const MenuBar: React.FC<MenuBarProps> = ({
           <button 
             onClick={onAdvanceTurn}
             className={cn(
-              "flex items-center gap-2 group transition-all duration-300",
-              theme === 'modern-glass' ? "bg-white text-black rounded-xl px-8 py-3 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]" : "",
-              theme === 'retro-2000' ? "bg-[#c0c0c0] retro-outset active:retro-inset px-4 h-8" : "",
-              theme === 'terminal-hacker' ? "bg-black border border-neon-green text-neon-green px-6 py-2 hover:bg-neon-green hover:text-black" : "",
-              theme === 'sap-blue' ? "bg-blue-600 text-white rounded-lg px-6 py-2 hover:bg-blue-500 active:scale-95 shadow-md" : "",
-              theme === 'high-tech-red' ? "bg-red-700 text-white border border-red-500 px-8 py-2 active:scale-95 hover:bg-red-600 shadow-[0_0_15px_rgba(220,38,38,0.5)]" : ""
+              "flex items-center gap-2 group transition-all duration-300 shrink-0",
+              theme === 'modern-glass' ? "bg-white text-black rounded-lg sm:rounded-xl px-3 sm:px-8 py-2 sm:py-3 hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]" : "",
+              theme === 'retro-2000' ? "bg-[#c0c0c0] retro-outset active:retro-inset px-2 h-7 sm:h-8" : "",
+              theme === 'terminal-hacker' ? "bg-black border border-neon-green text-neon-green px-3 sm:px-6 py-1.5 sm:py-2 hover:bg-neon-green hover:text-black" : "",
+              theme === 'sap-blue' ? "bg-blue-600 text-white rounded-lg px-3 sm:px-6 py-1.5 sm:py-2 hover:bg-blue-500 active:scale-95 shadow-md" : "",
+              theme === 'high-tech-red' ? "bg-red-700 text-white border border-red-500 px-3 sm:px-8 py-1.5 sm:py-2 active:scale-95 hover:bg-red-600 shadow-[0_0_15px_rgba(220,38,38,0.5)]" : ""
             )}
           >
-            <Play size={16} className={cn(
+            <Play size={14} className={cn(
               "group-hover:translate-x-0.5 transition-transform",
               theme === 'modern-glass' || theme === 'sap-blue' || theme === 'high-tech-red' ? "fill-white" : "",
               theme === 'retro-2000' ? "text-black fill-black" : "",
@@ -154,13 +156,16 @@ export const MenuBar: React.FC<MenuBarProps> = ({
             )} />
             <span className={cn(
               "font-bold uppercase",
-              theme === 'modern-glass' ? "tracking-[0.2em] text-xs" : "",
-              theme === 'retro-2000' ? "tracking-widest text-[10px] text-black" : "",
-              theme === 'terminal-hacker' ? "tracking-[0.3em] text-xs" : "",
-              theme === 'sap-blue' ? "tracking-wider text-xs font-sans" : "",
-              theme === 'high-tech-red' ? "tracking-widest text-sm font-digital" : ""
+              theme === 'modern-glass' ? "tracking-widest text-[9px] sm:text-xs" : "",
+              theme === 'retro-2000' ? "tracking-widest text-[8px] sm:text-[10px] text-black" : "",
+              theme === 'terminal-hacker' ? "tracking-wider text-[9px] sm:text-xs" : "",
+              theme === 'sap-blue' ? "tracking-wider text-[9px] sm:text-xs font-sans" : "",
+              theme === 'high-tech-red' ? "tracking-widest text-[10px] sm:text-sm font-digital" : ""
             )}>
-              {theme === 'retro-2000' ? `START/${currentRound}` : `Iniciar Rodada ${currentRound}`}
+              <span className="hidden md:inline">
+                {theme === 'retro-2000' ? `START/R${currentRound}` : `Rodada ${currentRound}`}
+              </span>
+              <span className="md:hidden">R{currentRound}</span>
             </span>
           </button>
         </div>
@@ -204,12 +209,12 @@ const MenuButton: React.FC<MenuButtonProps> = ({ icon, label, onClick, badge, co
     <button 
       onClick={onClick}
       className={cn(
-        "flex flex-col items-center justify-center transition-all relative group focus:outline-none",
-        theme === 'modern-glass' ? "min-w-[80px] h-14 rounded-xl duration-300 active:scale-90" : "",
-        theme === 'retro-2000' ? "gap-2 px-3 h-8 border border-transparent active:retro-inset flex-row" : "",
-        theme === 'terminal-hacker' ? "min-w-[80px] h-12 border border-transparent" : "",
-        theme === 'sap-blue' ? "min-w-[70px] h-12 rounded-lg active:bg-blue-600 mt-1" : "",
-        theme === 'high-tech-red' ? "min-w-[80px] h-12 border border-transparent" : ""
+        "flex flex-col items-center justify-center transition-all relative group focus:outline-none shrink-0",
+        theme === 'modern-glass' ? "min-w-[48px] sm:min-w-[80px] h-10 sm:h-14 rounded-lg sm:rounded-xl duration-300 active:scale-90" : "",
+        theme === 'retro-2000' ? "gap-1 sm:gap-2 px-1 sm:px-3 h-7 sm:h-8 border border-transparent active:retro-inset flex-row" : "",
+        theme === 'terminal-hacker' ? "min-w-[48px] sm:min-w-[80px] h-10 sm:h-12 border border-transparent" : "",
+        theme === 'sap-blue' ? "min-w-[48px] sm:min-w-[70px] h-10 sm:h-12 rounded-lg active:bg-blue-600 mt-0 sm:mt-1" : "",
+        theme === 'high-tech-red' ? "min-w-[48px] sm:min-w-[80px] h-10 sm:h-12 border border-transparent" : ""
       )}
     >
       <div className={cn(
@@ -228,7 +233,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ icon, label, onClick, badge, co
         {icon}
       </div>
       <span className={cn(
-        "uppercase font-bold tracking-widest transition-colors",
+        "uppercase font-bold tracking-widest transition-colors hidden md:block",
         theme === 'modern-glass' ? cn(
           "text-[9px] mt-1 transition-all duration-300",
           "text-gray-500 group-hover:text-white",

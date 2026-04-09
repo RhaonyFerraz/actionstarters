@@ -62,15 +62,15 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-sap-dark flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md animate-in slide-in-from-bottom-4 fade-in duration-300">
+    <div className="min-h-screen bg-sap-dark flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+      <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md animate-in slide-in-from-bottom-4 fade-in duration-300 my-4">
         
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-50 text-sap-blue rounded-full mb-4">
             <Briefcase size={32} />
           </div>
-          <h1 className="text-3xl font-extrabold text-sap-dark">SAP Board Game</h1>
-          <p className="text-gray-500 mt-2 text-sm">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-sap-dark">SAP Board Game</h1>
+          <p className="text-gray-500 mt-2 text-xs sm:text-sm">
             Simulação de Gestão Empresarial V2
           </p>
         </div>
@@ -84,7 +84,7 @@ export const Login: React.FC = () => {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-tight">E-mail Corporativo</label>
+              <label className="block text-xs sm:text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-tight">E-mail Corporativo</label>
               <input 
                 type="email" 
                 required={!isLoading}
@@ -96,7 +96,7 @@ export const Login: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-tight">Senha de Acesso</label>
+              <label className="block text-xs sm:text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-tight">Senha de Acesso</label>
               <input 
                 type="password" 
                 required={!isLoading}
@@ -115,7 +115,7 @@ export const Login: React.FC = () => {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-100"></div>
             </div>
-            <div className="relative flex justify-center text-[9px] uppercase font-bold text-gray-400">
+            <div className="relative flex justify-center text-[10px] sm:text-[9px] uppercase font-bold text-gray-400">
               <span className="px-2 bg-white">Alternativas</span>
             </div>
           </div>
@@ -125,7 +125,7 @@ export const Login: React.FC = () => {
               type="button"
               onClick={handleGitHubLogin}
               disabled={isLoading}
-              className="h-10 bg-[#24292F] hover:bg-[#24292F]/90 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-2 transition-all shadow-sm disabled:opacity-50"
+              className="h-11 sm:h-10 bg-[#24292F] hover:bg-[#24292F]/90 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-2 transition-all shadow-sm disabled:opacity-50"
             >
               <Github size={16} />
               GitHub
@@ -138,7 +138,7 @@ export const Login: React.FC = () => {
                 navigate('/');
               }}
               disabled={isLoading}
-              className="h-10 bg-sap-blue hover:bg-sap-blue/90 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95"
+              className="h-11 sm:h-10 bg-sap-blue hover:bg-sap-blue/90 text-white rounded-lg font-bold text-[11px] flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95"
             >
               Modo Demo
             </button>
@@ -148,7 +148,7 @@ export const Login: React.FC = () => {
             <button 
               type="button" 
               onClick={() => setIsLoginFlow(!isLoginFlow)}
-              className="text-[10px] text-gray-500 hover:text-sap-blue font-bold uppercase underline underline-offset-4 transition-colors"
+              className="text-xs sm:text-[10px] text-gray-500 hover:text-sap-blue font-bold uppercase underline underline-offset-4 transition-colors"
             >
               {isLoginFlow ? 'Cadastre sua Empresa (CEO)' : 'Já possui acesso? Clique aqui'}
             </button>
