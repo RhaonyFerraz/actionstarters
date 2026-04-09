@@ -37,7 +37,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
     )}>
       <div 
         className={cn(
-          "w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]", 
+          "w-full max-w-[95vw] sm:max-w-2xl overflow-hidden flex flex-col max-h-[90vh]", 
           theme === 'modern-glass' ? "glass-panel rounded-3xl modern-shadow border-white/5" : "",
           theme === 'retro-2000' ? "bg-[#c0c0c0] retro-outset rounded-none p-1" : "",
           theme === 'terminal-hacker' ? "bg-black terminal-border rounded-sm" : "",
@@ -49,7 +49,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
       >
         {/* Header */}
         <div className={cn(
-          "flex items-center justify-between px-8 py-4 transition-colors",
+          "flex items-center justify-between px-4 sm:px-8 py-4 transition-colors",
           theme === 'modern-glass' ? (headerClassName || "border-b border-white/5 bg-white/5 py-6") : "",
           theme === 'retro-2000' ? "bg-gradient-to-r from-[#000080] to-[#1084d0] px-2 py-1 mb-2" : "",
           theme === 'terminal-hacker' ? "border-b border-dashed border-neon-green bg-black" : "",
@@ -88,7 +88,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
         
         {/* Content (Scrollable) */}
         <div className={cn(
-          "flex-1 overflow-y-auto p-8 custom-scrollbar",
+          "flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar",
           theme === 'retro-2000' ? "retro-inset bg-white p-6 m-1 text-black" : "",
           theme === 'terminal-hacker' ? "bg-black text-neon-green p-6" : "",
           theme === 'sap-blue' ? "bg-[#f4f4f4] text-gray-800 p-6 font-sans" : "",
