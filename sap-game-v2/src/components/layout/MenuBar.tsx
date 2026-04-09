@@ -105,7 +105,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
 
         {/* Right: Actions */}
         <div className="flex items-center gap-2 sm:gap-4 relative z-10">
-          <div className="hidden sm:flex items-center border-r border-white/5 pr-2 md:pr-4 mr-1 md:mr-2 gap-2">
+          <div className="flex items-center border-r border-white/5 pr-1 sm:pr-4 mr-1 sm:mr-2 gap-1 sm:gap-2">
             <button 
               onClick={() => setShowTicker(!showTicker)}
               className={cn(
