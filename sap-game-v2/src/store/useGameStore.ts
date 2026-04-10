@@ -14,6 +14,9 @@ interface GameStore extends PlayerState {
   addEmail: (email: Omit<EmailMessage, 'id' | 'read'>) => void;
   markEmailAsRead: (emailId: string) => void;
   upgradeModule: (moduleName: keyof ModulesLevels, cost: number) => void;
+  payFinancialNote: (id: string) => void;
+  collectFinancialNote: (id: string) => void;
+  addFinancialNote: (note: Omit<FinancialNote, 'id' | 'status'>) => void;
 }
 
 const initialState: PlayerState = {
@@ -39,6 +42,44 @@ const initialState: PlayerState = {
     logistics: 1,
   },
   debts: [],
+  financialNotes: [
+    {
+      id: 'fin-01',
+      title: 'Energia & Cloud (AWS)',
+      description: 'Custo fixo de infraestrutura tecnológica.',
+      amount: 450,
+      dueRound: 2,
+      type: 'payable',
+      status: 'pending'
+    },
+    {
+      id: 'fin-02',
+      title: 'Faturamento Venda #1042',
+      description: 'Recebimento de venda a prazo (30 dias).',
+      amount: 12500,
+      dueRound: 4,
+      type: 'receivable',
+      status: 'pending'
+    },
+    {
+      id: 'fin-03',
+      title: 'Impostos (DAS/Simples)',
+      description: 'Recolhimento tributário mensal.',
+      amount: 2100,
+      dueRound: 5,
+      type: 'payable',
+      status: 'pending'
+    },
+    {
+      id: 'fin-04',
+      title: 'Crédito de Consultoria',
+      description: 'Reembolso de serviço não prestado.',
+      amount: 800,
+      dueRound: 1,
+      type: 'receivable',
+      status: 'pending'
+    }
+  ],
   inbox: [
     {
       id: 'welcome-01',
@@ -76,8 +117,6 @@ export const useGameStore = create<GameStore>((set) => ({
     if (debtIndex === -1) return state;
     
     const debt = state.debts[debtIndex];
-    
-    // Simples check de segurança, mas a UI deve impedir isso também
     if (state.balance < debt.installmentValue) return state; 
     
     const updatedDebt = { 
@@ -124,5 +163,34 @@ export const useGameStore = create<GameStore>((set) => ({
         [moduleName]: state.modulesLevels[moduleName] + 1
       }
     };
-  })
+  }),
+
+  payFinancialNote: (id) => set((state) => {
+    const note = state.financialNotes.find(n => n.id === id);
+    if (!note || state.balance < note.amount) return state;
+    return {
+      balance: state.balance - note.amount,
+      financialNotes: state.financialNotes.map(n => n.id === id ? { ...n, status: 'paid' } : n)
+    };
+  }),
+
+  collectFinancialNote: (id) => set((state) => {
+    const note = state.financialNotes.find(n => n.id === id);
+    if (!note) return state;
+    return {
+      balance: state.balance + note.amount,
+      financialNotes: state.financialNotes.map(n => n.id === id ? { ...n, status: 'paid' } : n)
+    };
+  }),
+  
+  addFinancialNote: (noteData) => set((state) => ({
+    financialNotes: [
+      ...state.financialNotes,
+      {
+        ...noteData,
+        id: `fin-${crypto.randomUUID().split('-')[0]}`,
+        status: 'pending'
+      }
+    ]
+  }))
 }));

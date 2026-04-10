@@ -4,6 +4,7 @@ import { BankModal } from '../components/modals/BankModal';
 import { CommercialModal } from '../components/modals/CommercialModal';
 import { InventarioModal } from '../components/modals/InventarioModal';
 import { ConsultoriaModal } from '../components/modals/ConsultoriaModal';
+import { FinanceiroModal } from '../components/modals/FinanceiroModal';
 import { QuizModal } from '../components/modals/QuizModal';
 import { SurpriseModal } from '../components/modals/SurpriseModal';
 import { EmailModal } from '../components/modals/EmailModal';
@@ -21,6 +22,7 @@ export const GameBoard = () => {
   const [isCommercialOpen, setIsCommercialOpen] = useState(false);
   const [isInventarioOpen, setIsInventarioOpen] = useState(false);
   const [isConsultoriaOpen, setIsConsultoriaOpen] = useState(false);
+  const [isFinanceiroOpen, setIsFinanceiroOpen] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isEmailOpen, setIsEmailOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -43,6 +45,7 @@ export const GameBoard = () => {
         onOpenCommercial={() => setIsCommercialOpen(true)}
         onOpenInventario={() => setIsInventarioOpen(true)}
         onOpenConsultoria={() => setIsConsultoriaOpen(true)}
+        onOpenFinanceiro={() => setIsFinanceiroOpen(true)}
         onOpenEmail={() => setIsEmailOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onAdvanceTurn={handleAdvanceTurn}
@@ -56,6 +59,7 @@ export const GameBoard = () => {
       <CommercialModal isOpen={isCommercialOpen} onClose={() => setIsCommercialOpen(false)} />
       <InventarioModal isOpen={isInventarioOpen} onClose={() => setIsInventarioOpen(false)} />
       <ConsultoriaModal isOpen={isConsultoriaOpen} onClose={() => setIsConsultoriaOpen(false)} />
+      <FinanceiroModal isOpen={isFinanceiroOpen} onClose={() => setIsFinanceiroOpen(false)} />
       <QuizModal isOpen={isQuizOpen} onClose={() => {
         setIsQuizOpen(false);
         // Disparar surpresa obrigatória 1s após fechar o quiz da Q1

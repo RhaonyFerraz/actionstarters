@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useGameStore } from '../../store/useGameStore';
 import React, { useState } from 'react';
+import { cn } from '../ui/Button';
 
 interface MenuBarProps {
   onOpenBank: () => void;
@@ -30,6 +31,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
   onOpenCommercial,
   onOpenConsultoria,
   onOpenEmail,
+  onOpenFinanceiro,
   onOpenInventario,
   onOpenSettings,
   onAdvanceTurn
@@ -91,10 +93,10 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         {/* Center: Navigation (Visible only on Desktop/Tablet md+) */}
         <nav className="hidden md:flex flex-1 items-center justify-center gap-2 lg:gap-4 relative z-10 mx-2">
           <MenuButton icon={<Building2 size={20} />} label="Banco" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<PiggyBank size={20} />} label="Financeiro" onClick={onOpenBank} color="green" />
+          <MenuButton icon={<PiggyBank size={20} />} label="Financeiro" onClick={onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton icon={<Package size={20} />} label="Inventário" onClick={onOpenInventario || onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={20} />} label="Melhorias" onClick={onOpenConsultoria} color="green" />
-          <MenuButton icon={<Receipt size={20} />} label="Despesas" onClick={onOpenBank} color="green" />
+          <MenuButton icon={<Receipt size={20} />} label="Despesas" onClick={onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton 
             icon={<Mail size={20} />} 
             label="E-mail" 
@@ -183,10 +185,10 @@ export const MenuBar: React.FC<MenuBarProps> = ({
       )}>
         <nav className="flex items-center justify-around h-full w-full">
           <MenuButton icon={<Building2 size={24} />} label="Banco" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<PiggyBank size={24} />} label="Finance" onClick={onOpenBank} color="green" />
+          <MenuButton icon={<PiggyBank size={24} />} label="Finance" onClick={onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton icon={<Package size={24} />} label="Inv." onClick={onOpenInventario || onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={24} />} label="Up" onClick={onOpenConsultoria} color="green" />
-          <MenuButton icon={<Receipt size={24} />} label="Bills" onClick={onOpenBank} color="green" />
+          <MenuButton icon={<Receipt size={24} />} label="Bills" onClick={onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton 
             icon={<Mail size={24} />} 
             label="E-mail" 
@@ -224,8 +226,6 @@ interface MenuButtonProps {
   badge?: number;
   color?: 'green' | 'purple';
 }
-
-import { cn } from '../ui/Button';
 
 const MenuButton: React.FC<MenuButtonProps> = ({ icon, label, onClick, badge, color = 'green' }) => {
   const { theme } = useGameStore();

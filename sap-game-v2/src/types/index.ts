@@ -36,6 +36,16 @@ export interface ModulesLevels {
   logistics: number;
 }
 
+export interface FinancialNote {
+  id: string;
+  title: string;
+  description: string;
+  amount: number;
+  dueRound: number;
+  type: 'payable' | 'receivable';
+  status: 'pending' | 'overdue' | 'paid';
+}
+
 export type ThemeStyle = 'modern-glass' | 'retro-2000' | 'terminal-hacker' | 'sap-blue' | 'high-tech-red';
 
 export interface PlayerState {
@@ -45,5 +55,6 @@ export interface PlayerState {
   inventory: Inventory;
   modulesLevels: ModulesLevels;
   debts: Debt[];
+  financialNotes: FinancialNote[];
   inbox: EmailMessage[];
 }
