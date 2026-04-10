@@ -50,7 +50,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
       >
         {/* Header */}
         <div className={cn(
-          "flex items-center justify-between px-4 sm:px-8 py-4 transition-colors",
+          "relative flex items-center px-4 sm:px-8 py-4 transition-colors",
           theme === 'modern-glass' ? (headerClassName || "border-b border-white/5 bg-white/5 py-6") : "",
           theme === 'retro-2000' ? "bg-gradient-to-r from-[#000080] to-[#1084d0] px-2 py-1 mb-2" : "",
           theme === 'terminal-hacker' ? "border-b border-dashed border-neon-green bg-black" : "",
@@ -58,7 +58,13 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
           theme === 'high-tech-red' ? "bg-red-950/50 border-b-2 border-red-600" : "",
           theme !== 'modern-glass' && headerClassName ? headerClassName : ""
         )}>
-          <div className={cn("flex flex-col", centerTitle ? "items-center" : "")}>
+          {/* Spacer for left side if centering */}
+          {centerTitle && <div className="w-10 sm:w-12" />}
+
+          <div className={cn(
+            "flex flex-col flex-1", 
+            centerTitle ? "items-center text-center" : ""
+          )}>
             <h2 className={cn(
               "text-3xl font-extrabold tracking-tight uppercase leading-none truncate",
               theme === 'modern-glass' ? "text-white" : "",
@@ -72,13 +78,14 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
               <div className={cn("h-1 bg-white mt-2 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.6)]", centerTitle ? "w-24" : "w-12")} />
             )}
           </div>
+
           <button 
             onClick={onClose}
             className={cn(
-              "transition-all flex items-center justify-center focus:outline-none",
+              "transition-all flex items-center justify-center focus:outline-none shrink-0 ml-4",
               theme === 'modern-glass' ? "p-2 rounded-xl bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-500 duration-300 border border-white/5" : "",
               theme === 'retro-2000' ? "retro-outset active:retro-inset bg-[#c0c0c0] w-6 h-6 hover:bg-[#dfdfdf]" : "",
-              theme === 'terminal-hacker' ? "text-neon-green hover:bg-neon-green hover:text-black border border-neon-green w-8 h-8 font-black" : "",
+              theme === 'terminal-hacker' ? "text-neon-green hover:bg-neon-green/20 border border-neon-green w-8 h-8 font-black" : "",
               theme === 'sap-blue' ? "text-blue-100 hover:text-white hover:bg-blue-600 p-2 rounded-lg" : "",
               theme === 'high-tech-red' ? "text-red-500 hover:bg-red-600 hover:text-black border border-red-600 p-2" : ""
             )}
