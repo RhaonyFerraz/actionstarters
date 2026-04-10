@@ -15,10 +15,10 @@ export const FinanceiroModal: React.FC<FinanceiroModalProps> = ({ isOpen, onClos
   const [activeTab, setActiveTab] = useState<TabType>('payable');
 
   const tabs = [
-    { id: 'payable', label: 'Contas a Pagar', color: 'border-[#f59e0b]' },
-    { id: 'overdue', label: 'Contas Vencidas', color: 'border-[#ef4444]' },
-    { id: 'receivable', label: 'Contas a Receber', color: 'border-[#10b981]' },
-    { id: 'late', label: 'Recebimentos em Atraso', color: 'border-[#8b5cf6]' }
+    { id: 'payable', label: 'Contas a Pagar', color: '#f59e0b', desc: 'Títulos em aberto que vencerão em breve.' },
+    { id: 'overdue', label: 'Contas Vencidas', color: '#ef4444', desc: 'Títulos que já passaram da validade e requerem atenção imediata.' },
+    { id: 'receivable', label: 'Contas a Receber', color: '#10b981', desc: 'Previsão de entrada de capital na empresa.' },
+    { id: 'late', label: 'Recebimentos em Atraso', color: '#8b5cf6', desc: 'Títulos faturados que ainda não foram liquidados pelo cliente.' }
   ];
 
   const filteredNotes = financialNotes.filter(note => {
@@ -34,81 +34,85 @@ export const FinanceiroModal: React.FC<FinanceiroModalProps> = ({ isOpen, onClos
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="FINANCEIRO" centerTitle>
-      <div className="flex flex-col space-y-8">
+    <Modal isOpen={isOpen} onClose={onClose} title="FINANCEIRO" centerTitle className="max-w-4xl">
+      <div className="flex flex-col space-y-10">
         
-        {/* Navigation Tabs (Photo style) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as TabType)}
-              className={cn(
-                "py-3 px-2 text-[10px] sm:text-xs font-bold transition-all border rounded-md",
-                activeTab === tab.id 
-                  ? `${tab.color} bg-white/5 text-white` 
-                  : "border-gray-800 text-gray-500 hover:text-gray-300"
-              )}
-            >
-              {tab.label}
-            </button>
-          ))}
+        {/* Navigation Tabs (Single Row Grid) */}
+        <div className="grid grid-cols-4 gap-1 sm:gap-2">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as TabType)}
+                className={cn(
+                  "relative py-4 px-2 text-[8px] sm:text-[10px] font-black uppercase tracking-widest transition-all rounded-t-lg",
+                  isActive 
+                    ? "bg-[#1e1e1e] text-white" 
+                    : "bg-[#0f0f0f] text-gray-500 hover:text-gray-400"
+                )}
+                style={{
+                  borderTop: `3px solid ${isActive ? tab.color : 'transparent'}`
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Content Section */}
-        <div className="space-y-6">
+        <div className="space-y-8 min-h-[400px]">
           <div>
-            <h3 className="text-white font-bold text-2xl tracking-tight mb-1">
+            <h3 className="text-white font-black text-2xl tracking-tight mb-1 uppercase">
               {tabs.find(t => t.id === activeTab)?.label}
             </h3>
-            <p className="text-gray-500 text-sm italic">
-              {activeTab === 'payable' && 'Títulos em aberto que vencerão em breve.'}
-              {activeTab === 'overdue' && 'Títulos que já passaram da validade e requerem atenção imediata.'}
-              {activeTab === 'receivable' && 'Previsão de entrada de capital na empresa.'}
-              {activeTab === 'late' && 'Títulos faturados que ainda não foram liquidados pelo cliente.'}
+            <p className="text-gray-500 text-sm font-medium">
+              {tabs.find(t => t.id === activeTab)?.desc}
             </p>
           </div>
 
-          <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+          <div className="space-y-4 max-h-[450px] overflow-y-auto pr-2 custom-scrollbar">
             {filteredNotes.length > 0 ? (
               filteredNotes.map((note) => (
-                <div key={note.id} className="bg-[#0a0a0a] rounded-xl p-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative border border-white/5">
-                  <div className="flex-1 space-y-1">
-                    <h4 className="text-white font-bold text-lg">
+                <div key={note.id} className="bg-[#0a0a0a] rounded-[2rem] p-8 border border-white/5 hover:border-white/10 transition-all duration-500">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="text-white font-bold text-xl tracking-tight">
                       {note.title}
                     </h4>
-                    <p className="text-gray-400 text-xs font-medium">
-                      Vence em: {Math.max(0, note.dueRound - currentRound)} rodada(s) | Previsão
-                    </p>
-                  </div>
-                  
-                  <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
-                    <span className="text-xl sm:text-2xl font-digital font-bold text-white whitespace-nowrap">
+                    <span className="text-xl sm:text-2xl font-digital font-bold text-white/90">
                       {formatCurrency(note.amount)}
                     </span>
+                  </div>
+                  
+                  <p className="text-gray-500 text-xs font-medium mb-8">
+                    Vence em {Math.max(0, note.dueRound - currentRound)} rodada(s) (Previsão)
+                  </p>
+
+                  <div className="flex justify-end">
                     <button 
                       onClick={() => note.type === 'payable' ? payFinancialNote(note.id) : collectFinancialNote(note.id)}
                       disabled={note.type === 'payable' && balance < note.amount}
-                      className="bg-[#c026d3] hover:bg-[#a21caf] text-white text-[10px] font-bold uppercase tracking-widest px-6 py-3 rounded-md transition-all active:scale-95 whitespace-nowrap disabled:opacity-50"
+                      className="bg-[#c026d3] hover:bg-[#a21caf] text-white text-[9px] font-black uppercase tracking-[0.2em] px-8 py-3 rounded-xl transition-all active:scale-95 disabled:opacity-30 disabled:grayscale"
                     >
-                      {note.type === 'payable' ? 'LIQUIDAR TÍTULO' : 'RECEBER VALOR'}
+                      {note.type === 'payable' ? 'VER DETALHES' : 'EFETUAR RECEBIMENTO'}
                     </button>
                   </div>
                 </div>
               ))
             ) : (
-              <div className="py-16 text-center bg-black/20 rounded-2xl border border-dashed border-white/10 opacity-40">
-                <p className="text-gray-400 uppercase font-black tracking-[0.3em] text-[10px]">Backlog Vazio</p>
+              <div className="py-24 text-center bg-black/10 rounded-[3rem] border border-dashed border-white/5 opacity-40">
+                <p className="text-gray-500 uppercase font-black tracking-[0.5em] text-[10px]">Backlog Operacional Vazio</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* Footer info box */}
+        {/* Footer (Fechar Button) */}
         <div className="flex justify-end pt-4">
           <button 
             onClick={onClose}
-            className="px-10 py-3 bg-[#1a1a1a] hover:bg-[#252525] text-white font-bold uppercase tracking-widest text-[11px] rounded-lg transition-all border border-white/5 active:scale-95"
+            className="px-12 py-4 bg-[#1a1a1a] hover:bg-[#252525] text-white font-bold uppercase tracking-[0.3em] text-[10px] rounded-2xl transition-all border border-white/5 shadow-xl active:scale-95"
           >
             Fechar
           </button>

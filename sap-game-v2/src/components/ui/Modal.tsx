@@ -50,7 +50,8 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
       >
         {/* Header */}
         <div className={cn(
-          "relative flex items-center px-4 sm:px-8 py-4 transition-colors",
+          "relative flex items-center px-4 sm:px-8 py-4 transition-colors min-h-[72px]",
+          centerTitle ? "justify-center" : "justify-between",
           theme === 'modern-glass' ? (headerClassName || "border-b border-white/5 bg-white/5 py-6") : "",
           theme === 'retro-2000' ? "bg-gradient-to-r from-[#000080] to-[#1084d0] px-2 py-1 mb-2" : "",
           theme === 'terminal-hacker' ? "border-b border-dashed border-neon-green bg-black" : "",
@@ -58,11 +59,8 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
           theme === 'high-tech-red' ? "bg-red-950/50 border-b-2 border-red-600" : "",
           theme !== 'modern-glass' && headerClassName ? headerClassName : ""
         )}>
-          {/* Spacer for left side if centering */}
-          {centerTitle && <div className="w-10 sm:w-12" />}
-
           <div className={cn(
-            "flex flex-col flex-1", 
+            "flex flex-col", 
             centerTitle ? "items-center text-center" : ""
           )}>
             <h2 className={cn(
@@ -82,7 +80,8 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
           <button 
             onClick={onClose}
             className={cn(
-              "transition-all flex items-center justify-center focus:outline-none shrink-0 ml-4",
+              "transition-all flex items-center justify-center focus:outline-none",
+              centerTitle ? "absolute right-4 sm:right-8" : "ml-4",
               theme === 'modern-glass' ? "p-2 rounded-xl bg-white/5 hover:bg-red-500/20 text-gray-400 hover:text-red-500 duration-300 border border-white/5" : "",
               theme === 'retro-2000' ? "retro-outset active:retro-inset bg-[#c0c0c0] w-6 h-6 hover:bg-[#dfdfdf]" : "",
               theme === 'terminal-hacker' ? "text-neon-green hover:bg-neon-green/20 border border-neon-green w-8 h-8 font-black" : "",
