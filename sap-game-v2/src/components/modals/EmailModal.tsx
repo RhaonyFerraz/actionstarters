@@ -7,9 +7,11 @@ import {
   SquarePen, 
   Mail, 
   MailOpen,
-  Layout,
   ChevronLeft,
-  Circle
+  Calendar,
+  User,
+  ArrowRight,
+  Monitor
 } from 'lucide-react';
 import { cn } from '../ui/Button';
 
@@ -25,139 +27,178 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     markEmailAsRead(id);
   };
 
+  const formatRound = (round: number) => `RODADA ${round.toString().padStart(2, '0')}`;
+
   return (
     <Modal 
       isOpen={isOpen} 
       onClose={onClose} 
-      title="📬 MailPlus Pro v1.0" 
-      className="max-w-5xl"
-      headerClassName="bg-blue-900/60 border-b border-blue-500/30"
+      title="COMUNICAÇÕES & RELATÓRIOS" 
+      centerTitle
+      className="max-w-[1400px] w-[95vw] h-[85vh] sm:h-[80vh]"
     >
-      <div className="win95-bg sm:-m-8 p-1 retro-outset font-sans text-black grow flex flex-col overflow-hidden">
+      <div className="flex flex-col h-full overflow-hidden">
         
-        {/* Win95 Header (Internal) - Hidden on mobile as the Modal already has a title */}
-        <div className="hidden sm:flex win95-title-bar mb-1" style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#111827' }}>
-          <div className="flex items-center gap-2">
-            <Layout size={12} className="text-gray-600" />
-            <span className="text-[11px] tracking-tight text-gray-800">MailPlus Pro v1.0 - [Inbox]</span>
-          </div>
-          <button onClick={onClose} className="w-4 h-4 bg-[#c0c0c0] text-black border border-white border-b-gray-800 border-r-gray-800 flex items-center justify-center text-[10px] font-bold active:border-inset">
-            X
-          </button>
-        </div>
-
-        <div className="flex-1 flex min-h-0 gap-1 overflow-hidden">
+        {/* Main Interface */}
+        <div className="flex flex-1 min-h-0 gap-6">
           
-          {/* Sidebar - Only visible on LG screens and up */}
-          <div className="hidden lg:flex w-44 flex-col gap-1 shrink-0">
-            <SidebarItem icon={<Inbox size={14} className="text-blue-600" />} label="Entrada" active />
-            <SidebarItem icon={<Send size={14} className="text-green-600" />} label="Saída" />
-            <SidebarItem icon={<SquarePen size={14} className="text-gray-400" />} label="ESCREVER" />
+          {/* Column 1: Categories & Inbox List */}
+          <div className={cn(
+            "flex flex-col h-full bg-[#0a111a]/40 backdrop-blur-md border border-white/5 rounded-3xl overflow-hidden transition-all duration-500",
+            selectedEmailId ? "hidden lg:flex lg:w-[400px] xl:w-[450px]" : "w-full lg:w-[400px] xl:w-[450px]"
+          )}>
             
-            <div className="flex-1 mt-2 retro-inset bg-white overflow-hidden p-2">
-               {/* Decorative white space */}
+            {/* Header / Search Mock */}
+            <div className="p-6 border-b border-white/5 space-y-4">
+              <div className="flex items-center justify-between text-[#22d3ee]">
+                 <div className="flex items-center gap-2">
+                   <Inbox size={20} />
+                   <h3 className="text-xs font-black uppercase tracking-[0.3em]">Inbox Operacional</h3>
+                 </div>
+                 <span className="bg-[#22d3ee]/10 px-3 py-1 rounded-full text-[10px] font-bold border border-[#22d3ee]/20">
+                    {inbox.filter(e => !e.read).length} NOVOS
+                 </span>
+              </div>
             </div>
-          </div>
 
-          {/* Main Content Area */}
-          <div className="flex-1 flex flex-col min-w-0">
-            
-            {/* Table Headers - Hidden on mobile, visible on lg */}
-            <div className="hidden lg:flex gap-px bg-gray-400 border-b border-gray-800">
-              <div className="flex-[3] win95-button rounded-none border-t-white border-l-white justify-start pl-4 font-sans uppercase tracking-tighter text-[9px]">Assunto</div>
-              <div className="w-32 win95-button rounded-none border-t-white border-l-white font-sans uppercase tracking-tighter text-[9px]">Data Recebida</div>
-            </div>
-
-            {/* Email List / Content */}
-            <div className="flex-1 bg-white retro-inset overflow-y-auto mt-px">
-              {!selectedEmail ? (
-                <div className="min-h-full">
-                  {inbox.length === 0 ? (
-                    <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
-                      <Mail size={48} strokeWidth={1} />
-                      <p className="text-[10px] uppercase font-bold mt-2">Caixa de entrada vazia</p>
-                    </div>
-                  ) : (
-                    inbox.map(email => (
-                      <button 
-                        key={email.id}
-                        onClick={() => handleSelect(email.id)}
-                        className="w-full flex items-center px-4 py-3 sm:py-1.5 hover:bg-[#000080] hover:text-white text-left group focus:bg-[#000080] focus:text-white border-b border-gray-50 transition-colors"
-                      >
-                        <div className="flex-[3] flex items-center gap-3 min-w-0">
-                          {email.read ? 
-                            <MailOpen size={14} className="text-gray-400 group-hover:text-blue-200 shrink-0" /> : 
-                            <Mail size={14} className="text-blue-600 group-hover:text-white shrink-0" />
-                          }
-                          <span className={cn(
-                            "truncate text-xs font-sans",
-                            !email.read && "font-bold"
-                          )}>
-                            {email.subject}
-                          </span>
-                        </div>
-                        <div className="w-32 text-right text-[10px] font-mono shrink-0 pr-2 opacity-60">
-                          05/04/2026
-                        </div>
-                      </button>
-                    ))
-                  )}
+            {/* Email List Wrapper */}
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-2">
+              {inbox.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
+                   <Monitor size={48} strokeWidth={1} className="text-white" />
+                   <p className="text-[10px] uppercase font-black mt-4 tracking-widest text-white">Nenhum dado recebido</p>
                 </div>
               ) : (
-                <div className="p-4 sm:p-6 flex flex-col h-full overflow-hidden animate-in fade-in slide-in-from-right-2 duration-200">
-                  <div className="mb-4 pb-4 border-b border-dashed border-gray-300">
-                    <button 
-                      onClick={() => setSelectedEmailId(null)}
-                      className="text-[10px] font-bold text-blue-800 hover:underline mb-4 flex items-center gap-1 group"
-                    >
-                      <ChevronLeft size={12} className="group-hover:-translate-x-0.5 transition-transform" />
-                      VOLTAR PARA LISTA
-                    </button>
-                    <h2 className="text-xl font-bold text-gray-900 leading-tight mb-2 tracking-tight">{selectedEmail.subject}</h2>
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[10px] text-gray-500 uppercase tracking-widest font-sans">
-                      <span className="bg-gray-100 px-2 py-0.5 rounded border border-gray-200">De: {selectedEmail.sender}</span>
-                      <span className="flex items-center gap-1"><Circle size={6} className="fill-blue-500 text-blue-500" /> Round: {selectedEmail.timestampRound}</span>
+                inbox.map(email => (
+                  <button 
+                    key={email.id}
+                    onClick={() => handleSelect(email.id)}
+                    className={cn(
+                      "w-full text-left p-4 rounded-2xl transition-all duration-300 relative group overflow-hidden border",
+                      selectedEmailId === email.id 
+                        ? "bg-[#22d3ee]/5 border-[#22d3ee]/30 shadow-[0_0_20px_rgba(34,211,238,0.05)]" 
+                        : "bg-transparent border-transparent hover:bg-white/5 hover:border-white/10"
+                    )}
+                  >
+                    {!email.read && (
+                      <div className="absolute left-1 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#22d3ee] rounded-full shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+                    )}
+                    
+                    <div className="flex justify-between items-start mb-1 gap-4">
+                       <span className={cn(
+                         "text-xs font-black uppercase tracking-widest truncate flex-1",
+                         email.read ? "text-gray-400" : "text-white"
+                       )}>
+                         {email.sender}
+                       </span>
+                       <span className="text-[9px] font-bold text-gray-500 shrink-0 uppercase tracking-tighter">
+                         {formatRound(email.timestampRound)}
+                       </span>
                     </div>
-                  </div>
-                  <div className="flex-1 overflow-y-auto text-gray-800 text-[15px] sm:text-[13px] font-sans leading-relaxed whitespace-pre-wrap selection:bg-[#000080] selection:text-white pr-4">
-                    {selectedEmail.content}
-                  </div>
-                </div>
+                    
+                    <h4 className={cn(
+                      "text-sm tracking-tight line-clamp-1",
+                      email.read ? "text-gray-500 font-medium" : "text-[#22d3ee] font-bold"
+                    )}>
+                      {email.subject}
+                    </h4>
+                    
+                    <p className="text-[11px] text-gray-500 mt-2 line-clamp-1 leading-relaxed opacity-60">
+                      Criptografia de transmissão de dados nível RSA-4096 ativa...
+                    </p>
+                  </button>
+                ))
               )}
             </div>
           </div>
+
+          {/* Column 2: Content View Area */}
+          <div className={cn(
+            "flex-1 flex flex-col h-full bg-[#0a111a]/20 backdrop-blur-sm border border-white/5 rounded-3xl overflow-hidden transition-all duration-500",
+            !selectedEmailId ? "hidden lg:flex" : "flex"
+          )}>
+            {selectedEmail ? (
+              <div className="flex flex-col h-full animate-in fade-in slide-in-from-right-4 duration-500">
+                {/* Email Header */}
+                <div className="p-8 border-b border-white/5 bg-white/[0.02]">
+                  <div className="flex items-center gap-4 mb-8 lg:hidden">
+                     <button onClick={() => setSelectedEmailId(null)} className="p-2 rounded-xl bg-white/5 text-white hover:bg-white/10">
+                        <ChevronLeft size={20} />
+                     </button>
+                     <span className="text-xs font-black text-gray-400 uppercase tracking-widest">Lista de Mensagens</span>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                       <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tighter leading-none">
+                         {selectedEmail.subject}
+                       </h2>
+                       <div className="flex items-center gap-3">
+                         <div className="bg-[#22d3ee]/10 border border-[#22d3ee]/20 px-4 py-1.5 rounded-full flex items-center gap-2">
+                           <Calendar size={12} className="text-[#22d3ee]" />
+                           <span className="text-[10px] font-black text-[#22d3ee] uppercase tracking-widest">{formatRound(selectedEmail.timestampRound)}</span>
+                         </div>
+                       </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 border border-white/10 flex items-center justify-center text-white font-black text-sm">
+                        {selectedEmail.sender[0]}
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-0.5">Remetente</p>
+                        <p className="text-sm text-gray-200 font-bold">{selectedEmail.sender}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Email Body */}
+                <div className="flex-1 overflow-y-auto p-8 sm:p-12 space-y-8 custom-scrollbar">
+                  <div className="max-w-3xl">
+                    <div className="text-gray-300 text-base sm:text-lg leading-relaxed font-medium whitespace-pre-wrap tracking-tight">
+                      {selectedEmail.content}
+                    </div>
+                    
+                    <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row gap-6 items-center justify-between">
+                       <div className="flex items-center gap-3 opacity-50">
+                         <Mail size={20} className="text-gray-400" />
+                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Assinatura Digital Verificada</span>
+                       </div>
+                       
+                       <button className="bg-[#c026d3] hover:bg-[#a21caf] text-white px-8 py-3 rounded-2xl flex items-center gap-3 transition-all active:scale-95 group">
+                         <span className="text-xs font-black uppercase tracking-widest">Processar Relatório</span>
+                         <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                       </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center space-y-6 opacity-30 select-none">
+                <div className="w-24 h-24 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center">
+                   <Mail size={40} className="text-white animate-pulse" />
+                </div>
+                <div className="text-center space-y-2">
+                  <h3 className="text-xl font-bold text-white uppercase tracking-widest">Painel Desconectado</h3>
+                  <p className="text-xs text-gray-500 font-medium">Selecione uma transmissão na lista lateral para análise técnica.</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Footer Status Bar - Stacked on mobile, grid on sm */}
-        <div className="mt-1 flex flex-col sm:grid sm:grid-cols-4 gap-1 shrink-0">
-          <div className="hidden xs:flex sm:col-span-3 retro-inset px-3 h-8 sm:h-6 items-center gap-2 bg-[#c0c0c0]">
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500 border border-black/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)]" />
-            <span className="text-[10px] font-sans font-bold text-gray-600 truncate">Sistema Online: <span className="text-green-700 uppercase">Operação</span></span>
-          </div>
-          <button 
-            onClick={onClose}
-            className="win95-button text-red-700 font-black h-10 sm:h-6 text-xs sm:text-[10px]"
-          >
-            FECHAR JANELA
-          </button>
+        {/* Action Footer (Mobile only close or simple status) */}
+        <div className="mt-6 flex justify-end">
+           <button 
+             onClick={onClose}
+             className="px-10 py-4 bg-white/5 hover:bg-white/10 text-white font-black uppercase tracking-[0.4em] text-[10px] rounded-2xl transition-all border border-white/5 active:scale-95"
+           >
+             ENCERRAR TERMINAL
+           </button>
         </div>
 
       </div>
     </Modal>
   );
 };
-
-const SidebarItem: React.FC<{ icon: React.ReactNode; label: string; active?: boolean }> = ({ icon, label, active }) => {
-  return (
-    <button className={cn(
-      "w-full flex items-center gap-3 px-3 py-1.5 text-[11px] font-sans transition-all",
-      active ? "retro-inset bg-gray-50 font-bold border-l-4 border-l-blue-600" : "win95-button border-l-transparent text-gray-700"
-    )}>
-      <span className="shrink-0">{icon}</span>
-      <span className="truncate">{label}</span>
-    </button>
-  );
-};
-
-
-

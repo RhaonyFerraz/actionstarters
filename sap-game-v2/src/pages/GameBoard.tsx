@@ -20,7 +20,6 @@ export const GameBoard = () => {
 
   const [isBankOpen, setIsBankOpen] = useState(false);
   const [isCommercialOpen, setIsCommercialOpen] = useState(false);
-  const [isInventarioOpen, setIsInventarioOpen] = useState(false);
   const [isConsultoriaOpen, setIsConsultoriaOpen] = useState(false);
   const [isFinanceiroOpen, setIsFinanceiroOpen] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
@@ -43,7 +42,6 @@ export const GameBoard = () => {
       <MenuBar 
         onOpenBank={() => setIsBankOpen(true)}
         onOpenCommercial={() => setIsCommercialOpen(true)}
-        onOpenInventario={() => setIsInventarioOpen(true)}
         onOpenConsultoria={() => setIsConsultoriaOpen(true)}
         onOpenFinanceiro={() => setIsFinanceiroOpen(true)}
         onOpenEmail={() => setIsEmailOpen(true)}
@@ -57,7 +55,6 @@ export const GameBoard = () => {
       {/* Modais */}
       <BankModal isOpen={isBankOpen} onClose={() => setIsBankOpen(false)} />
       <CommercialModal isOpen={isCommercialOpen} onClose={() => setIsCommercialOpen(false)} />
-      <InventarioModal isOpen={isInventarioOpen} onClose={() => setIsInventarioOpen(false)} />
       <ConsultoriaModal isOpen={isConsultoriaOpen} onClose={() => setIsConsultoriaOpen(false)} />
       <FinanceiroModal isOpen={isFinanceiroOpen} onClose={() => setIsFinanceiroOpen(false)} />
       <QuizModal isOpen={isQuizOpen} onClose={() => {
