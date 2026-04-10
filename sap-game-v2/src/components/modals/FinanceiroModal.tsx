@@ -96,16 +96,16 @@ export const FinanceiroModal: React.FC<FinanceiroModalProps> = ({ isOpen, onClos
                   ].map((asset, i) => (
                     <div key={i} className="bg-[#0a0a0a] rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center space-y-2 group hover:border-white/20 transition-all">
                       <h4 className="text-[10px] text-gray-500 font-black uppercase tracking-widest">{asset.title}</h4>
-                      <p className="text-xl font-digital text-white group-hover:text-[#c026d3] transition-colors">{new Intl.NumberFormat('pt-BR').format(asset.val)}</p>
+                      <p className="text-xl font-digital text-white group-hover:text-[#3b82f6] transition-colors">{new Intl.NumberFormat('pt-BR').format(asset.val)}</p>
                     </div>
                   ))}
                 </div>
 
                 {/* Totalizer */}
-                <div className="bg-[#0a0a0a] rounded-[2rem] p-10 border border-[#c026d3]/20 flex flex-col items-center justify-center relative overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-                   <div className="absolute inset-0 bg-gradient-to-br from-[#c026d3]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                   <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#c026d3] mb-4 relative z-10">Valor Bruto de Ativos</p>
-                   <p className="text-5xl sm:text-6xl font-digital font-bold text-white relative z-10 drop-shadow-[0_0_15px_rgba(192,38,211,0.3)]">
+                <div className="bg-[#0a0a0a] rounded-[2rem] p-10 border border-[#3b82f6]/20 flex flex-col items-center justify-center relative overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                   <div className="absolute inset-0 bg-gradient-to-br from-[#3b82f6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                   <p className="text-[10px] font-black uppercase tracking-[0.4em] text-[#3b82f6] mb-4 relative z-10">Valor Bruto de Ativos</p>
+                   <p className="text-5xl sm:text-6xl font-digital font-bold text-white relative z-10 drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]">
                      {formatCurrency(totalInventoryValue)}
                    </p>
                 </div>
@@ -131,7 +131,7 @@ export const FinanceiroModal: React.FC<FinanceiroModalProps> = ({ isOpen, onClos
                       <button 
                         onClick={() => note.type === 'payable' ? payFinancialNote(note.id) : collectFinancialNote(note.id)}
                         disabled={note.type === 'payable' && balance < note.amount}
-                        className="bg-[#c026d3] hover:bg-[#a21caf] text-white text-[9px] font-black uppercase tracking-[0.2em] px-8 py-3 rounded-xl transition-all active:scale-95 disabled:opacity-30 disabled:grayscale"
+                        className="bg-[#3b82f6] hover:bg-[#2563eb] text-white text-[9px] font-black uppercase tracking-[0.2em] px-8 py-3 rounded-xl transition-all active:scale-95 disabled:opacity-30 disabled:grayscale"
                       >
                         {note.type === 'payable' ? 'VER DETALHES' : 'EFETUAR RECEBIMENTO'}
                       </button>

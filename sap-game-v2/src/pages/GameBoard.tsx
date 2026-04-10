@@ -14,6 +14,8 @@ import { SettingsModal } from '../components/modals/SettingsModal';
 import { HintSystem } from '../components/ui/HintSystem';
 import { useGameStore } from '../store/useGameStore';
 
+import { DespesasModal } from '../components/modals/DespesasModal';
+
 export const GameBoard = () => {
   const { addToast } = useToast();
   const { advanceTurn } = useTurn(addToast);
@@ -22,6 +24,7 @@ export const GameBoard = () => {
   const [isCommercialOpen, setIsCommercialOpen] = useState(false);
   const [isConsultoriaOpen, setIsConsultoriaOpen] = useState(false);
   const [isFinanceiroOpen, setIsFinanceiroOpen] = useState(false);
+  const [isDespesasOpen, setIsDespesasOpen] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isEmailOpen, setIsEmailOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -44,6 +47,7 @@ export const GameBoard = () => {
         onOpenCommercial={() => setIsCommercialOpen(true)}
         onOpenConsultoria={() => setIsConsultoriaOpen(true)}
         onOpenFinanceiro={() => setIsFinanceiroOpen(true)}
+        onOpenDespesas={() => setIsDespesasOpen(true)}
         onOpenEmail={() => setIsEmailOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onAdvanceTurn={handleAdvanceTurn}
@@ -57,6 +61,7 @@ export const GameBoard = () => {
       <CommercialModal isOpen={isCommercialOpen} onClose={() => setIsCommercialOpen(false)} />
       <ConsultoriaModal isOpen={isConsultoriaOpen} onClose={() => setIsConsultoriaOpen(false)} />
       <FinanceiroModal isOpen={isFinanceiroOpen} onClose={() => setIsFinanceiroOpen(false)} />
+      <DespesasModal isOpen={isDespesasOpen} onClose={() => setIsDespesasOpen(false)} />
       <QuizModal isOpen={isQuizOpen} onClose={() => {
         setIsQuizOpen(false);
         // Disparar surpresa obrigatória 1s após fechar o quiz da Q1

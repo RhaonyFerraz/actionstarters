@@ -166,7 +166,7 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Assinatura Digital Verificada</span>
                        </div>
                        
-                       <button className="bg-[#c026d3] hover:bg-[#a21caf] text-white px-8 py-3 rounded-2xl flex items-center gap-3 transition-all active:scale-95 group">
+                       <button className="bg-[#3b82f6] hover:bg-[#2563eb] text-white px-8 py-3 rounded-2xl flex items-center gap-3 transition-all active:scale-95 group">
                          <span className="text-xs font-black uppercase tracking-widest">Processar Relatório</span>
                          <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                        </button>

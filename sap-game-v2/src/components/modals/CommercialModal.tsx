@@ -51,7 +51,7 @@ export const CommercialModal: React.FC<{ isOpen: boolean; onClose: () => void }>
         <div className="bg-[#0a0a0a] rounded-[2rem] border border-white/5 p-8 space-y-8 relative overflow-hidden">
           <div className="space-y-2 relative z-10">
             <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
-              <ShoppingCart size={20} className="text-[#c026d3]" />
+              <ShoppingCart size={20} className="text-[#3b82f6]" />
               Painel de Vendas
             </h3>
             <p className="text-gray-500 text-sm leading-relaxed max-w-md">
@@ -71,7 +71,7 @@ export const CommercialModal: React.FC<{ isOpen: boolean; onClose: () => void }>
                 max={totalStock}
                 value={sellAmount}
                 onChange={(e) => setSellAmount(Number(e.target.value))}
-                className="w-full h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer accent-[#c026d3] border border-white/5"
+                className="w-full h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer accent-[#3b82f6] border border-white/5"
               />
             </div>
 
@@ -93,7 +93,7 @@ export const CommercialModal: React.FC<{ isOpen: boolean; onClose: () => void }>
               disabled={sellAmount <= 0 || isSelling}
               className={cn(
                 "w-full h-16 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-30 disabled:grayscale group relative overflow-hidden",
-                "bg-[#c026d3] hover:bg-[#a21caf] text-white shadow-[0_10px_30px_-10px_rgba(192,38,211,0.5)]"
+                "bg-[#3b82f6] hover:bg-[#2563eb] text-white shadow-[0_10px_30px_-10px_rgba(59,130,246,0.5)]"
               )}
             >
               {isSelling ? (

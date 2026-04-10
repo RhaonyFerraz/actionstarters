@@ -1,160 +1,121 @@
 import React, { useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { useBank } from '../../hooks/useBank';
-import { useToast } from '../../hooks/useToast';
-import { Building2, Landmark, History, AlertCircle, ArrowUpRight } from 'lucide-react';
 import { cn } from '../ui/Button';
 
 export const BankModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  const { balance, debts, takeLoan, payInstallment, marketParams } = useBank();
-  const { addToast } = useToast();
-  const [loanAmount, setLoanAmount] = useState(10000);
-  const [installments, setInstallments] = useState(6);
+  const { balance, debts } = useBank();
+  const [activeTab, setActiveTab] = useState('Resumo');
+  const [debitoAutomatico, setDebitoAutomatico] = useState(false);
 
-  const formatCurrency = (val: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
-
-  const handleTakeLoan = () => {
-    const success = takeLoan(loanAmount, installments);
-    if (success) {
-      addToast('success', 'Crédito Aprovado', `Foram creditados ${formatCurrency(loanAmount)} na sua conta.`);
-    } else {
-      addToast('error', 'Crédito Negado', 'O valor solicitado excede o limite disponível.');
-    }
+  const formatCurrency = (val: number) => {
+    return new Intl.NumberFormat('pt-BR', { 
+      style: 'currency', 
+      currency: 'BRL',
+      minimumFractionDigits: 2 
+    }).format(val);
   };
 
+  const totalDebts = debts.reduce((acc, debt) => acc + (debt.installmentValue * debt.remainingInstallments), 0);
+
+  const tabs = ['PIX', 'Resumo', 'Empréstimos', 'Investimentos', 'Consórcio'];
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="SISTEMA BANCÁRIO CENTRAL" centerTitle className="max-w-4xl">
-      <div className="flex flex-col space-y-8">
+    <Modal isOpen={isOpen} onClose={onClose} title=" " centerTitle className="max-w-4xl">
+      <div className="flex flex-col items-center">
         
-        {/* Liquidity Status */}
-        <div className="bg-[#0a0a0a] border border-white/5 rounded-[2rem] p-8 flex flex-col md:flex-row justify-between items-center gap-6 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#c026d3]/40 to-transparent" />
-          
-          <div className="flex items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl bg-[#c026d3]/10 flex items-center justify-center text-[#c026d3]">
-              <Landmark size={32} />
-            </div>
-            <div>
-              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mb-1">Saldo em Conta</p>
-              <h4 className="text-3xl font-digital text-white tracking-tighter">{formatCurrency(balance)}</h4>
-            </div>
-          </div>
+        {/* Title */}
+        <h2 className="text-2xl font-black text-white uppercase tracking-tight mb-8">Banco Corporativo SAP</h2>
 
-          <div className="md:text-right">
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mb-1">Capacidade de Crédito</p>
-            <h4 className="text-xl font-bold text-emerald-400">ALTA REPUTAÇÃO</h4>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Loan Request Panel */}
-          <div className="bg-[#0a0a0a] rounded-[2rem] border border-white/5 p-8 space-y-6">
-            <div className="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
-              <Building2 size={20} className="text-[#c026d3]" />
-              <h3 className="text-lg font-bold text-white tracking-tight">Nova Linha de Crédito</h3>
-            </div>
-
-            <div className="space-y-6">
-              <div className="space-y-3">
-                <div className="flex justify-between items-end">
-                  <label className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Valor do Aporte</label>
-                  <span className="text-xs text-white font-digital">{formatCurrency(loanAmount)}</span>
-                </div>
-                <input 
-                  type="range"
-                  min="10000"
-                  max={marketParams.maxLoan}
-                  step="10000"
-                  value={loanAmount}
-                  onChange={(e) => setLoanAmount(Number(e.target.value))}
-                  className="w-full h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer accent-[#c026d3] border border-white/5"
-                />
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex justify-between items-end">
-                  <label className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Parcelamento</label>
-                  <span className="text-xs text-white font-bold">{installments} Rodadas</span>
-                </div>
-                <input 
-                  type="range"
-                  min="1"
-                  max="12"
-                  step="1"
-                  value={installments}
-                  onChange={(e) => setInstallments(Number(e.target.value))}
-                  className="w-full h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer accent-[#c026d3] border border-white/5"
-                />
-              </div>
-
-              <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
-                <div className="flex justify-between text-[11px] mb-2 font-bold uppercase tracking-widest text-[#c026d3]">
-                  <span>RESUMO DA SOLICITAÇÃO</span>
-                </div>
-                <div className="flex justify-between text-[11px] mb-1">
-                  <span className="text-gray-500">Juros Estimados</span>
-                  <span className="text-red-400 font-bold">{marketParams.interestRate * 100}% p/ Rodada</span>
-                </div>
-                <div className="flex justify-between text-[11px]">
-                  <span className="text-gray-500">Valor das Parcelas</span>
-                  <span className="text-white font-bold">{formatCurrency((loanAmount * Math.pow(1 + marketParams.interestRate, installments)) / installments)}</span>
-                </div>
-              </div>
-
-              <button 
-                onClick={handleTakeLoan}
-                className="w-full py-4 bg-[#c026d3] hover:bg-[#a21caf] text-white font-bold uppercase tracking-[0.2em] text-[10px] rounded-xl transition-all active:scale-95 shadow-lg flex items-center justify-center gap-2"
-              >
-                AUTORIZAR CRÉDITO
-                <ArrowUpRight size={14} />
-              </button>
-            </div>
-          </div>
-
-          {/* Active Debts / Obligations */}
-          <div className="bg-[#0a0a0a] rounded-[2rem] border border-white/5 p-8 flex flex-col">
-            <div className="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
-              <History size={20} className="text-[#c026d3]" />
-              <h3 className="text-lg font-bold text-white tracking-tight">Obrigações Bancárias</h3>
-            </div>
-
-            <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-3 mt-4 max-h-[350px]">
-              {debts.length > 0 ? (
-                debts.map(debt => (
-                  <div key={debt.id} className="bg-white/5 rounded-xl p-4 border border-white/5 flex justify-between items-center group">
-                    <div className="min-w-0">
-                      <p className="text-xs font-bold text-white truncate pr-2">Empréstimo (Turno {debt.createdAtRound})</p>
-                      <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0.5">{debt.remainingInstallments} parcelas restantes</p>
-                    </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-sm font-digital text-white">{formatCurrency(debt.installmentValue)}</p>
-                      <button 
-                        onClick={() => payInstallment(debt.id)}
-                        disabled={balance < debt.installmentValue}
-                        className="text-[8px] font-black uppercase tracking-widest text-[#c026d3] hover:text-white transition-colors disabled:opacity-30"
-                      >
-                        [ Liquidar Parcela ]
-                      </button>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="h-full flex flex-col items-center justify-center opacity-30 text-center py-10">
-                  <AlertCircle size={32} className="text-gray-500 mb-2" />
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">Sem faturas bancárias</p>
-                </div>
+        {/* Tabs Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 w-full px-4 sm:px-10 mb-10">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={cn(
+                "py-3 px-1 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all border",
+                activeTab === tab 
+                  ? "bg-[#3b82f6] text-white border-[#3b82f6] shadow-[0_0_15px_rgba(59,130,246,0.3)]" 
+                  : "bg-[#1a1a1a] text-gray-500 border-white/5 hover:border-white/10"
               )}
-            </div>
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full px-4 sm:px-10 mb-8">
+          <div className="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center space-y-2 min-h-[140px]">
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Saldo Total</p>
+            <h4 className="text-xl font-digital font-bold text-[#facc15] tracking-tighter">
+              {formatCurrency(balance)}
+            </h4>
+          </div>
+
+          <div className="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center space-y-2 min-h-[140px]">
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Dívidas Ativas</p>
+            <h4 className="text-xl font-digital font-bold text-[#facc15] tracking-tighter">
+              {formatCurrency(totalDebts)}
+            </h4>
+          </div>
+
+          <div className="bg-[#0f0f0f] border border-white/5 rounded-2xl p-6 flex flex-col items-center justify-center space-y-2 min-h-[140px]">
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Rendimento Previsto</p>
+            <h4 className="text-xl font-digital font-bold text-[#facc15] tracking-tighter">
+              {formatCurrency(0)}
+            </h4>
           </div>
         </div>
 
-        {/* Info box Match */}
-        <div className="bg-amber-500/5 border border-amber-500/10 rounded-2xl p-5 flex items-start gap-4">
-            <AlertCircle size={20} className="text-amber-500 shrink-0 mt-0.5" />
-            <p className="text-[10px] text-amber-500/80 font-bold uppercase tracking-widest leading-relaxed">
-              Conselho: Utilize o crédito bancário para sustentar saltos de investimento em Infraestrutura ou Marketing, mas monitore as taxas de juros para não comprometer sua margem líquida.
-            </p>
+        {/* Automatic Debit Section */}
+        <div className="w-full px-4 sm:px-10 mb-10">
+          <div className="bg-[#0f0f0f] border border-white/5 rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#3b82f6]/40 to-transparent opacity-30" />
+            
+            <div className="flex flex-col items-center sm:items-start">
+              <h5 className="text-sm font-black text-white uppercase tracking-widest mb-1">Débito Automático</h5>
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-tight">
+                <span className="text-[#facc15]">ADICUE + 10%</span> de limite de Crédito se ativado.
+              </p>
+            </div>
+
+            <button 
+              onClick={() => setDebitoAutomatico(!debitoAutomatico)}
+              className={cn(
+                "px-8 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 border",
+                debitoAutomatico 
+                  ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" 
+                  : "bg-white/5 text-gray-400 border-white/10"
+              )}
+            >
+              {debitoAutomatico ? "ATIVADO ✓" : "DESATIVADO X"}
+            </button>
+          </div>
         </div>
+
+        {/* Active Items Section */}
+        <div className="w-full px-4 sm:px-10 mb-12">
+           <h5 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.3em] mb-4">Itens Ativos</h5>
+           <div className="py-10 text-center bg-black/20 rounded-[2rem] border border-dashed border-white/5">
+             <p className="text-gray-600 text-[10px] font-bold uppercase tracking-widest">Nenhum item ativo no momento.</p>
+           </div>
+        </div>
+
+        {/* Footer Actions */}
+        <div className="w-full px-4 sm:px-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button className="w-full sm:w-auto min-w-[200px] py-4 bg-gradient-to-r from-[#f97316] to-[#ea580c] hover:brightness-110 text-white font-black uppercase tracking-[0.3em] text-[11px] rounded-2xl transition-all active:scale-95 shadow-[0_10px_30px_rgba(249,115,22,0.2)]">
+            EXTRATO
+          </button>
+          <button 
+            onClick={onClose}
+            className="w-full sm:w-auto min-w-[200px] py-4 bg-[#1a1a1a] hover:bg-[#252525] text-white font-black uppercase tracking-[0.3em] text-[11px] rounded-2xl transition-all border border-white/5 active:scale-95"
+          >
+            Fechar
+          </button>
+        </div>
+
       </div>
     </Modal>
   );

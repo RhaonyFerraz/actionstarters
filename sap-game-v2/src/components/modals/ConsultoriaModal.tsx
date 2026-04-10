@@ -102,7 +102,7 @@ export const ConsultoriaModal: React.FC<{ isOpen: boolean; onClose: () => void }
                   className={cn(
                     "w-full mt-6 py-4 rounded-xl font-bold uppercase tracking-[0.2em] text-[10px] transition-all duration-500 flex items-center justify-center gap-2 active:scale-95 disabled:opacity-30 disabled:grayscale disabled:active:scale-100",
                     canAfford && currentLvl < maxLvl
-                      ? "bg-[#c026d3] hover:bg-[#a21caf] text-white shadow-[0_10px_20px_-5px_rgba(192,38,211,0.3)]" 
+                      ? "bg-[#3b82f6] hover:bg-[#2563eb] text-white shadow-[0_10px_20px_-5px_rgba(59,130,246,0.3)]" 
                       : "bg-[#1a1a1a] text-gray-600 border border-white/5"
                   )}
                 >
