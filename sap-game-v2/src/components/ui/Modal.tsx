@@ -10,10 +10,11 @@ interface ModalProps {
   children: React.ReactNode;
   className?: string;
   headerClassName?: string;
+  centerTitle?: boolean;
   forceTheme?: 'modern-glass' | 'retro-2000' | 'terminal-hacker' | 'sap-blue' | 'high-tech-red';
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className, headerClassName, forceTheme }) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, className, headerClassName, forceTheme, centerTitle }) => {
   const { theme: globalTheme } = useGameStore();
   const theme = forceTheme || globalTheme;
 
@@ -57,7 +58,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
           theme === 'high-tech-red' ? "bg-red-950/50 border-b-2 border-red-600" : "",
           theme !== 'modern-glass' && headerClassName ? headerClassName : ""
         )}>
-          <div className="flex flex-col">
+          <div className={cn("flex flex-col", centerTitle ? "items-center" : "")}>
             <h2 className={cn(
               "text-3xl font-extrabold tracking-tight uppercase leading-none truncate",
               theme === 'modern-glass' ? "text-white" : "",
@@ -66,9 +67,9 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
               theme === 'sap-blue' ? "font-sans font-semibold text-xl tracking-normal" : "",
               theme === 'high-tech-red' ? "font-digital text-red-500 shadow-[0_0_10px_rgba(220,38,38,0.8)]" : ""
             )}>{title}</h2>
-
+  
             {theme === 'modern-glass' && (
-              <div className="h-1 w-12 bg-white mt-2 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.6)]" />
+              <div className={cn("h-1 bg-white mt-2 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.6)]", centerTitle ? "w-24" : "w-12")} />
             )}
           </div>
           <button 
