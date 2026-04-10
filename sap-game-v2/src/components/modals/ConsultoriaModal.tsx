@@ -74,24 +74,11 @@ export const ConsultoriaModal: React.FC<{ isOpen: boolean; onClose: () => void }
                       {dep.desc}
                     </p>
 
-                    {/* Industrial Lamp Progress Dots (10 units) */}
-                    <div className="flex gap-1.5 h-2.5">
+                    {/* Fixed Yellow Industrial Dots with Bloom Effect */}
+                    <div className="flex gap-2 h-2.5">
                       {Array.from({ length: maxLvl }).map((_, i) => {
                         const isActive = i < currentLvl;
-                        // Industrial Color Map: Red -> Orange -> Yellow -> Green -> Blue -> White
-                        const colors = [
-                          '#ef4444', // 1: Red
-                          '#f97316', // 2: Orange
-                          '#facc15', // 3: Yellow
-                          '#a3e635', // 4: Lime
-                          '#22c55e', // 5: Green
-                          '#10b981', // 6: Emerald
-                          '#06b6d4', // 7: Cyan
-                          '#3b82f6', // 8: Blue
-                          '#8b5cf6', // 9: Violet
-                          '#f8fafc', // 10: Ice White
-                        ];
-                        const color = colors[i];
+                        const yellowColor = '#facc15'; // Amarelo Industrial Vibrante
 
                         return (
                           <div 
@@ -101,9 +88,8 @@ export const ConsultoriaModal: React.FC<{ isOpen: boolean; onClose: () => void }
                               isActive ? "opacity-100" : "bg-white/[0.03] border border-white/[0.05] opacity-30"
                             )}
                             style={{ 
-                              backgroundColor: isActive ? color : undefined,
-                              boxShadow: isActive ? `0 0 15px ${color}, 0 0 5px ${color}` : 'none',
-                              filter: isActive ? 'brightness(1.2)' : 'none'
+                              backgroundColor: isActive ? yellowColor : undefined,
+                              boxShadow: isActive ? `0 0 15px ${yellowColor}, 0 0 5px ${yellowColor}` : 'none'
                             }}
                           />
                         );
