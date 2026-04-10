@@ -94,27 +94,56 @@ export const BankModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                     <p className="text-xs font-mono-neon text-neon-cyan">
                        RESTANTE: {formatBRL(debt.totalAmount)}
                     </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-tighter mb-2">
-                       {debt.remainingInstallments}x de {formatBRL(debt.installmentValue)}
-                    </p>
-                    <Button 
-                      variant="secondary" 
-                      onClick={() => payInstallment(debt.id)}
-                      size="sm"
-                      disabled={balance < debt.installmentValue}
-                      className="px-4 text-[10px]"
-                    >
-                      LIQUIDAR PARCELA
-                    </Button>
-                  </div>
-                </div>
-              ))}
+                AUTORIZAR CRÉDITO
+                <ArrowUpRight size={14} />
+              </button>
             </div>
-          )}
+          </div>
+
+          {/* Active Debts / Obligations */}
+          <div className="bg-[#0a0a0a] rounded-[2rem] border border-white/5 p-8 flex flex-col">
+            <div className="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
+              <History size={20} className="text-[#c026d3]" />
+              <h3 className="text-lg font-bold text-white tracking-tight">Obrigações Ativas</h3>
+            </div>
+
+            <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-3 mt-4 max-h-[280px]">
+              {activeLoans.length > 0 ? (
+                activeLoans.map(loan => (
+                  <div key={loan.id} className="bg-white/5 rounded-xl p-4 border border-white/5 flex justify-between items-center group">
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-white truncate pr-2">{loan.title}</p>
+                      <p className="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0.5">Venc: Rodada {loan.dueRound}</p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="text-sm font-digital text-white">{formatCurrency(loan.amount)}</p>
+                      <button 
+                        onClick={() => payFinancialNote(loan.id)}
+                        disabled={balance < loan.amount}
+                        className="text-[8px] font-black uppercase tracking-widest text-[#c026d3] hover:text-white transition-colors disabled:opacity-30"
+                      >
+                        [ Liquidar ]
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center opacity-30 text-center py-10">
+                  <AlertCircle size={32} className="text-gray-500 mb-2" />
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">Sem débitos ativos</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
+        {/* Info box Match */}
+        <div className="bg-purple-500/5 border border-purple-500/10 rounded-2xl p-5 flex items-start gap-4">
+            <AlertCircle size={20} className="text-purple-400 shrink-0 mt-0.5" />
+            <p className="text-[10px] text-purple-400/80 font-bold uppercase tracking-widest leading-relaxed">
+              Conselho: Utilize o crédito bancário para sustentar saltos de investimento em Infraestrutura ou Marketing, mas monitore as taxas de juros para não comprometer sua margem líquida.
+            </p>
+        </div>
       </div>
     </Modal>
   );

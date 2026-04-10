@@ -1,63 +1,81 @@
 import React, { useState } from 'react';
 import { Modal } from '../ui/Modal';
-import { Button } from '../ui/Button';
+import { useGameStore } from '../../store/useGameStore';
 import { useCommercial } from '../../hooks/useCommercial';
-import { useToast } from '../../hooks/useToast';
+import { Package, TrendingUp, ShoppingCart, AlertCircle, ArrowRight } from 'lucide-react';
+import { cn } from '../ui/Button';
 
 export const CommercialModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  const { skus, currentPrice, commercialLevel, sellProducts } = useCommercial();
-  const { addToast } = useToast();
-  const [sellAmount, setSellAmount] = useState<number>(1);
+  const { skus, currentRound } = useGameStore();
+  const { sellProducts } = useCommercial();
+  const [sellAmount, setSellAmount] = useState(1);
+  const [isSelling, setIsSelling] = useState(false);
 
-  const handleSell = () => {
-    const result = sellProducts(sellAmount);
-    
-    if (result.success) {
-      addToast('success', 'Venda Concluída', result.message || 'Produto faturado com sucesso.');
-      setSellAmount(1);
-    } else {
-      addToast('error', 'Falha na Venda', result.message || 'Não foi possível concluir o faturamento.');
-    }
+  const pricePerUnit = 2500;
+  const totalStock = skus.length;
+
+  const handleSell = async () => {
+    if (sellAmount <= 0 || sellAmount > totalStock) return;
+    setIsSelling(true);
+    await sellProducts(sellAmount);
+    setIsSelling(false);
+    setSellAmount(1);
   };
 
-  const formatBRL = (val: number) => 
-    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
+  const formatCurrency = (val: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Departamento Comercial">
-      <div className="space-y-6">
+    <Modal isOpen={isOpen} onClose={onClose} title="DEPARTAMENTO COMERCIAL" centerTitle className="max-w-2xl">
+      <div className="flex flex-col space-y-8">
         
-        {/* Market Status Bar */}
-        <div className="bg-black/60 rounded-xl p-6 border border-neon-green/20 shadow-[0_0_20px_rgba(0,0,0,0.5)] flex justify-between items-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-neon-green/40 shadow-[0_0_10px_rgba(57,255,20,0.4)]" />
-          <div>
-            <p className="text-xs text-neon-green/60 uppercase tracking-[0.2em] font-mono-neon font-bold">Estoque Disponível</p>
-            <h3 className="text-4xl font-digital font-bold text-white mt-1 neon-text">{skus} <span className="text-xs font-normal opacity-50 tracking-normal">UN</span></h3>
+        {/* Status Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 flex items-center gap-4 group">
+            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+              <Package size={24} />
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mb-0.5">Estoque Disponível</p>
+              <h4 className="text-2xl font-digital text-white">{totalStock} <span className="text-[10px] font-sans text-gray-400">UNIDADES</span></h4>
+            </div>
           </div>
-          <div className="text-right border-l border-white/10 pl-8">
-            <p className="text-xs text-neon-cyan/60 uppercase tracking-[0.2em] font-mono-neon font-bold">Preço de Mercado</p>
-            <h3 className="text-2xl font-digital font-bold mt-1 text-neon-cyan tracking-tight">{formatBRL(currentPrice)}<span className="text-xs text-white/30 font-normal tracking-normal ml-1">/un</span></h3>
+
+          <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6 flex items-center gap-4 group">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+              <TrendingUp size={24} />
+            </div>
+            <div>
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mb-0.5">Preço de Mercado</p>
+              <h4 className="text-2xl font-digital text-white">{formatCurrency(pricePerUnit)}</h4>
+            </div>
           </div>
         </div>
 
-        {/* Sell Form */}
-        <div className="bg-black/20 rounded-xl p-6 border border-white/5">
-          <h4 className="font-digital text-sm text-white border-b border-white/5 pb-3 mb-4 tracking-widest uppercase opacity-80">Despacho de Mercadorias</h4>
-          <p className="text-xs text-gray-500 mb-6 leading-relaxed">
-            Selecione o volume de SKUs para escoar do seu estoque e injetar liquidez na empresa.
-            Nível atual do setor Comercial: <strong className="text-neon-green">Lv {commercialLevel}</strong>.
-          </p>
-          
-          <div className="flex gap-4 items-end">
-            <div className="flex-1">
-              <label className="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-2">Quantidade para Venda</label>
+        {/* Sell Form Card */}
+        <div className="bg-[#0a0a0a] rounded-[2rem] border border-white/5 p-8 space-y-8 relative overflow-hidden">
+          <div className="space-y-2 relative z-10">
+            <h3 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+              <ShoppingCart size={20} className="text-[#c026d3]" />
+              Painel de Vendas
+            </h3>
+            <p className="text-gray-500 text-sm leading-relaxed max-w-md">
+              Selecione a quantidade de produtos acabados para faturamento. O valor será convertido em um título a receber.
+            </p>
+          </div>
+
+          <div className="space-y-6 relative z-10">
+            <div className="space-y-4">
+              <div className="flex justify-between items-end">
+                <label className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Quantidade</label>
+                <span className="text-xs text-gray-500 font-bold">{sellAmount} de {totalStock} selecionados</span>
+              </div>
               <input 
-                type="number" 
-                min={1}
-                max={skus || 1}
+                type="range"
+                min="0"
+                max={totalStock}
                 value={sellAmount}
                 onChange={(e) => setSellAmount(Number(e.target.value))}
-                className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 focus:border-neon-green/50 focus:ring-1 focus:ring-neon-green/20 outline-none font-digital text-xl text-white transition-all shadow-inner"
+                className="w-full h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer accent-[#c026d3] border border-white/5"
               />
             </div>
             
