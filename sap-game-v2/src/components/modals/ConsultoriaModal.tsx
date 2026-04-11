@@ -23,9 +23,9 @@ export const ConsultoriaModal: React.FC<{ isOpen: boolean; onClose: () => void }
 
   const departments: { id: keyof ModulesLevels; name: string; icon: any; desc: string; color: string }[] = [
     { id: 'commercial', name: 'Infraestrutura', icon: Building2, color: 'text-blue-400', desc: 'Melhora o galpão e os ativos industriais em até 30% por rodada.' },
-    { id: 'pcp', name: 'Máquinas', icon: Factory, color: 'text-purple-400', desc: 'Melhora o maquinário da fábrica em até 40% por rodada.' },
+    { id: 'pcp', name: 'Máquinas', icon: Factory, color: 'text-blue-500', desc: 'Melhora o maquinário da fábrica em até 40% por rodada.' },
     { id: 'hr', name: 'Treinamento', icon: GraduationCap, color: 'text-emerald-400', desc: 'Melhora o capital humano e reduz custos operacionais em até 20% por rodada.' },
-    { id: 'marketing', name: 'Propaganda', icon: Megaphone, color: 'text-rose-400', desc: 'Melhora os pontos de visibilidade em até 10% em rodadas próximas.' },
+    { id: 'marketing', name: 'Propaganda', icon: Megaphone, color: 'text-cyan-500', desc: 'Melhora os pontos de visibilidade em até 10% em rodadas próximas.' },
     { id: 'logistics', name: 'Logística', icon: Truck, color: 'text-amber-400', desc: 'Melhora o frete e a logística de percurso por rodada.' },
     { id: 'financial', name: 'Consultoria', icon: FileText, color: 'text-cyan-400', desc: 'Recupere 10% dos ganhos perdidos em percursos por rodada.' }
   ];

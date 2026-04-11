@@ -64,7 +64,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
             centerTitle ? "items-center text-center" : ""
           )}>
             <h2 className={cn(
-              "text-3xl font-extrabold tracking-tight uppercase leading-none truncate",
+              "text-lg sm:text-2xl font-bold tracking-tight uppercase leading-none truncate",
               theme === 'modern-glass' ? "text-white" : "",
               theme === 'retro-2000' ? "text-base font-sans font-bold text-white tracking-normal uppercase" : "",
               theme === 'terminal-hacker' ? "font-digital text-neon-green shadow-none text-xl" : "",

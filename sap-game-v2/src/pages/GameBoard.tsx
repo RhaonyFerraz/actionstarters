@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useTurn } from '../hooks/useTurn';
 import { BankModal } from '../components/modals/BankModal';
 import { CommercialModal } from '../components/modals/CommercialModal';
-import { InventarioModal } from '../components/modals/InventarioModal';
 import { ConsultoriaModal } from '../components/modals/ConsultoriaModal';
 import { FinanceiroModal } from '../components/modals/FinanceiroModal';
 import { QuizModal } from '../components/modals/QuizModal';

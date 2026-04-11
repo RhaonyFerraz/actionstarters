@@ -256,12 +256,12 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     <Modal isOpen={isOpen} onClose={onClose} title="Jornada de Aprendizado SAP">
       <div className="p-2 space-y-6">
         
-        <div className="flex items-center gap-6 bg-slate-900/50 backdrop-blur-md border border-white/10 p-6 rounded-2xl text-neon-cyan shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-neon-cyan/50 shadow-[0_0_10px_rgba(0,255,255,0.4)]" />
-          <HelpCircle size={40} className="shrink-0 opacity-80" />
+        <div className="flex items-center gap-6 bg-[#0a0a0a]/60 backdrop-blur-xl border border-white/5 p-6 rounded-[2rem] text-blue-400 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-[2px] h-full bg-[#3b82f6]/30 shadow-[0_0_15px_rgba(59,130,246,0.3)]" />
+          <HelpCircle size={32} className="shrink-0 opacity-60" />
           <div className="flex-1">
              <div className="flex justify-between items-center mb-1">
-                <h3 className="font-digital font-bold text-xs uppercase tracking-[0.2em] opacity-60">Diretiva de Bonificação Corporativa</h3>
+                <h3 className="font-digital font-bold text-[9px] uppercase tracking-[0.3em] opacity-40">Diretiva de Bonificação Corporativa</h3>
                 
                 {/* Mode Differentiation: Irreversible in Modern, Toggle in Classic */}
                 {isModern ? (
@@ -288,22 +288,22 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                 )}
              </div>
              
-             <p className="text-sm font-mono-neon text-white/80 leading-relaxed">
-                Responda corretamente para injetar <strong className="text-neon-cyan font-digital text-lg">{formatBRL(isModern && language === 'pt' ? Math.floor(questionData.bonusAmount * 0.9) : questionData.bonusAmount)}</strong> em sua conta operacional.
-                {isModern && language === 'pt' && <span className="block text-[10px] text-red-400 mt-1 uppercase font-bold italic tracking-widest animate-pulse">⚠️ Penalidade de 10% aplicada por usar tradução</span>}
+             <p className="text-sm font-medium text-gray-400 leading-relaxed">
+                Responda corretamente para injetar <strong className="text-blue-400 font-digital text-base">{formatBRL(isModern && language === 'pt' ? Math.floor(questionData.bonusAmount * 0.9) : questionData.bonusAmount)}</strong> em sua conta operacional.
+                {isModern && language === 'pt' && <span className="block text-[9px] text-red-400/60 mt-1 uppercase font-black italic tracking-widest">⚠️ Penalidade de 10% aplicada por usar tradução</span>}
              </p>
           </div>
         </div>
 
         <div>
            <div className="relative mb-6">
-             <div className="absolute -left-4 top-0 w-1 h-full bg-neon-cyan shadow-[0_0_10px_rgba(0,255,255,0.5)]" />
+             <div className="absolute -left-4 top-0 w-[2px] h-full bg-[#3b82f6]/40 shadow-[0_0_10px_rgba(59,130,246,0.2)]" />
              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pl-4">
-               <h2 className="text-2xl font-digital font-bold text-white leading-tight tracking-tight flex-1">
+               <h2 className="text-xl font-digital font-bold text-white leading-relaxed tracking-normal flex-1">
                  {displayQuestion}
                </h2>
                {questionData.imageUrl && !isAnswered && (
-                 <Button onClick={() => setShowImage(!showImage)} variant="neon" className="shrink-0 !py-2 !px-4 !border-neon-cyan/50 !text-neon-cyan hover:!bg-neon-cyan/10">
+                 <Button onClick={() => setShowImage(!showImage)} variant="neon" className="shrink-0 !py-2 !px-4 !border-blue-400/40 !text-blue-400 hover:!bg-blue-400/10">
                    <ImageIcon size={18} className="mr-2" />
                    {showImage ? 'Ocultar Anexo' : 'Ver Imagem de Apoio'}
                  </Button>
@@ -314,7 +314,7 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
            {showImage && !isAnswered && questionData.imageUrl && (
              <div className="mb-6 p-2 bg-slate-950/40 backdrop-blur-sm border border-white/10 rounded-xl animate-in fade-in slide-in-from-top-4 flex flex-col items-center">
                <img src={questionData.imageUrl} alt="Anexo de Apoio" onClick={() => setIsFullscreenImage(true)} className="w-full max-h-[400px] object-contain rounded-lg cursor-pointer hover:opacity-80 transition-opacity" />
-               <p className="text-neon-cyan/60 text-[10px] uppercase font-digital mt-2 tracking-widest text-center">[ Clique na imagem para expandir ]</p>
+               <p className="text-blue-400/40 text-[10px] uppercase font-digital mt-2 tracking-widest text-center">[ Clique na imagem para expandir ]</p>
              </div>
            )}
 
@@ -323,14 +323,14 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                if (isAnswered && idx !== questionData.correctAnswerIndex && idx !== selectedOption) return null;
                let className = "w-full text-left p-5 rounded-2xl border transition-all font-mono-neon tracking-wide flex items-center group relative overflow-hidden ";
                if (!isAnswered) {
-                 className += selectedOption === idx ? "border-neon-cyan bg-neon-cyan/5 text-neon-cyan shadow-[0_0_15px_rgba(0,255,255,0.1)] ring-1 ring-neon-cyan/30" : "border-white/5 bg-white/5 text-gray-400 hover:border-white/20 hover:bg-white/[0.07]";
+                 className += selectedOption === idx ? "border-[#3b82f6] bg-[#3b82f6]/5 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.1)] ring-1 ring-[#3b82f6]/30" : "border-white/5 bg-white/5 text-gray-500 hover:border-white/20 hover:bg-white/[0.07]";
                } else {
                  if (idx === questionData.correctAnswerIndex) className += "border-neon-green bg-neon-green/5 text-neon-green shadow-[0_0_15px_rgba(57,255,20,0.1)] ring-1 ring-neon-green/30";
                  else if (selectedOption === idx) className += "border-red-500 bg-red-950/20 text-red-400 opacity-60 line-through ring-1 ring-red-500/20";
                }
                return (
                  <button key={idx} disabled={isAnswered} onClick={() => { setSelectedOption(idx); scrollToBottom(); }} className={className}>
-                   <span className={`shrink-0 inline-block w-6 h-6 rounded-md border text-center text-[10px] leading-5 font-black mr-4 transition-all ${selectedOption === idx ? 'bg-neon-cyan text-black border-neon-cyan shadow-[0_0_10px_rgba(0,255,255,0.5)]' : 'bg-slate-800/40 text-gray-500 border-white/10 group-hover:border-white/20'}`}>{String.fromCharCode(65 + idx)}</span>
+                   <span className={`shrink-0 inline-block w-6 h-6 rounded-md border text-center text-[10px] leading-5 font-black mr-4 transition-all ${selectedOption === idx ? 'bg-[#3b82f6] text-white border-[#3b82f6] shadow-[0_0_10px_rgba(59,130,246,0.3)]' : 'bg-slate-800/40 text-gray-600 border-white/10 group-hover:border-white/20'}`}>{String.fromCharCode(65 + idx)}</span>
                    <span className="flex-1">{option}</span>
                  </button>
                )
@@ -346,7 +346,7 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
           ) : (
             <div className="w-full flex flex-col gap-4 animate-in slide-in-from-bottom-2 duration-300">
               <div className="flex justify-between items-center bg-slate-900/40 backdrop-blur-sm p-6 rounded-2xl border border-white/10">
-                <span className={`font-digital text-lg flex items-center gap-3 tracking-tight ${isCorrect ? 'text-neon-green neon-text' : 'text-red-500'}`}>
+                <span className={`font-digital text-base flex items-center gap-3 tracking-tight ${isCorrect ? 'text-neon-green neon-text' : 'text-red-500'}`}>
                   {isCorrect ? (isModern && language === 'pt' ? '✔️ DIRETIVA EXECUTADA (COM PENALIDADE)' : '✔️ DIRETIVA EXECUTADA COM SUCESSO') : '❌ FALHA NA INTEGRIDADE DOS DADOS'}
                 </span>
                 <Button onClick={handleNext} variant="neon" className={isCorrect ? '!text-neon-green !border-neon-green/40' : '!text-gray-500 !border-white/10'}>
@@ -357,16 +357,16 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                 <div className="bg-slate-900/80 backdrop-blur-md border border-white/10 p-6 rounded-2xl text-left space-y-4">
                   {displayExplanation && (
                     <div>
-                      <h4 className="text-neon-cyan font-bold uppercase tracking-widest text-xs mb-2">Justificativa Técnica:</h4>
-                      <p className="text-gray-300 text-sm font-sans leading-relaxed whitespace-pre-wrap">{displayExplanation}</p>
+                      <h4 className="text-[#3b82f6] font-bold uppercase tracking-widest text-[9px] mb-2">Justificativa Técnica:</h4>
+                      <p className="text-gray-400 text-sm font-sans leading-relaxed whitespace-pre-wrap">{displayExplanation}</p>
                     </div>
                   )}
                   {displayBonusText && (
                     <div className="pt-4 border-t border-white/5">
-                      <h4 className="text-yellow-400 font-bold uppercase tracking-widest text-xs mb-2 flex items-center gap-2">
+                      <h4 className="text-yellow-400 font-bold uppercase tracking-widest text-[9px] mb-2 flex items-center gap-2">
                         <HelpCircle size={14} /> Fato Bônus SAP
                       </h4>
-                      <p className="text-gray-400 text-sm font-mono-neon leading-relaxed whitespace-pre-wrap">{displayBonusText}</p>
+                      <p className="text-gray-500 text-sm font-mono-neon leading-relaxed whitespace-pre-wrap">{displayBonusText}</p>
                     </div>
                   )}
                 </div>

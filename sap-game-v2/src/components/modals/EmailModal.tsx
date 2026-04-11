@@ -50,12 +50,12 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
             
             {/* Header / Search Mock */}
             <div className="p-6 border-b border-white/5 space-y-4">
-              <div className="flex items-center justify-between text-[#22d3ee]">
+              <div className="flex items-center justify-between text-[#3b82f6]">
                  <div className="flex items-center gap-2">
                    <Inbox size={20} />
                    <h3 className="text-xs font-black uppercase tracking-[0.3em]">Inbox Operacional</h3>
                  </div>
-                 <span className="bg-[#22d3ee]/10 px-3 py-1 rounded-full text-[10px] font-bold border border-[#22d3ee]/20">
+                 <span className="bg-[#3b82f6]/10 px-3 py-1 rounded-full text-[9px] font-black border border-[#3b82f6]/20 text-[#3b82f6]">
                     {inbox.filter(e => !e.read).length} NOVOS
                  </span>
               </div>
@@ -76,12 +76,12 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                     className={cn(
                       "w-full text-left p-4 rounded-2xl transition-all duration-300 relative group overflow-hidden border",
                       selectedEmailId === email.id 
-                        ? "bg-[#22d3ee]/5 border-[#22d3ee]/30 shadow-[0_0_20px_rgba(34,211,238,0.05)]" 
+                        ? "bg-[#3b82f6]/5 border-[#3b82f6]/30 shadow-[0_0_20px_rgba(59,130,246,0.05)]" 
                         : "bg-transparent border-transparent hover:bg-white/5 hover:border-white/10"
                     )}
                   >
                     {!email.read && (
-                      <div className="absolute left-1 top-1/2 -translate-y-1/2 w-1 h-8 bg-[#22d3ee] rounded-full shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
+                      <div className="absolute left-1 top-1/2 -translate-y-1/2 w-[2px] h-6 bg-[#3b82f6] rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
                     )}
                     
                     <div className="flex justify-between items-start mb-1 gap-4">
@@ -97,8 +97,8 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                     </div>
                     
                     <h4 className={cn(
-                      "text-sm tracking-tight line-clamp-1",
-                      email.read ? "text-gray-500 font-medium" : "text-[#22d3ee] font-bold"
+                      "text-xs tracking-tight line-clamp-1",
+                      email.read ? "text-gray-500 font-medium" : "text-blue-400 font-bold"
                     )}>
                       {email.subject}
                     </h4>
@@ -125,18 +125,18 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                      <button onClick={() => setSelectedEmailId(null)} className="p-2 rounded-xl bg-white/5 text-white hover:bg-white/10">
                         <ChevronLeft size={20} />
                      </button>
-                     <span className="text-xs font-black text-gray-400 uppercase tracking-widest">Lista de Mensagens</span>
+                     <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Lista de Mensagens</span>
                   </div>
 
                   <div className="space-y-6">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                       <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tighter leading-none">
+                       <h2 className="text-xl sm:text-2xl font-bold text-white tracking-normal leading-tight">
                          {selectedEmail.subject}
                        </h2>
                        <div className="flex items-center gap-3">
-                         <div className="bg-[#22d3ee]/10 border border-[#22d3ee]/20 px-4 py-1.5 rounded-full flex items-center gap-2">
-                           <Calendar size={12} className="text-[#22d3ee]" />
-                           <span className="text-[10px] font-black text-[#22d3ee] uppercase tracking-widest">{formatRound(selectedEmail.timestampRound)}</span>
+                         <div className="bg-[#3b82f6]/10 border border-[#3b82f6]/20 px-4 py-1.5 rounded-full flex items-center gap-2">
+                           <Calendar size={12} className="text-[#3b82f6]" />
+                           <span className="text-[10px] font-black text-[#3b82f6] uppercase tracking-widest">{formatRound(selectedEmail.timestampRound)}</span>
                          </div>
                        </div>
                     </div>
@@ -146,7 +146,7 @@ export const EmailModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                         {selectedEmail.sender[0]}
                       </div>
                       <div>
-                        <p className="text-[10px] text-gray-500 font-black uppercase tracking-[0.2em] mb-0.5">Remetente</p>
+                        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mb-0.5">Remetente</p>
                         <p className="text-sm text-gray-200 font-bold">{selectedEmail.sender}</p>
                       </div>
                     </div>
