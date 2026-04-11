@@ -111,6 +111,66 @@
   animation: flyToBank 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
+@keyframes flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor);
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+    opacity: 0.4;
+    filter: none;
+  }
+}
+
+@keyframes reveal-logo {
+  0% { opacity: 0; filter: blur(20px); transform: scale(0.8); }
+  100% { opacity: 1; filter: blur(0); transform: scale(1); }
+}
+
+@keyframes slow-zoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+@keyframes fade-out-intro {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.05); }
+}
+
+.animate-flicker { animation: flicker 3s linear infinite; }
+.animate-reveal-logo { animation: reveal-logo 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards; }
+.animate-slow-zoom { animation: slow-zoom 8s ease-out forwards; }
+.animate-fade-out-intro { animation: fade-out-intro 1s ease-in forwards; }
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.animate-glitch {
+  animation: glitch 0.2s ease-in-out infinite;
+}
+
+.text-metallic {
+  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes progress-load {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-progress-load {
+  animation: progress-load 4s linear forwards;
+}
+
 @layer base {
   body {
     @apply bg-[#121212] text-gray-300 antialiased transition-colors duration-500 overflow-x-hidden;

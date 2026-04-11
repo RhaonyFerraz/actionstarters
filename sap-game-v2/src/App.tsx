@@ -7,7 +7,7 @@ import { BackgroundCarousel } from './components/layout/BackgroundCarousel';
 import { useGameStore } from './store/useGameStore';
 import { useCloudSave } from './hooks/useCloudSave';
 import { useAuth } from './hooks/useAuth';
-import { Loader2 } from 'lucide-react';
+import { IntroScreen } from './components/ui/IntroScreen';
 
 /**
  * MODO DE PRODUÇÃO SAP ATIVO 🛠️
@@ -29,6 +29,7 @@ const App = () => {
 
   return (
     <div className={`min-h-screen theme-${theme}`}>
+      <IntroScreen />
       <BackgroundCarousel />
       <ToastProvider>
         <Routes>

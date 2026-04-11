@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from '../ui/Modal';
 import { useGameStore } from '../../store/useGameStore';
+import { AlertCircle } from 'lucide-react';
 import { cn } from '../ui/Button';
 
 interface DespesasModalProps {
@@ -55,6 +56,10 @@ export const DespesasModal: React.FC<DespesasModalProps> = ({ isOpen, onClose })
         <div className="text-center mb-10 space-y-2">
           <h2 className="text-3xl font-black text-white uppercase tracking-tight">Controle de Despesas</h2>
           <p className="text-gray-500 text-sm font-medium tracking-wide">Gestão de custos fixos e variáveis da operação.</p>
+          <div className="pt-4 flex items-center justify-center gap-2 text-red-500 animate-pulse bg-red-500/5 px-6 py-2 rounded-full border border-red-500/10">
+             <AlertCircle size={16} />
+             <span className="text-[10px] font-black uppercase tracking-[0.3em]">PAGAMENTO PENDENTE (QUESTÃO 5+)</span>
+          </div>
         </div>
 
         {/* Expenses Grid */}

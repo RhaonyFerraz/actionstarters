@@ -57,4 +57,5 @@ export interface PlayerState {
   debts: Debt[];
   financialNotes: FinancialNote[];
   inbox: EmailMessage[];
+  hasSeenIntro: boolean;
 }

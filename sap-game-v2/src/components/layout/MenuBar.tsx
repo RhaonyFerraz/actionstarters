@@ -1,6 +1,6 @@
 import { 
   Building2, 
-  PiggyBank, 
+  Landmark, 
   Package, 
   Receipt, 
   Mail, 
@@ -8,7 +8,8 @@ import {
   Eye,
   EyeOff,
   Zap,
-  Settings
+  Settings,
+  BarChart3
 } from 'lucide-react';
 import { useGameStore } from '../../store/useGameStore';
 import React, { useState } from 'react';
@@ -73,12 +74,12 @@ export const MenuBar: React.FC<MenuBarProps> = ({
           )}>
             <span className={cn(
               "uppercase font-bold tracking-widest hidden lg:block",
-              theme === 'modern-glass' ? "text-[10px] text-gray-400 mb-0.5" : "",
+              theme === 'modern-glass' ? "text-[10px] text-black/40 mb-0.5" : "",
               theme === 'sap-blue' ? "text-[9px] text-blue-300 mb-0.5" : ""
             )}>Disponível</span>
             <span className={cn(
               "font-digital tracking-tighter truncate",
-              theme === 'modern-glass' ? "text-neon-green text-base sm:text-2xl drop-shadow-[0_0_10px_rgba(56,211,26,0.6)]" : "",
+              theme === 'modern-glass' ? "text-black text-base sm:text-2xl font-black tracking-tight" : "",
               theme === 'retro-2000' ? "text-neon-green text-sm sm:text-lg drop-shadow-[0_0_3px_rgba(56,211,26,0.5)]" : "",
               theme === 'terminal-hacker' ? "text-neon-green text-sm sm:text-xl" : "",
               theme === 'sap-blue' ? "text-white text-sm sm:text-xl font-sans font-bold tracking-normal" : "",
@@ -92,7 +93,8 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         {/* Center: Navigation (Visible only on Desktop/Tablet md+) */}
         <nav className="hidden md:flex flex-1 items-center justify-center gap-2 lg:gap-4 relative z-10 mx-2">
           <MenuButton icon={<Building2 size={20} />} label="Banco" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<PiggyBank size={20} />} label="Financeiro" onClick={onOpenFinanceiro || onOpenBank} color="green" />
+          <MenuButton icon={<Landmark size={20} />} label="Financeiro" onClick={onOpenFinanceiro || onOpenBank} color="green" />
+          <MenuButton icon={<BarChart3 size={20} />} label="Comercial" onClick={onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={20} />} label="Melhorias" onClick={onOpenConsultoria} color="green" />
           <MenuButton icon={<Receipt size={20} />} label="Despesas" onClick={onOpenDespesas || onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton 
@@ -183,7 +185,8 @@ export const MenuBar: React.FC<MenuBarProps> = ({
       )}>
         <nav className="flex items-center justify-around h-full w-full">
           <MenuButton icon={<Building2 size={24} />} label="Banco" onClick={onOpenBank} color="green" />
-          <MenuButton icon={<PiggyBank size={24} />} label="Finance" onClick={onOpenFinanceiro || onOpenBank} color="green" />
+          <MenuButton icon={<Landmark size={24} />} label="Finance" onClick={onOpenFinanceiro || onOpenBank} color="green" />
+          <MenuButton icon={<BarChart3 size={24} />} label="Com" onClick={onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={24} />} label="Up" onClick={onOpenConsultoria} color="green" />
           <MenuButton icon={<Receipt size={24} />} label="Bills" onClick={onOpenDespesas || onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton 
@@ -259,7 +262,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ icon, label, onClick, badge, co
         "uppercase font-bold tracking-widest transition-colors hidden md:block",
         theme === 'modern-glass' ? cn(
           "text-[9px] mt-1 transition-all duration-300",
-          "text-gray-500 group-hover:text-white",
+          "text-black drop-shadow-[0_0_2px_rgba(255,255,255,0.8)] group-hover:text-black group-hover:drop-shadow-[0_0_5px_rgba(255,255,255,1)]",
           color === 'green' ? "group-hover:drop-shadow-[0_0_8px_rgba(56,211,26,0.5)]" : "group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
         ) : "",
         theme === 'retro-2000' ? "text-[10px] hidden lg:block text-black" : "",

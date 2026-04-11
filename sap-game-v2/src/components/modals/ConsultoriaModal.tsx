@@ -1,135 +1,162 @@
 import React from 'react';
 import { Modal } from '../ui/Modal';
 import { useGameStore } from '../../store/useGameStore';
-import { Truck, Factory, GraduationCap, Megaphone, Building2, FileText, ChevronRight } from 'lucide-react';
-import { ModulesLevels } from '../../types';
+import { 
+  Building2, 
+  Cpu, 
+  GraduationCap, 
+  Megaphone, 
+  Truck, 
+  UserRound,
+  ArrowUpRight,
+  TrendingUp,
+  ShieldCheck
+} from 'lucide-react';
 import { cn } from '../ui/Button';
 
 export const ConsultoriaModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  const levels = useGameStore(state => state.modulesLevels);
-  const balance = useGameStore(state => state.balance);
-  const upgradeModule = useGameStore(state => state.upgradeModule);
+  const { balance, modulesLevels, upgradeModule } = useGameStore();
 
-  const formatCurrency = (val: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(val);
-
-  const getUpgradeCost = (currentLvl: number) => Math.floor(10000 * Math.pow(1.5, currentLvl));
-
-  const handleUpgrade = (id: keyof ModulesLevels) => {
-    const cost = getUpgradeCost(levels[id]);
-    if (balance >= cost) {
-      upgradeModule(id, cost);    
-    }
+  const handleUpgrade = (id: string, cost: number) => {
+    upgradeModule(id as any, cost);
   };
 
-  const departments: { id: keyof ModulesLevels; name: string; icon: any; desc: string; color: string }[] = [
-    { id: 'commercial', name: 'Infraestrutura', icon: Building2, color: 'text-blue-400', desc: 'Melhora o galpão e os ativos industriais em até 30% por rodada.' },
-    { id: 'pcp', name: 'Máquinas', icon: Factory, color: 'text-blue-500', desc: 'Melhora o maquinário da fábrica em até 40% por rodada.' },
-    { id: 'hr', name: 'Treinamento', icon: GraduationCap, color: 'text-emerald-400', desc: 'Melhora o capital humano e reduz custos operacionais em até 20% por rodada.' },
-    { id: 'marketing', name: 'Propaganda', icon: Megaphone, color: 'text-cyan-500', desc: 'Melhora os pontos de visibilidade em até 10% em rodadas próximas.' },
-    { id: 'logistics', name: 'Logística', icon: Truck, color: 'text-amber-400', desc: 'Melhora o frete e a logística de percurso por rodada.' },
-    { id: 'financial', name: 'Consultoria', icon: FileText, color: 'text-cyan-400', desc: 'Recupere 10% dos ganhos perdidos em percursos por rodada.' }
+  const improvements = [
+    {
+      id: 'hr', // Mapping to 'Treinamento' in the old system or HR in current
+      title: 'Treinamento',
+      icon: GraduationCap,
+      description: 'Valoriza matéria-prima e reduz multas por erros em 2% por nível.',
+      cost: 5000,
+      color: 'text-emerald-400',
+      bgColor: 'bg-emerald-400/10'
+    },
+    {
+      id: 'marketing', // Propaganda
+      title: 'Propaganda',
+      icon: Megaphone,
+      description: 'Valoriza produtos acabados e dá + R$ 20 em eventos positivos.',
+      cost: 4500,
+      color: 'text-blue-400',
+      bgColor: 'bg-blue-400/10'
+    },
+    {
+      id: 'logistics', // Logística
+      title: 'Logística',
+      icon: Truck,
+      description: 'Valoriza frota e dá + R$ 5 de bônus por acerto.',
+      cost: 6000,
+      color: 'text-amber-400',
+      bgColor: 'bg-amber-400/10'
+    },
+    {
+      id: 'pcp', // Using PCP for Machines/Infrastructure or similar
+      title: 'Máquinas',
+      icon: Cpu,
+      description: 'Pronto para aumentar a produtividade e o valor do maquinário.',
+      cost: 8000,
+      color: 'text-purple-400',
+      bgColor: 'bg-purple-400/10'
+    },
+    {
+      id: 'infrastructure', // New conceptual ID or mapping to existing
+      title: 'Infraestrutura',
+      icon: Building2,
+      description: 'Aumenta o valor do Galpão no inventário em o dobro do investimento.',
+      cost: 12000,
+      color: 'text-rose-400',
+      bgColor: 'bg-rose-400/10'
+    },
+    {
+      id: 'commercial', // Consultores
+      title: 'Consultores',
+      icon: UserRound,
+      description: '+2s questões, +1% val. penhora e +10% limite crédito.',
+      cost: 15000,
+      color: 'text-indigo-400',
+      bgColor: 'bg-indigo-400/10'
+    }
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="GESTÃO ESTRATÉGICA" centerTitle className="max-w-4xl">
-      <div className="flex flex-col space-y-8">
+    <Modal isOpen={isOpen} onClose={onClose} title=" " centerTitle className="max-w-6xl">
+      <div className="flex flex-col space-y-12 pb-10">
         
-        {/* Header Style Match */}
-        <div className="text-center px-4 pt-2">
-          <p className="text-gray-500 text-sm font-medium italic opacity-80 max-w-2xl mx-auto">
-            Invista em infraestrutura e pessoal para otimizar os buffers de produtividade e maximizar a liquidez operacional do seu ERP.
-          </p>
+        {/* Header Section */}
+        <div className="flex flex-col items-center gap-6 px-4">
+           <div className="flex items-center gap-4 text-white">
+              <TrendingUp size={32} className="text-[#3b82f6]" />
+              <h2 className="text-3xl font-black uppercase tracking-tighter">Melhorias Estratégicas</h2>
+           </div>
+           <p className="max-w-2xl text-center text-sm font-medium text-gray-400 leading-relaxed">
+             Aprimore sua operação para aumentar a eficiência e o lucro por rodada. Escolha investimentos de alto ROI para valorizar seus ativos e mitigar riscos operacionais.
+           </p>
         </div>
 
-        {/* Improvements Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {departments.map(dep => {
-            const currentLvl = levels[dep.id];
-            const cost = getUpgradeCost(currentLvl);
-            const canAfford = balance >= cost;
-            const maxLvl = 10;
+        {/* Improvements Grid (Exact Emulation of the 6 areas) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-10">
+           {improvements.map((item) => {
+              const level = (modulesLevels as any)[item.id] || 0;
+              const currentCost = item.cost * (level + 1);
+              const canAfford = balance >= currentCost;
 
-            return (
-              <div key={dep.id} className="bg-[#0a0a0a] rounded-[2rem] p-6 flex flex-col justify-between border border-white/5 hover:border-white/10 transition-all duration-500 group relative overflow-hidden">
-                
-                <div className="flex gap-5 relative z-10">
-                  <div className={cn(
-                    "w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 shrink-0",
-                    "bg-white/5 border border-white/5 group-hover:bg-white/10 group-hover:border-white/20",
-                    dep.color
-                  )}>
-                    <dep.icon size={28} />
-                  </div>
-                  
-                  <div className="flex-1 min-w-0">
-                    <div className="flex justify-between items-center mb-1">
-                      <h3 className="font-bold text-white text-lg tracking-tight group-hover:text-cyan-400 transition-colors">{dep.name}</h3>
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-500 whitespace-nowrap">Nível: {currentLvl}</span>
-                    </div>
-                    
-                    <p className="text-xs text-gray-500 leading-relaxed font-sans mb-4 opacity-80">
-                      {dep.desc}
-                    </p>
+              return (
+                <div key={item.id} className="bg-[#0a0a0a] border border-white/5 rounded-[2.5rem] p-8 flex flex-col space-y-6 hover:border-white/20 transition-all group relative overflow-hidden">
+                   <div className={cn("absolute top-0 right-0 w-32 h-32 blur-[80px] opacity-20 pointer-events-none", item.bgColor)} />
+                   
+                   <div className="flex items-center justify-between">
+                      <div className={cn("p-4 rounded-2xl", item.bgColor, item.color)}>
+                         <item.icon size={28} />
+                      </div>
+                      <div className="text-right">
+                         <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Nível Atual</p>
+                         <p className="text-xl font-digital text-white">0{level}</p>
+                      </div>
+                   </div>
 
-                    {/* Industrial Level Progress */}
-                    <div className="flex gap-1.5 h-1.5 mb-2">
-                      {Array.from({ length: maxLvl }).map((_, i) => {
-                        const isActive = i < currentLvl;
-                        const yellowColor = '#facc15';
+                   <div className="space-y-2">
+                      <h3 className="text-lg font-black text-white uppercase tracking-widest">{item.title}</h3>
+                      <p className="text-[11px] text-gray-400 font-medium leading-relaxed min-h-[48px]">
+                        {item.description}
+                      </p>
+                   </div>
 
-                        return (
-                          <div 
-                            key={i} 
-                            className={cn(
-                              "flex-1 rounded-[1px] transition-all duration-500",
-                              isActive ? "" : "bg-white/[0.03] border border-white/[0.05] opacity-20"
-                            )}
-                            style={{ 
-                              backgroundColor: isActive ? yellowColor : undefined,
-                              boxShadow: isActive ? `0 0 10px ${yellowColor}` : 'none'
-                            }}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
+                   <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                      <div>
+                         <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest mb-1">Custo Upgrade</p>
+                         <p className="text-lg font-digital text-emerald-500">R$ {currentCost.toLocaleString()}</p>
+                      </div>
+                      <button 
+                         onClick={() => handleUpgrade(item.id, currentCost)}
+                         disabled={!canAfford}
+                         className={cn(
+                           "p-3 rounded-xl transition-all active:scale-95 disabled:opacity-20",
+                           canAfford ? "bg-[#3b82f6] text-white hover:bg-[#2563eb] shadow-lg shadow-blue-900/40" : "bg-white/5 text-gray-500"
+                         )}
+                      >
+                         <ArrowUpRight size={20} />
+                      </button>
+                   </div>
                 </div>
-
-                {/* Magenta Premium Button */}
-                <button 
-                  onClick={() => handleUpgrade(dep.id)}
-                  disabled={!canAfford || currentLvl >= maxLvl}
-                  className={cn(
-                    "w-full mt-6 py-4 rounded-xl font-bold uppercase tracking-[0.2em] text-[10px] transition-all duration-500 flex items-center justify-center gap-2 active:scale-95 disabled:opacity-30 disabled:grayscale disabled:active:scale-100",
-                    canAfford && currentLvl < maxLvl
-                      ? "bg-[#3b82f6] hover:bg-[#2563eb] text-white shadow-[0_10px_20px_-5px_rgba(59,130,246,0.3)]" 
-                      : "bg-[#1a1a1a] text-gray-600 border border-white/5"
-                  )}
-                >
-                  {currentLvl >= maxLvl 
-                    ? "MOLDE DE OPERAÇÃO NO MÁXIMO" 
-                    : (
-                      <>
-                        INVESTIR {formatCurrency(cost)}
-                        <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )
-                  }
-                </button>
-              </div>
-            );
-          })}
+              );
+           })}
         </div>
 
-        {/* Status indicator Match */}
-        <div className="flex justify-center pt-2">
-          <div className="bg-[#111111] px-8 py-3 rounded-2xl border border-white/5 flex items-center gap-4">
-             <div className="text-right">
-                <p className="text-[9px] text-gray-500 font-bold uppercase tracking-[0.2em]">Saldo Disponível</p>
-                <p className="text-white font-digital text-2xl">{formatCurrency(balance)}</p>
-             </div>
-          </div>
+        {/* Institutional Footer */}
+        <div className="flex flex-col items-center gap-6 px-4">
+           <div className="flex items-center gap-2 opacity-30">
+              <ShieldCheck size={16} />
+              <p className="text-[10px] font-black uppercase tracking-[0.4em]">Protocolo de Auditoria SAP Ativo</p>
+           </div>
+           
+           <button 
+             onClick={onClose}
+             className="px-20 py-5 bg-white/5 hover:bg-white/10 text-white font-black uppercase tracking-[0.5em] text-[11px] rounded-[2rem] transition-all border border-white/5 active:scale-95 shadow-2xl"
+           >
+             Fechar Painel Estratégico
+           </button>
         </div>
+
       </div>
     </Modal>
   );

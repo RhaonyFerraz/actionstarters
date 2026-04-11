@@ -17,6 +17,7 @@ interface GameStore extends PlayerState {
   payFinancialNote: (id: string) => void;
   collectFinancialNote: (id: string) => void;
   addFinancialNote: (note: Omit<FinancialNote, 'id' | 'status'>) => void;
+  setHasSeenIntro: (seen: boolean) => void;
 }
 
 const initialState: PlayerState = {
@@ -89,7 +90,8 @@ const initialState: PlayerState = {
       read: false,
       timestampRound: 1
     }
-  ]
+  ],
+  hasSeenIntro: false
 };
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -192,5 +194,7 @@ export const useGameStore = create<GameStore>((set) => ({
         status: 'pending'
       }
     ]
-  }))
+  })),
+
+  setHasSeenIntro: (seen) => set({ hasSeenIntro: seen })
 }));
