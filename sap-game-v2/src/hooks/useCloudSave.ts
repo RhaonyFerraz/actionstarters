@@ -30,7 +30,7 @@ export const useCloudSave = () => {
             balance: data.balance ?? 50000,
             currentRound: data.currentRound ?? 1,
             inventory: data.inventory ?? { skus: 0, machinery: 0, bonusPoints: 0 },
-            modulesLevels: data.modulesLevels ?? { commercial: 1, financial: 1, marketing: 1, hr: 1, pcp: 1, logistics: 1 },
+            modulesLevels: data.modulesLevels ?? { financial: 1, marketing: 1, hr: 1, pcp: 1, logistics: 1 },
             debts: data.debts ?? []
           });
           console.log('✅ Nuvem: Save restaurado com sucesso.');

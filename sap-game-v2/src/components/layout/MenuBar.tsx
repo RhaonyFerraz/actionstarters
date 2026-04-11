@@ -17,7 +17,6 @@ import { cn } from '../ui/Button';
 
 interface MenuBarProps {
   onOpenBank: () => void;
-  onOpenCommercial: () => void;
   onOpenConsultoria: () => void;
   onOpenEmail: () => void;
   onOpenFinanceiro?: () => void;
@@ -28,7 +27,6 @@ interface MenuBarProps {
 
 export const MenuBar: React.FC<MenuBarProps> = ({
   onOpenBank,
-  onOpenCommercial,
   onOpenConsultoria,
   onOpenEmail,
   onOpenFinanceiro,
@@ -95,7 +93,6 @@ export const MenuBar: React.FC<MenuBarProps> = ({
           <MenuButton icon={<Building2 size={20} />} label="Banco" onClick={onOpenBank} color="green" />
           <MenuButton icon={<Landmark size={20} />} label="Financeiro" onClick={onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton icon={<Package size={20} />} label="Estoque" onClick={() => {}} color="blue" />
-          <MenuButton icon={<BarChart3 size={20} />} label="Comercial" onClick={onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={20} />} label="Melhorias" onClick={onOpenConsultoria} color="green" />
           <MenuButton icon={<Receipt size={20} />} label="Despesas" onClick={onOpenDespesas || onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton 
@@ -187,7 +184,6 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         <nav className="flex items-center justify-around h-full w-full">
           <MenuButton icon={<Building2 size={24} />} label="Banco" onClick={onOpenBank} color="green" />
           <MenuButton icon={<Landmark size={24} />} label="Finance" onClick={onOpenFinanceiro || onOpenBank} color="green" />
-          <MenuButton icon={<BarChart3 size={24} />} label="Com" onClick={onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={24} />} label="Up" onClick={onOpenConsultoria} color="green" />
           <MenuButton icon={<Receipt size={24} />} label="Bills" onClick={onOpenDespesas || onOpenFinanceiro || onOpenBank} color="green" />
           <MenuButton 

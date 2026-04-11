@@ -28,7 +28,6 @@ export interface Inventory {
 }
 
 export interface ModulesLevels {
-  commercial: number;
   financial: number;
   marketing: number;
   hr: number;

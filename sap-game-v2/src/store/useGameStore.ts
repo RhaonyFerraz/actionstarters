@@ -35,7 +35,6 @@ const initialState: PlayerState = {
     bonusPoints: 0 
   },
   modulesLevels: {
-    commercial: 1,
     financial: 1,
     marketing: 1,
     hr: 1,

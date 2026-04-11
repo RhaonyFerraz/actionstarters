@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTurn } from '../hooks/useTurn';
 import { BankModal } from '../components/modals/BankModal';
-import { CommercialModal } from '../components/modals/CommercialModal';
 import { ConsultoriaModal } from '../components/modals/ConsultoriaModal';
 import { FinanceiroModal } from '../components/modals/FinanceiroModal';
 import { QuizModal } from '../components/modals/QuizModal';
@@ -20,7 +19,6 @@ export const GameBoard = () => {
   const { advanceTurn } = useTurn(addToast);
 
   const [isBankOpen, setIsBankOpen] = useState(false);
-  const [isCommercialOpen, setIsCommercialOpen] = useState(false);
   const [isConsultoriaOpen, setIsConsultoriaOpen] = useState(false);
   const [isFinanceiroOpen, setIsFinanceiroOpen] = useState(false);
   const [isDespesasOpen, setIsDespesasOpen] = useState(false);
@@ -43,7 +41,6 @@ export const GameBoard = () => {
       {/* Nova Barra de Menu Neon */}
       <MenuBar 
         onOpenBank={() => setIsBankOpen(true)}
-        onOpenCommercial={() => setIsCommercialOpen(true)}
         onOpenConsultoria={() => setIsConsultoriaOpen(true)}
         onOpenFinanceiro={() => setIsFinanceiroOpen(true)}
         onOpenDespesas={() => setIsDespesasOpen(true)}
@@ -57,7 +54,6 @@ export const GameBoard = () => {
 
       {/* Modais */}
       <BankModal isOpen={isBankOpen} onClose={() => setIsBankOpen(false)} />
-      <CommercialModal isOpen={isCommercialOpen} onClose={() => setIsCommercialOpen(false)} />
       <ConsultoriaModal isOpen={isConsultoriaOpen} onClose={() => setIsConsultoriaOpen(false)} />
       <FinanceiroModal isOpen={isFinanceiroOpen} onClose={() => setIsFinanceiroOpen(false)} />
       <DespesasModal isOpen={isDespesasOpen} onClose={() => setIsDespesasOpen(false)} />

@@ -9,7 +9,7 @@ export interface PlayerSaveRecord {
   currentRound: number;
   lastSavedAt: string;
   inventory: { skus: number; machinery: number; bonusPoints: number };
-  modulesLevels: { commercial: number; financial: number; marketing: number; hr: number; pcp: number; logistics: number };
+  modulesLevels: { financial: number; marketing: number; hr: number; pcp: number; logistics: number };
   debts: any[];
 }
 
@@ -29,7 +29,7 @@ export const useAdminData = () => {
         currentRound: d.data().currentRound ?? 1,
         lastSavedAt: d.data().lastSavedAt ?? '—',
         inventory: d.data().inventory ?? { skus: 0, machinery: 0, bonusPoints: 0 },
-        modulesLevels: d.data().modulesLevels ?? { commercial: 1, financial: 1, marketing: 1, hr: 1, pcp: 1, logistics: 1 },
+        modulesLevels: d.data().modulesLevels ?? { financial: 1, marketing: 1, hr: 1, pcp: 1, logistics: 1 },
         debts: d.data().debts ?? [],
       }));
       // Ordena por saldo decrescente (ranking)
@@ -52,7 +52,7 @@ export const useAdminData = () => {
       balance: 50000,
       currentRound: 1,
       inventory: { skus: 0, machinery: 0, bonusPoints: 0 },
-      modulesLevels: { commercial: 1, financial: 1, marketing: 1, hr: 1, pcp: 1, logistics: 1 },
+      modulesLevels: { financial: 1, marketing: 1, hr: 1, pcp: 1, logistics: 1 },
       debts: [],
       lastSavedAt: new Date().toISOString(),
     }, { merge: true });

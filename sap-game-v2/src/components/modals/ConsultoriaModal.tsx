@@ -66,15 +66,6 @@ export const ConsultoriaModal: React.FC<{ isOpen: boolean; onClose: () => void }
       cost: 12000,
       color: 'text-rose-400',
       bgColor: 'bg-rose-400/10'
-    },
-    {
-      id: 'commercial', // Consultores
-      title: 'Consultores',
-      icon: UserRound,
-      description: '+2s questões, +1% val. penhora e +10% limite crédito.',
-      cost: 15000,
-      color: 'text-indigo-400',
-      bgColor: 'bg-indigo-400/10'
     }
   ];
 
