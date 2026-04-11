@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal } from '../ui/Modal';
-import { useGameStore } from '../../store/useGameStore';
 import { AlertCircle } from 'lucide-react';
 import { cn } from '../ui/Button';
 

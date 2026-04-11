@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { useBank } from '../../hooks/useBank';
-import { useGameStore } from '../../store/useGameStore';
-import { cn } from '../ui/Button';
 import { Landmark, QrCode, TrendingUp, Wallet, ArrowRight, ShieldCheck, History } from 'lucide-react';
 
 export const BankModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   const { balance, debts } = useBank();
-  const theme = useGameStore(state => state.theme);
   const [pixKey, setPixKey] = useState('');
-  const [loanAmount, setLoanAmount] = useState(0);
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('pt-BR', { 

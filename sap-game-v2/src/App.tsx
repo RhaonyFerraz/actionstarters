@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import { GameBoard } from './pages/GameBoard';
 import { Login } from './pages/Login';
 import { AdminPanel } from './pages/AdminPanel';

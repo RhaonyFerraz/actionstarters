@@ -11,10 +11,9 @@ import {
   ShieldCheck,
   ArrowRight
 } from 'lucide-react';
-import { cn } from '../ui/Button';
 
 export const CommercialModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  const { balance, modulesLevels, currentRound } = useGameStore();
+  const { balance, currentRound } = useGameStore();
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);

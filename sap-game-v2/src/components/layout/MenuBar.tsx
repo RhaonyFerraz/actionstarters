@@ -1,7 +1,6 @@
 import { 
   Building2, 
   Landmark, 
-  Package, 
   Receipt, 
   Mail, 
   Play,

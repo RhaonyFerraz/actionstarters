@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { PlayerState, Debt, EmailMessage, ModulesLevels } from '../types';
+import { PlayerState, Debt, EmailMessage, ModulesLevels, FinancialNote } from '../types';
 
 interface GameStore extends PlayerState {
   // Actions
@@ -191,7 +191,7 @@ export const useGameStore = create<GameStore>((set) => ({
       {
         ...noteData,
         id: `fin-${crypto.randomUUID().split('-')[0]}`,
-        status: 'pending'
+        status: 'pending' as const
       }
     ]
   })),

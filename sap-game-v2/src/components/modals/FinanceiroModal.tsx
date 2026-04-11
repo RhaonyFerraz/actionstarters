@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal } from '../ui/Modal';
 import { useGameStore } from '../../store/useGameStore';
 import { cn } from '../ui/Button';
@@ -7,7 +7,6 @@ import {
   AlertCircle, 
   CheckCircle2, 
   Clock, 
-  ListOrdered, 
   ArrowUpRight, 
   ArrowDownLeft,
   DollarSign,
@@ -16,7 +15,9 @@ import {
 } from 'lucide-react';
 
 export const FinanceiroModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  const { financialNotes, inventory, currentRound, balance, payFinancialNote, collectFinancialNote } = useGameStore();
+  const { financialNotes, inventory, currentRound, balance, payFinancialNote, collectFinancialNote, debts } = useGameStore();
+  
+  const totalDebts = debts.reduce((sum, d) => sum + d.totalAmount, 0);
 
   const categories = [
     { id: 'payable', label: 'Contas a Pagar', icon: FileText, color: 'text-amber-500', desc: 'Títulos em aberto que vencerão em breve.' },

@@ -3,7 +3,7 @@ import { useGameStore } from '../store/useGameStore';
 export const useCommercial = () => {
   const skus = useGameStore((state) => state.inventory.skus);
   const removeInventory = useGameStore((state) => state.removeInventory);
-  const addBalance = useGameStore((state) => state.addBalance);
+  // const addBalance = useGameStore((state) => state.addBalance);
   const levels = useGameStore((state) => state.modulesLevels);
 
   const BASE_PRICE = 2500;
