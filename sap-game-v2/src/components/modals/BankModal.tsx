@@ -4,8 +4,20 @@ import { useBank } from '../../hooks/useBank';
 import { Landmark, QrCode, TrendingUp, Wallet, ArrowRight, ShieldCheck, History } from 'lucide-react';
 
 export const BankModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-  const { balance, debts } = useBank();
+  const { balance, debts, addDebt } = useBank();
   const [pixKey, setPixKey] = useState('');
+  const [loanAmount, setLoanAmount] = useState(0);
+
+  const handleApplyLoan = () => {
+    if (loanAmount <= 0) return;
+    addDebt({
+      totalAmount: loanAmount,
+      remainingInstallments: 12,
+      installmentValue: (loanAmount * 1.05) / 12,
+      interestRate: 5
+    });
+    setLoanAmount(0);
+  };
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('pt-BR', { 
@@ -98,14 +110,29 @@ export const BankModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
                     </div>
                  </div>
 
-                 <div className="bg-gradient-to-r from-red-500/5 to-transparent p-4 rounded-xl border-l-2 border-red-500">
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Valor por Parcela (Previsão):</p>
-                    <p className="text-lg font-digital text-white">{formatCurrency(totalDebts > 0 ? (totalDebts / 12) : 0)}</p>
-                 </div>
+                  <div className="bg-gradient-to-r from-red-500/5 to-transparent p-4 rounded-xl border-l-2 border-red-500">
+                     <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">Valor por Parcela (Previsão):</p>
+                     <p className="text-lg font-digital text-white">{formatCurrency(totalDebts > 0 ? (totalDebts / 12) : 0)}</p>
+                  </div>
 
-                 <button className="w-full py-4 bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-xl transition-all border border-red-500/20 active:scale-95">
-                   SOLICITAR APORTE
-                 </button>
+                  <div className="space-y-2">
+                    <p className="text-[10px] text-gray-500 font-bold uppercase">Valor do Aporte (R$)</p>
+                    <input 
+                      type="number"
+                      value={loanAmount || ''}
+                      onChange={(e) => setLoanAmount(Number(e.target.value))}
+                      placeholder="0,00"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-xl font-digital text-white focus:outline-none focus:border-red-500/40 transition-all font-bold"
+                    />
+                  </div>
+
+                  <button 
+                    onClick={handleApplyLoan}
+                    disabled={loanAmount <= 0}
+                    className="w-full py-4 bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white font-black uppercase tracking-[0.2em] text-[10px] rounded-xl transition-all border border-red-500/20 active:scale-95 disabled:opacity-20"
+                  >
+                    SOLICITAR APORTE
+                  </button>
               </div>
            </div>
 

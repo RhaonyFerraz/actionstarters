@@ -181,7 +181,7 @@ export const QuizModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
               </div>
               <div className="h-4 bg-gray-200 border border-gray-400 p-0.5">
                 <div 
-                  className="h-full bg-blue-600 transition-all duration-1000"
+                  className="h-full bg-[#3b82f6] shadow-[0_0_10px_rgba(59,130,246,0.6)] transition-all duration-1000"
                   style={{ width: `${(surpriseTimeLeft / 60) * 100}%` }}
                 />
               </div>

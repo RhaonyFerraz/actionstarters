@@ -1,6 +1,7 @@
 import { 
   Building2, 
   Landmark, 
+  Package,
   Receipt, 
   Mail, 
   Play,
@@ -93,6 +94,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
         <nav className="hidden md:flex flex-1 items-center justify-center gap-2 lg:gap-4 relative z-10 mx-2">
           <MenuButton icon={<Building2 size={20} />} label="Banco" onClick={onOpenBank} color="green" />
           <MenuButton icon={<Landmark size={20} />} label="Financeiro" onClick={onOpenFinanceiro || onOpenBank} color="green" />
+          <MenuButton icon={<Package size={20} />} label="Estoque" onClick={() => {}} color="blue" />
           <MenuButton icon={<BarChart3 size={20} />} label="Comercial" onClick={onOpenCommercial} color="green" />
           <MenuButton icon={<Zap size={20} />} label="Melhorias" onClick={onOpenConsultoria} color="green" />
           <MenuButton icon={<Receipt size={20} />} label="Despesas" onClick={onOpenDespesas || onOpenFinanceiro || onOpenBank} color="green" />

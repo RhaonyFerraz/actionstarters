@@ -3,15 +3,24 @@ import { Modal } from '../ui/Modal';
 import { useGameStore } from '../../store/useGameStore';
 import { 
   Inbox, 
+  Send, 
   Archive, 
   Trash2, 
   Mail, 
+  MailOpen,
   ChevronLeft,
+  Calendar,
+  User,
   ArrowRight,
   Monitor,
   Search,
+  Filter,
   Reply,
+  Forward,
   MoreVertical,
+  CheckCircle2,
+  Clock,
+  Star
 } from 'lucide-react';
 import { cn } from '../ui/Button';
 
