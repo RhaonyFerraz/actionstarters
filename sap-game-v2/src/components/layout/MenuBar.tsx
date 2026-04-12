@@ -8,8 +8,7 @@ import {
   Eye,
   EyeOff,
   Zap,
-  Settings,
-  BarChart3
+  Settings
 } from 'lucide-react';
 import { useGameStore } from '../../store/useGameStore';
 import React, { useState } from 'react';
@@ -206,7 +205,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({
           <div className="animate-ticker whitespace-nowrap">
             <span className="text-white font-bold text-[11px] uppercase tracking-[0.4em] flex gap-20 items-center justify-center">
               <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">ESTRATÉGIA: Infraestrutura avançada aumenta massivamente seu lucro por rodada.</span>
-              <span className={cn(theme === 'terminal-hacker' ? 'text-neon-green' : 'text-blue-400', "drop-shadow-[0_0_8px_rgba(59,130,246,0.2)]")}>MERCADO: O preço das SKUs varia conforme seu nível comercial.</span>
+              <span className={cn(theme === 'terminal-hacker' ? 'text-neon-green' : 'text-blue-400', "drop-shadow-[0_0_8px_rgba(59,130,246,0.2)]")}>MERCADO: O preço das SKUs varia conforme a demanda global.</span>
               <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">UPDATE: Novo sistema de gestão SAP ativo.</span>
             </span>
           </div>

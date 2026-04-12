@@ -155,20 +155,52 @@
   animation: glitch 0.2s ease-in-out infinite;
 }
 
-.text-metallic {
-  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 50%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-@keyframes progress-load {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-
 .animate-progress-load {
-  animation: progress-load 4s linear forwards;
+  animation: progress-load 3s linear forwards;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scanline {
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-terminal-cursor::after {
+  content: '_';
+  animation: blink-cursor 1s infinite;
+}
+
+@keyframes reveal-terminal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-reveal-terminal {
+  animation: reveal-terminal 0.5s ease-out forwards;
+}
+
+.bg-executive-blue {
+  background-color: #3b82f6;
+}
+
+.border-executive-blue {
+  border-color: #3b82f6;
+}
+
+.text-executive-blue {
+  color: #3b82f6;
+}
+
+.shadow-executive {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
 @layer base {

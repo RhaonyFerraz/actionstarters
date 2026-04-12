@@ -1,201 +1,208 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useGameStore } from '../../store/useGameStore';
-import { Play, Database, ShieldCheck } from 'lucide-react';
+import { Shield, Cpu, Activity, Database, Lock, Terminal as TerminalIcon, ChevronRight } from 'lucide-react';
+import { cn } from '../ui/Button';
 
-const Particles: React.FC = () => {
-  const particles = useMemo(() => {
-    return Array.from({ length: 30 }).map((_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      size: `${Math.random() * 2 + 1}px`,
-      delay: `${Math.random() * 5}s`,
-      duration: `${Math.random() * 10 + 10}s`,
-    }));
-  }, []);
+const LOG_MESSAGES = [
+  "B1_KERNEL_LOAD: SUCCESS (0.003ms)",
+  "BOOT_PROTOCOL: SAP_NUCLEUS_ACTIVE",
+  "CORE_AUTH: CEO_CREDENTIALS_VALIDATED",
+  "DATABASE_LINK: STABLE (SYNCING...)",
+  "SECURITY_GATE: PROTOCOL_822A_ENGAGED",
+  "INFRASTRUCTURE: SCALING_CLOUD_ASSETS",
+  "UI_ENGINE: RENDERING_EXECUTIVE_PANEL",
+  "SYSTEM_READY: ACTION_STARTERS_V2.0"
+];
 
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="absolute bg-white/20 rounded-full animate-float-slow"
-          style={{
-            left: p.left,
-            top: p.top,
-            width: p.size,
-            height: p.size,
-            animationDelay: p.delay,
-            animationDuration: p.duration,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
+const TechnicalGrid: React.FC = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.03]">
+    <div className="absolute inset-0" style={{ 
+      backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
+      backgroundSize: '40px 40px'
+    }} />
+    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/10 to-transparent animate-scanline h-[200%]" />
+  </div>
+);
 
 export const IntroScreen: React.FC = () => {
-  const [phase, setPhase] = useState<'interaction' | 'animating' | 'finished'>('interaction');
-  const [isExiting, setIsExiting] = useState(false);
-  const [glitchActive, setGlitchActive] = useState(false);
+  const [phase, setPhase] = useState<'interaction' | 'booting' | 'logo' | 'finished'>('interaction');
+  const [logs, setLogs] = useState<string[]>([]);
+  const [progress, setProgress] = useState(0);
   const setHasSeenIntro = useGameStore((state) => state.setHasSeenIntro);
   const hasSeenIntro = useGameStore((state) => state.hasSeenIntro);
 
-  const playImpactSound = useCallback(() => {
+  // High-Tech Digital Sound System
+  const playTechSound = useCallback((type: 'blip' | 'boot' | 'chime') => {
     const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
     if (!AudioContext) return;
 
     const ctx = new AudioContext();
     const now = ctx.currentTime;
-    
-    // Whoosh layer (Crescendo)
-    const noise = ctx.createOscillator();
-    const noiseGain = ctx.createGain();
-    noise.type = 'sine';
-    noise.frequency.setValueAtTime(50, now);
-    noise.frequency.exponentialRampToValueAtTime(1200, now + 1.2);
-    noiseGain.gain.setValueAtTime(0.001, now);
-    noiseGain.gain.exponentialRampToValueAtTime(0.3, now + 1.2);
-    noise.connect(noiseGain);
-    noiseGain.connect(ctx.destination);
-    
-    // Main Thud (Impact)
-    const thud = ctx.createOscillator();
-    const thudGain = ctx.createGain();
-    thud.type = 'triangle';
-    thud.frequency.setValueAtTime(160, now + 1.2);
-    thud.frequency.exponentialRampToValueAtTime(30, now + 2.5);
-    thudGain.gain.setValueAtTime(0, now);
-    thudGain.gain.setValueAtTime(0.8, now + 1.2);
-    thudGain.gain.exponentialRampToValueAtTime(0.001, now + 3);
-    thud.connect(thudGain);
-    thudGain.connect(ctx.destination);
+    const master = ctx.createGain();
+    master.gain.setValueAtTime(0.1, now);
+    master.connect(ctx.destination);
 
-    // High Digital Click
-    const click = ctx.createOscillator();
-    const clickGain = ctx.createGain();
-    click.type = 'square';
-    click.frequency.setValueAtTime(3000, now + 1.2);
-    clickGain.gain.setValueAtTime(0, now);
-    clickGain.gain.setValueAtTime(0.05, now + 1.2);
-    clickGain.gain.exponentialRampToValueAtTime(0.001, now + 1.3);
-    click.connect(clickGain);
-    clickGain.connect(ctx.destination);
-
-    noise.start(now);
-    noise.stop(now + 1.2);
-    thud.start(now + 1.2);
-    thud.stop(now + 3);
-    click.start(now + 1.2);
-    click.stop(now + 1.3);
+    if (type === 'blip') {
+      const osc = ctx.createOscillator();
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(2400, now);
+      osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.05, now);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc.connect(g).connect(master);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } else if (type === 'boot') {
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(100, now);
+      osc.frequency.linearRampToValueAtTime(400, now + 1.5);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(0.2, now + 0.5);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+      osc.connect(g).connect(master);
+      osc.start(now);
+      osc.stop(now + 1.5);
+    } else if (type === 'chime') {
+      [880, 1320, 1760].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0, now);
+        g.gain.setValueAtTime(0.1, now + idx * 0.1);
+        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.5);
+        osc.connect(g).connect(master);
+        osc.start(now + idx * 0.1);
+        osc.stop(now + idx * 0.1 + 0.5);
+      });
+    }
   }, []);
 
-  const handleStart = () => {
-    setPhase('animating');
-    playImpactSound();
+  const startBootSequence = () => {
+    setPhase('booting');
+    playTechSound('boot');
     
-    // Glitch moments
-    setTimeout(() => setGlitchActive(true), 1200);
-    setTimeout(() => setGlitchActive(false), 1400);
-    setTimeout(() => setGlitchActive(true), 3200);
-    setTimeout(() => setGlitchActive(false), 3300);
+    // Animate Logs
+    LOG_MESSAGES.forEach((msg, i) => {
+      setTimeout(() => {
+        setLogs(prev => [...prev, msg]);
+        setProgress(((i + 1) / LOG_MESSAGES.length) * 100);
+        playTechSound('blip');
+      }, i * 400);
+    });
 
+    // Transition to Logo
     setTimeout(() => {
-      setIsExiting(true);
+      setPhase('logo');
+      playTechSound('chime');
+      
+      // Final Finish
       setTimeout(() => {
         setHasSeenIntro(true);
         setPhase('finished');
-      }, 1200);
-    }, 5500);
-  };
-
-  const handleSkip = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setHasSeenIntro(true);
-    setPhase('finished');
+      }, 4000);
+    }, LOG_MESSAGES.length * 400 + 800);
   };
 
   if (hasSeenIntro || phase === 'finished') return null;
 
   return (
-    <div className={`fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden transition-all duration-1000 ${isExiting ? 'animate-fade-out-intro' : ''}`}>
-      
-      {/* Background Particles Layer */}
-      <Particles />
+    <div className="fixed inset-0 z-[100] bg-[#020617] flex items-center justify-center overflow-hidden font-sans">
+      <TechnicalGrid />
 
-      {/* Radial Gradient Glow */}
-      <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/40 via-transparent to-transparent pointer-events-none" />
-
-      {phase === 'interaction' ? (
-        <div className="text-center z-10">
-          <button 
-            onClick={handleStart}
-            className="group relative flex flex-col items-center gap-8"
-          >
-            <div className="relative">
-              <div className="absolute inset-0 bg-purple-500/20 blur-2xl rounded-full scale-150 animate-pulse" />
-              <div className="w-28 h-28 rounded-full border-2 border-white/20 flex items-center justify-center transition-all duration-700 bg-black/40 backdrop-blur-sm group-hover:border-purple-500 group-hover:shadow-[0_0_50px_rgba(168,85,247,0.6)] group-hover:scale-110 relative z-10">
-                <Play size={44} className="text-white fill-white transition-colors group-hover:text-purple-400 group-hover:fill-purple-400 translate-x-1" />
-              </div>
-            </div>
-            <div className="space-y-3 relative z-10">
-              <h2 className="text-white font-black text-xl sm:text-2xl tracking-[0.6em] uppercase animate-in fade-in slide-in-from-bottom duration-1000">CLIQUE PARA INICIAR</h2>
-              <div className="flex items-center justify-center gap-3 opacity-30 group-hover:opacity-60 transition-opacity">
-                <ShieldCheck size={14} className="text-purple-400" />
-                <p className="text-white text-[10px] font-black uppercase tracking-widest">Acesso Autorizado SAP ERP</p>
-              </div>
-            </div>
-          </button>
-        </div>
-      ) : (
-        <div className="relative flex flex-col items-center justify-center w-full px-4">
-          
-          {/* Skip Button */}
-          <button 
-            onClick={handleSkip}
-            className="absolute -top-40 right-4 sm:-top-52 sm:right-10 text-[10px] font-black text-white/20 hover:text-white uppercase tracking-[0.4em] transition-all border border-white/10 px-6 py-3 rounded-full bg-black/40 backdrop-blur-sm active:scale-95"
-          >
-            Pular Introdução
-          </button>
-
-          {/* Logo Animation with High Polish */}
-          <div className={`flex flex-col sm:flex-row items-center gap-4 sm:gap-12 animate-slow-zoom ${glitchActive ? 'animate-glitch' : ''}`}>
-            <h1 className="text-6xl sm:text-8xl md:text-[10rem] font-black text-metallic tracking-tighter animate-reveal-logo opacity-0 drop-shadow-2xl" style={{ animationDelay: '1.2s' }}>
-              ACTION
-            </h1>
-            <h1 
-              className={`text-6xl sm:text-8xl md:text-[10rem] font-black text-[#A855F7] tracking-tighter animate-reveal-logo animate-flicker opacity-0 drop-shadow-[0_0_30px_rgba(168,85,247,0.8)]`}
-              style={{ 
-                animationDelay: '1.8s',
-                textShadow: '0 0 20px rgba(168,85,247,1), 0 0 50px rgba(168,85,247,0.6), 0 0 100px rgba(168,85,247,0.3)'
-              }}
+      {phase === 'interaction' && (
+        <div className="relative z-10 flex flex-col items-center gap-12 animate-in fade-in zoom-in duration-1000">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full scale-150 animate-pulse" />
+            <button 
+              onClick={startBootSequence}
+              className="relative w-32 h-32 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md flex items-center justify-center group-hover:border-blue-500/50 group-hover:scale-110 transition-all duration-700 modern-shadow"
             >
-              STARTERS
-            </h1>
+              <TerminalIcon size={40} className="text-white group-hover:text-blue-400 transition-colors" />
+              <div className="absolute -inset-2 border border-white/5 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity animate-ping-slow" />
+            </button>
           </div>
-
-          {/* Loading Subtitle Integration */}
-          <div className="mt-20 flex flex-col items-center w-full max-w-xs sm:max-w-md animate-in fade-in duration-1000 delay-[2500ms] opacity-0 fill-mode-forwards">
-            <div className="flex items-center justify-between w-full mb-3">
-              <p className="text-[10px] font-black text-[#A855F7] uppercase tracking-[0.2em] flex items-center gap-2">
-                <Database size={12} />
-                Sincronizando Sistema
-              </p>
-              <p className="text-[10px] font-mono text-white/30 uppercase">v2.0.4-SAP</p>
-            </div>
-            <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden">
-               <div className="h-full bg-gradient-to-r from-[#A855F7] to-white animate-progress-load shadow-[0_0_10px_#A855F7]" />
-            </div>
-            <p className="mt-6 text-white/40 text-[11px] font-black uppercase tracking-[1.2em] text-center ml-[1.2em]">
-              Apresenta
-            </p>
+          
+          <div className="text-center space-y-4">
+             <h2 className="text-white text-xs font-black tracking-[0.8em] uppercase opacity-50">System_Initialization</h2>
+             <div className="flex items-center justify-center gap-3">
+                <Shield size={14} className="text-blue-500" />
+                <span className="text-white/30 text-[9px] font-bold uppercase tracking-widest">SAP Certified Nucleus v2.0</span>
+             </div>
           </div>
         </div>
       )}
 
-      {/* Screen Effects */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.08] pointer-events-none mix-blend-screen" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20 pointer-events-none" />
+      {phase === 'booting' && (
+        <div className="relative z-10 w-full max-w-lg px-8 space-y-8">
+           <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                 <Cpu size={20} className="text-blue-500 animate-pulse" />
+                 <h3 className="text-white text-sm font-black uppercase tracking-widest">Booting Sequence</h3>
+              </div>
+              <span className="text-blue-500/50 font-mono text-[10px]">AUTH_MODE: EXE_CEO</span>
+           </div>
+
+           <div className="bg-black/40 border border-white/5 rounded-2xl p-6 h-64 font-mono text-[11px] space-y-2 overflow-hidden shadow-2xl">
+              {logs.map((log, i) => (
+                <div key={i} className="flex items-center gap-3 text-blue-400/80 animate-reveal-terminal">
+                   <ChevronRight size={10} className="text-blue-500" />
+                   <span className="text-gray-300">{log}</span>
+                </div>
+              ))}
+              <div className="animate-terminal-cursor text-blue-500 text-lg ml-1" />
+           </div>
+
+           <div className="space-y-3">
+              <div className="flex justify-between text-[10px] font-black tracking-widest uppercase">
+                 <span className="text-white/40 italic">Initializing Assets...</span>
+                 <span className="text-blue-500">{Math.round(progress)}%</span>
+              </div>
+              <div className="w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                 <div 
+                   className="h-full bg-blue-500 shadow-executive transition-all duration-300 ease-out"
+                   style={{ width: `${progress}%` }}
+                 />
+              </div>
+           </div>
+        </div>
+      )}
+
+      {phase === 'logo' && (
+        <div className="relative z-10 flex flex-col items-center animate-in fade-in zoom-in duration-1000 scale-90 sm:scale-100">
+           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-12">
+              <h1 className="text-6xl sm:text-8xl md:text-9xl font-black text-white tracking-tighter drop-shadow-2xl">
+                ACTION
+              </h1>
+              <h1 className="text-6xl sm:text-8xl md:text-9xl font-black text-blue-500 tracking-tighter shadow-executive" style={{ textShadow: '0 0 40px rgba(59, 130, 246, 0.5)' }}>
+                STARTERS
+              </h1>
+           </div>
+           
+           <div className="mt-16 flex items-center gap-8 opacity-0 animate-in fade-in duration-1000 delay-500 fill-mode-forwards">
+              <div className="h-[1px] w-24 bg-gradient-to-r from-transparent to-white/20" />
+              <p className="text-[10px] font-black text-white/40 uppercase tracking-[1.5em] ml-[1.5em]">APRESENTA</p>
+              <div className="h-[1px] w-24 bg-gradient-to-l from-transparent to-white/20" />
+           </div>
+
+           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[1px] bg-gradient-to-r from-transparent via-blue-500/20 to-transparent rotate-12 pointer-events-none" />
+        </div>
+      )}
+
+      {/* Corporate Overlays */}
+      <div className="absolute inset-x-0 bottom-0 p-10 flex justify-between items-end pointer-events-none opacity-20">
+         <div className="space-y-1">
+            <p className="text-[9px] font-black text-white tracking-widest uppercase">Encryption_Status</p>
+            <div className="flex gap-1">
+               {[1,2,3,4,5].map(i => <div key={i} className="w-1 h-1 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }} />)}
+            </div>
+         </div>
+         <Activity size={24} className="text-blue-500/30" />
+      </div>
+
     </div>
   );
 };

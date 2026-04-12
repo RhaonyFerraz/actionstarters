@@ -21,7 +21,7 @@ export const useEmailManager = () => {
       addEmail({
         subject: 'Liberação do Mercado Global',
         sender: 'matriz@sap-board.com',
-        content: 'CEO,\n\nO mercado internacional acaba de se aquecer.\nAproveite o momento para investir na Consultoria Comercial e aumentar pesadamente o lucro sobre seus SKUs.\n\nAbraços.',
+        content: 'CEO,\n\nO mercado internacional acaba de se aquecer.\nAproveite o momento para investir na Infraestrutura e aumentar pesadamente o lucro sobre seus produtos.\n\nAbraços.',
         timestampRound: currentRound
       });
     }
@@ -30,7 +30,7 @@ export const useEmailManager = () => {
       addEmail({
         subject: '⚠️ Greve Logística Detectada',
         sender: 'sindicato@transportes.org',
-        content: 'Informamos a paralização dos meios de transporte no país.\n\nNos próximos turnos, não adiantará investir no PCP ou Comercial, mantenha seu caixa protegido até a normalização.',
+        content: 'Informamos a paralização dos meios de transporte no país.\n\nNos próximos turnos, não adiantará investir no PCP ou Logística, mantenha seu caixa protegido até a normalização.',
         timestampRound: currentRound
       });
     }
